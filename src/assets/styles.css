@@ -24,4 +24,27 @@
 
 .restaurant h3{
   margin-bottom: 1rem;
+  text-align: center;
+}
+
+.menuItem{
+  display: flex;
+  justify-content: space-between;
+}
+
+.mealInfo{
+  display: flex;
+}
+
+.menuName{
+  max-width: 15rem;
+  margin: 0.5rem;
+}
+
+.menuPrice{
+  margin: 0.5rem;
+}
+
+.menuCode{
+  margin: 0.5rem;
 }
