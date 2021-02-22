@@ -23,6 +23,7 @@ const getDailyMenu = async (restaurantId, lang, date) => {
   let menuData;
   try {
     menuData = await getMenus(`${sodexoAddress}/${restaurantId}/${date}`);
+    await console.log('Menu: ' + JSON.stringify(menuData));
   } catch (error) {
     throw new Error(error.message);
   }
