@@ -3,7 +3,6 @@ const sodexoAddress = 'https://www.sodexo.fi/ruokalistat/output/daily_json';
 let menu = [];
 
 const parseSodexoMenu = (data, lang) => {
-  console.log('SodexoData: ' + data.courses);
   const courses = Object.values(data.courses);
   menu = [];
   for(const course of courses) {
@@ -29,7 +28,6 @@ const getDailyMenu = async (restaurantId, lang, date) => {
     throw new Error(error.message);
   }
   const parsedMenu = parseSodexoMenu(menuData, lang);
-  console.log('Parsed: ' + JSON.stringify(parsedMenu));
   return parsedMenu;
 };
 
