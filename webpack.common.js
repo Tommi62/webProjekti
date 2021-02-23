@@ -3,6 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 module.exports = {
   entry: {
@@ -29,6 +31,25 @@ module.exports = {
         removeComments: true,
         collapseWhitespace: true
       },
+    }),
+    new WorkboxPlugin.GenerateSW({
+      // these options encourage the ServiceWorkers to get in there fast
+      // and not allow any straggling "old" SWs to hang around
+      clientsClaim: true,
+      skipWaiting: true,
+    }),
+    new WebpackPwaManifest({
+      name: 'Metropolia Progressive Web App',
+      short_name: 'MetropoliaPWA',
+      description: 'Describe your Progressive Web App here',
+      background_color: '#ffffff',
+      crossorigin: 'use-credentials',
+      icons: [
+        {
+          src: path.resolve('src/assets/icon.png'),
+          sizes: [96, 128, 192, 256, 384, 512]
+        },
+      ]
     })
   ],
   output: {

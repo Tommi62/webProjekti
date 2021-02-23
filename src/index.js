@@ -1,9 +1,9 @@
 import SodexoData from './modules/sodexo-data';
 import FazerData from './modules/fazer-data';
+import {getLocation, getDistance} from './modules/calculate-distance';
 import HSLData from './modules/hsl-data';
 
-
-const menuContainer = document.querySelector('.restaurant');
+const resContainer = document.querySelector('.restaurant');
 const langFi = document.querySelector('.fi');
 const langEn = document.querySelector('.en');
 const myyrmaki = document.querySelector('.myyrmaki');
@@ -41,6 +41,16 @@ const restaurants = [{
   type: SodexoData
 }];
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js').then(registration => {
+      console.log('SW registered: ', registration);
+    }).catch(registrationError => {
+      console.log('SW registration failed: ', registrationError);
+    });
+  });
+}
+
 const today = new Date().toISOString().split('T')[0];
 let currentCampus = 'arabia';
 let language = 'fi';
@@ -49,9 +59,12 @@ const getMenu = async () => {
   for (const restaurant of restaurants) {
     if (restaurant.name === currentCampus) {
       try {
-        const parsedMenu = await restaurant.type.getDailyMenu(restaurant.id, language, today);
-        renderMenu(parsedMenu, restaurant.displayName);
-
+          const parsedMenu = await restaurant.type.getDailyMenu(restaurant.id, language, today);
+          if(restaurant.type === SodexoData){
+            renderSodexoMenu(parsedMenu, restaurant.displayName);
+          } else{
+            renderMenu(parsedMenu, restaurant.displayName);
+          }
       } catch (error) {
         console.error(error);
         let message;
@@ -67,7 +80,7 @@ const getMenu = async () => {
 };
 
 const renderMenu = (data, name) => {
-  menuContainer.innerHTML = '';
+  resContainer.innerHTML = '';
   const restaurantName = '<h3>' + name + '</h3>';
   const ul = document.createElement('ul');
   for (const item of data) {
@@ -75,8 +88,43 @@ const renderMenu = (data, name) => {
     listItem.textContent = item;
     ul.appendChild(listItem);
   }
-  menuContainer.innerHTML += restaurantName;
-  menuContainer.appendChild(ul);
+  resContainer.innerHTML += restaurantName;
+  resContainer.appendChild(ul);
+};
+
+const renderSodexoMenu = (data, name) => {
+  resContainer.innerHTML = '';
+  const restaurantName = '<h3>' + name + '</h3>';
+  const menuContainer = document.createElement('div');
+  menuContainer.classList.add('menu');
+  for (const item of data) {
+    const mealContainer = document.createElement('div');
+    mealContainer.classList.add('menuItem');
+
+    const nameContainer = document.createElement('div');
+    nameContainer.classList.add('menuName');
+    nameContainer.innerHTML = '<h4>' + item.category + '</h4>';
+    nameContainer.innerHTML += '<p>' + item.title + '</p>';
+
+    const infoContainer = document.createElement('div');
+    infoContainer.classList.add('mealInfo');
+
+    const priceContainer = document.createElement('div');
+    priceContainer.classList.add('menuPrice');
+    priceContainer.innerHTML = '<br><p>' + item.price + '</p>';
+
+    const codeContainer = document.createElement('div');
+    codeContainer.classList.add('menuCode');
+    codeContainer.innerHTML = '<br><p>' + item.code + '</p>';
+
+    infoContainer.appendChild(priceContainer);
+    infoContainer.appendChild(codeContainer);
+    mealContainer.appendChild(nameContainer);
+    mealContainer.appendChild(infoContainer);
+    menuContainer.appendChild(mealContainer);
+  }
+  resContainer.innerHTML += restaurantName;
+  resContainer.appendChild(menuContainer);
 };
 
 const loadHSLData = async (id) => {
@@ -102,8 +150,21 @@ const loadHSLData = async (id) => {
 const NoMenuFoundNotification = (message, name) => {
   const restaurantName = '<h3>' + name + '</h3>';
   const noMenuMessage = `<p>${message}</p>`;
-  menuContainer.innerHTML += restaurantName;
-  menuContainer.innerHTML += noMenuMessage;
+  resContainer.innerHTML += restaurantName;
+  resContainer.innerHTML += noMenuMessage;
+};
+
+const nearestCampus = () => {
+  getLocation()
+  .then((position) => {
+    const currentLatitude = position.coords.latitude;
+    const currentLongitude = position.coords.longitude;
+    const distance = getDistance(currentLatitude, currentLongitude, restaurants[1].lat, restaurants[1].long, 'K');
+    alert('Dis: ' + distance);
+  })
+  .catch((err) => {
+    console.error(err.message);
+  });
 };
 
 const getStops = async () => {
@@ -122,6 +183,7 @@ const getStops = async () => {
 const init = () => {
   getMenu();
   getStops();
+  nearestCampus();
 };
 
 langFi.addEventListener('click', () => {
