@@ -6,6 +6,10 @@ import HSLData from './modules/hsl-data';
 const menuContainer = document.querySelector('.restaurant');
 const langFi = document.querySelector('.fi');
 const langEn = document.querySelector('.en');
+const myyrmaki = document.querySelector('.myyrmaki');
+const karamalmi = document.querySelector('.karamalmi');
+const myllypuro = document.querySelector('.myllypuro');
+const arabia = document.querySelector('.arabia');
 
 const restaurants = [{
   displayName: 'Myyrmäen Sodexo',
@@ -38,7 +42,7 @@ const restaurants = [{
 }];
 
 const today = new Date().toISOString().split('T')[0];
-let currentCampus = 'myllypuro';
+let currentCampus = 'arabia';
 let language = 'fi';
 
 const getMenu = async () => {
@@ -79,7 +83,6 @@ const loadHSLData = async (id) => {
   document.querySelector('.hsl-data').innerHTML = '';
   const result = await HSLData.getRidesByStopId(id);
   const stop = result.data.stop;
-  console.log('loadHSLData', stop);
   const stopElement = document.createElement('div');
   const stopList = document.createElement('ul');
   if (language === 'fi') {
@@ -108,7 +111,6 @@ const getStops = async () => {
     if (restaurant.name === currentCampus) {
       console.log('rest coords = ' + restaurant.lat + ' ' + restaurant.long);
       const stops = await HSLData.getStopsByLocation(restaurant.lat, restaurant.long);
-      console.log(stops);
       for (const stop of stops.data.stopsByRadius.edges) {
         const id = stop.node.stop.gtfsId;
         loadHSLData(id);
@@ -134,6 +136,26 @@ langEn.addEventListener('click', () => {
     language = 'en';
     init();
   }
+});
+
+myyrmaki.addEventListener('click', () => {
+    currentCampus = 'myyrmaki';
+    init();
+});
+
+karamalmi.addEventListener('click', () => {
+  currentCampus = 'karamalmi';
+  init();
+});
+
+myllypuro.addEventListener('click', () => {
+  currentCampus = 'myllypuro';
+  init();
+});
+
+arabia.addEventListener('click', () => {
+  currentCampus = 'arabia';
+  init();
 });
 
 
