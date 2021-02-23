@@ -61,6 +61,7 @@ let currentCampus = 'arabia';
 let language = 'fi';
 
 const getMenu = async () => {
+  console.log('getMenu');
   for (const restaurant of restaurants) {
     if (restaurant.name === currentCampus) {
       try {
@@ -79,6 +80,7 @@ const getMenu = async () => {
           message = 'No menu was found for today.';
         }
         NoMenuFoundNotification(message, restaurant.displayName);
+        console.log('current: ' + currentCampus);
       }
     }
   }
@@ -214,29 +216,38 @@ const loadHSLData = async (id) => {
 };
 
 const NoMenuFoundNotification = (message, name) => {
+  console.log('NoMenuFound ' + name);
+  resContainer.innerHTML = '';
   const restaurantName = '<h3>' + name + '</h3>';
   const noMenuMessage = `<p>${message}</p>`;
-  resContainer.innerHTML += restaurantName;
+  resContainer.innerHTML = restaurantName;
   resContainer.innerHTML += noMenuMessage;
 };
 
-const nearestCampus = () => {
+const getNearestCampus = () => {
+  let distances = [];
   getLocation()
-    .then((position) => {
-      const currentLatitude = position.coords.latitude;
-      const currentLongitude = position.coords.longitude;
-      const distance = getDistance(currentLatitude, currentLongitude, restaurants[1].lat, restaurants[1].long, 'K');
-      alert('Dis: ' + distance);
-    })
-    .catch((err) => {
-      console.error(err.message);
-    });
+  .then((position) => {
+    const currentLatitude = position.coords.latitude;
+    const currentLongitude = position.coords.longitude;
+    for(const restaurant of restaurants){
+      const distance = getDistance(currentLatitude, currentLongitude, restaurant.lat, restaurant.long, 'K');
+      distances.push(distance);
+    }
+    const i = distances.indexOf(Math.min(...distances));
+    currentCampus = restaurants[i].name;
+    console.log('Ready ' + currentCampus);
+    getMenu();
+  })
+  .catch((err) => {
+    console.error(err.message);
+    getMenu();
+  });
 };
 
 const getStops = async () => {
   for (const restaurant of restaurants) {
     if (restaurant.name === currentCampus) {
-      console.log('rest coords = ' + restaurant.lat + ' ' + restaurant.long);
       const stops = await HSLData.getStopsByLocation(restaurant.lat, restaurant.long);
       for (const stop of stops.data.stopsByRadius.edges) {
         const id = stop.node.stop.gtfsId;
@@ -247,11 +258,10 @@ const getStops = async () => {
 };
 
 const init = () => {
-  getMenu();
+  getNearestCampus();
   getStops();
   makeSlides();
   infoCarouselRight();
-  nearestCampus();
 };
 
 langFi.addEventListener('click', () => {

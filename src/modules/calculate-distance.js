@@ -1,5 +1,6 @@
 const getLocation = () => {
   if (navigator.geolocation) {
+    console.log('Getlocation');
     return new Promise((res, rej) => {
       navigator.geolocation.getCurrentPosition(res, rej);
     });
@@ -9,7 +10,8 @@ const getLocation = () => {
 };
 
 const getDistance = (lat1, lon1, lat2, lon2, unit) => {
-	if ((lat1 == lat2) && (lon1 == lon2)) {
+	console.log('Getdistance');
+  if ((lat1 == lat2) && (lon1 == lon2)) {
 		return 0;
 	}
 	else {
