@@ -1,11 +1,20 @@
 import SodexoData from './modules/sodexo-data';
 import FazerData from './modules/fazer-data';
-import {getLocation, getDistance} from './modules/calculate-distance';
+import { getLocation, getDistance } from './modules/calculate-distance';
 import HSLData from './modules/hsl-data';
+import InfoData from './modules/info-data';
+
 
 const resContainer = document.querySelector('.restaurant');
+const infoContainer = document.querySelector('.info');
 const langFi = document.querySelector('.fi');
 const langEn = document.querySelector('.en');
+const myyrmaki = document.querySelector('.myyrmaki');
+const karamalmi = document.querySelector('.karamalmi');
+const myllypuro = document.querySelector('.myllypuro');
+const arabia = document.querySelector('.arabia');
+const carouselRight = document.querySelector('.carouselRight');
+const carouselLeft = document.querySelector('.carouselLeft');
 
 const restaurants = [{
   displayName: 'Myyrmäen Sodexo',
@@ -48,7 +57,7 @@ if ('serviceWorker' in navigator) {
 }
 
 const today = new Date().toISOString().split('T')[0];
-let currentCampus = 'myllypuro';
+let currentCampus = 'arabia';
 let language = 'fi';
 
 const getMenu = async () => {
@@ -56,12 +65,12 @@ const getMenu = async () => {
   for (const restaurant of restaurants) {
     if (restaurant.name === currentCampus) {
       try {
-          const parsedMenu = await restaurant.type.getDailyMenu(restaurant.id, language, today);
-          if(restaurant.type === SodexoData){
-            renderSodexoMenu(parsedMenu, restaurant.displayName);
-          } else{
-            renderMenu(parsedMenu, restaurant.displayName);
-          }
+        const parsedMenu = await restaurant.type.getDailyMenu(restaurant.id, language, today);
+        if (restaurant.type === SodexoData) {
+          renderSodexoMenu(parsedMenu, restaurant.displayName);
+        } else {
+          renderMenu(parsedMenu, restaurant.displayName);
+        }
       } catch (error) {
         console.error(error);
         let message;
@@ -76,6 +85,64 @@ const getMenu = async () => {
     }
   }
 };
+
+const slides = [];
+
+const makeSlides = () => {
+  infoContainer.innerHTML = "";
+  const data = InfoData.parseInfo(language);
+  for (const set of data) {
+    const slide = document.createElement('div');
+    slide.className = 'slide';
+    const h3 = document.createElement('h3');
+
+    h3.innerHTML = set.title;
+    slide.appendChild(h3);
+
+    if (set.text !== "") {
+      const ul = document.createElement('ul');
+      for (const textNode of set.text) {
+        const li = document.createElement('li');
+        li.innerHTML = textNode;
+        ul.appendChild(li);
+      }
+      slide.appendChild(ul);
+    }
+    slides.push(slide);
+    console.log(slides);
+  }
+};
+
+let carouselPosition = -1;
+const infoCarouselRight = () => {
+  if (carouselPosition < slides.length-1) {
+    infoContainer.innerHTML = "";
+    carouselPosition++;
+    console.log(carouselPosition);
+    infoContainer.appendChild(slides[carouselPosition]);
+  } else {
+    carouselPosition = 0;
+    infoContainer.innerHTML = "";
+    infoContainer.appendChild(slides[carouselPosition]);
+  }
+};
+
+const infoCarouselLeft = () => {
+  if (carouselPosition > 0) {
+    infoContainer.innerHTML = "";
+    carouselPosition--;
+    infoContainer.appendChild(slides[carouselPosition]);
+  } else {
+    carouselPosition = slides.length;
+    infoContainer.innerHTML = "";
+    carouselPosition--;
+    infoContainer.appendChild(slides[carouselPosition]);
+  }
+};
+
+carouselRight.addEventListener('click', infoCarouselRight);
+carouselLeft.addEventListener('click', infoCarouselLeft);
+
 
 const renderMenu = (data, name) => {
   resContainer.innerHTML = '';
@@ -131,6 +198,8 @@ const loadHSLData = async (id) => {
   const stop = result.data.stop;
   const stopElement = document.createElement('div');
   const stopList = document.createElement('ul');
+  stopElement.className = 'stop';
+
   if (language === 'fi') {
     stopElement.innerHTML = `<h3>Seuraavat vuorot pysäkiltä ${stop.name}</h3>`;
   } else {
@@ -190,6 +259,8 @@ const getStops = async () => {
 const init = () => {
   getNearestCampus();
   getStops();
+  makeSlides();
+  infoCarouselRight();
 };
 
 langFi.addEventListener('click', () => {
@@ -199,11 +270,32 @@ langFi.addEventListener('click', () => {
   }
 });
 
+
 langEn.addEventListener('click', () => {
   if (language === 'fi') {
     language = 'en';
     init();
   }
+});
+
+myyrmaki.addEventListener('click', () => {
+  currentCampus = 'myyrmaki';
+  init();
+});
+
+karamalmi.addEventListener('click', () => {
+  currentCampus = 'karamalmi';
+  init();
+});
+
+myllypuro.addEventListener('click', () => {
+  currentCampus = 'myllypuro';
+  init();
+});
+
+arabia.addEventListener('click', () => {
+  currentCampus = 'arabia';
+  init();
 });
 
 
