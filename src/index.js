@@ -61,7 +61,6 @@ let currentCampus = 'arabia';
 let language = 'fi';
 
 const getMenu = async () => {
-  console.log('getMenu');
   for (const restaurant of restaurants) {
     if (restaurant.name === currentCampus) {
       try {
@@ -110,16 +109,15 @@ const makeSlides = () => {
       slide.appendChild(ul);
     }
     slides.push(slide);
-    console.log(slides);
   }
 };
 
 let carouselPosition = -1;
+
 const infoCarouselRight = () => {
   if (carouselPosition < slides.length-1) {
     infoContainer.innerHTML = "";
     carouselPosition++;
-    console.log(carouselPosition);
     infoContainer.appendChild(slides[carouselPosition]);
   } else {
     carouselPosition = 0;
@@ -139,6 +137,11 @@ const infoCarouselLeft = () => {
     carouselPosition--;
     infoContainer.appendChild(slides[carouselPosition]);
   }
+};
+
+const infoCarouselRefresh = () => {
+    infoContainer.innerHTML = "";
+    infoContainer.appendChild(slides[carouselPosition]);
 };
 
 carouselRight.addEventListener('click', infoCarouselRight);
@@ -238,6 +241,7 @@ const getNearestCampus = () => {
     currentCampus = restaurants[i].name;
     console.log('Ready ' + currentCampus);
     getMenu();
+    getStops();
   })
   .catch((err) => {
     console.error(err.message);
@@ -258,16 +262,24 @@ const getStops = async () => {
 };
 
 const init = () => {
-  getNearestCampus();
+  getMenu();
   getStops();
+  getNearestCampus();
   makeSlides();
   infoCarouselRight();
+};
+
+const refresh = () => {
+  getMenu();
+  getStops();
+  makeSlides();
+  infoCarouselRefresh();
 };
 
 langFi.addEventListener('click', () => {
   if (language === 'en') {
     language = 'fi';
-    init();
+    refresh();
   }
 });
 
@@ -275,28 +287,28 @@ langFi.addEventListener('click', () => {
 langEn.addEventListener('click', () => {
   if (language === 'fi') {
     language = 'en';
-    init();
+    refresh();
   }
 });
 
 myyrmaki.addEventListener('click', () => {
   currentCampus = 'myyrmaki';
-  init();
+  refresh();
 });
 
 karamalmi.addEventListener('click', () => {
   currentCampus = 'karamalmi';
-  init();
+  refresh();
 });
 
 myllypuro.addEventListener('click', () => {
   currentCampus = 'myllypuro';
-  init();
+  refresh();
 });
 
 arabia.addEventListener('click', () => {
   currentCampus = 'arabia';
-  init();
+  refresh();
 });
 
 
