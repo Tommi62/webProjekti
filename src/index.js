@@ -84,9 +84,10 @@ const getMenu = async () => {
   }
 };
 
-const slides = [];
+let slides = [];
 
 const makeSlides = () => {
+  slides.splice(0, slides.length);
   infoContainer.innerHTML = "";
   const data = InfoData.parseInfo(language);
   for (const set of data) {
