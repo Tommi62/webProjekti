@@ -48,7 +48,7 @@
   align-items: center;
 }
 
-.restaurant, div{
+.restaurant, .stop{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -61,7 +61,7 @@
   max-width: 40rem;
 }
 
-.restaurant ul, div ul{
+.restaurant ul, .stop ul{
   list-style-type: none;
   padding: 1rem;
 }
@@ -93,7 +93,7 @@
   margin: 0.5rem;
 }
 
-.restaurant h3, div h3{
+.restaurant h3, .stop h3{
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
   padding: 1rem;
@@ -101,10 +101,31 @@
   text-align: center;
 }
 
-.restaurant h3, div h3{
+.restaurant h3, .stop h3{
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
   padding: 1rem;
   background-color: var(--restBorders);
   text-align: center;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.slide {
+  border: 1px solid black;
+  margin: 10px;
+  max-width: 20rem;
+  padding: 5px;
+}
+
+.slide ul {
+  padding: 0 0 0 15px;
+}
+
+.slide ul li {
+  padding: 10px 0 0 0;
 }

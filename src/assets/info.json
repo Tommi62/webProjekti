@@ -1,0 +1,123 @@
+{
+  "info":[
+    {
+      "title_fi": "Koronaviruspandemia",
+      "title_en": "The coronavirus pandemic",
+      "text_fi": "",
+      "text_en": ""
+    },
+    {
+      "title_fi": "Koronavirus",
+      "text_fi": [
+        "Jokainen voi henkilökohtaisella toiminnallaan vaikuttaa viruksen leviämisen estämiseen mm. huolehtimalla käsihygieniasta, noudattamalla yskimiseen ja aivastamiseen liittyviä ohjeita ja sairastamalla kotona.",
+        "Näin toimimalla suojaamme paitsi itseämme myös muita.",
+        "Kun asioit kampuksella noudata seuraavia ohjeita."
+      ],
+      "title_en": "Coronavirus",
+      "text_en": [
+        "Everyone can slow down the spread of coronavirus with their own actions.",
+        "Reducing social contact is now also important, as this slows down the spread of the epidemic.",
+        "When you are on campus, follow the instructions below."
+      ]
+    },
+
+    {
+      "title_fi": "Hengityssuojainten käyttö",
+      "text_fi": [
+      "Metropoliassa on vahva suositus kasvomaskien käyttöön kaikissa oppimis- ja työtilanteissa Metropolian kampuksilla."
+      ],
+      "title_en": "Use of protective masks",
+      "text_en": [
+        "Metropolia has a strong recommendation for the use of face masks in all learning and work situations on Metropolia's campuses."
+      ]
+    },
+    {
+      "title_fi": "Käsien peseminen",
+      "text_fi": [
+        "Kastele kädet runsaalla vedellä",
+        "Ota saippuaa ja hiero kämmeniä vastakkain",
+        "Hiero kämmenselät, peukalot ja sormien välit",
+        "Hiero sormia lomittain vastatusten",
+        "Huuhdo kädet runsaalla vedellä",
+        "Kuivaa kätesi huolellisesti käsipyyhepaperilla",
+        "Sulje hana käsipyyhepaperilla ja laita stoppi tartunnoille"
+      ],
+      "title_en": "Wash your hands and stop infections from spreading",
+      "text_en": [
+        "Wet your hands with a lot of water",
+        "Apply some soap and rub your hands palm to palm",
+        "Rub the backs of your hands, your thumbs and between your fingers",
+        "Rub your hands together with your fingers interlaced",
+        "Rinse your hands with a lot of water",
+        "Dry your hands carefully with a paper towel",
+        "Use a paper towel to turn off the tap"
+      ]
+    },
+    {
+      "title_fi": "Yski ja aivasta oikein",
+      "text_fi": [
+        "Yski ja aivasta hihaasi, niin laitat stopin tartunnoille.",
+        "Jos mahdollista, käytä kertakäyttöistä nenäliinaa.",
+        "Laita käytetty liina roskiin ja pese kädet saippualla."
+      ],
+      "title_en": "Cough and sneeze correctly",
+      "text_en": [
+        "Cough and sneeze into your sleeve to stop infections from spreading.",
+        "If possible, use a paper tissue.",
+        "Put the used tissue into a bin and wash your hands with soap."
+      ]
+    },
+    {
+      "title_fi": "Turvavälit ja lähikontaktien vähentäminen",
+      "text_fi": [
+        "Lähikontaktien vähentäminen on tärkeää, koska siten hidastetaan epidemian leviämistä.",
+        "Kun liikut kampuksella tai ulkona, pidä vähintään 1–2 metrin etäisyys muihin ihmisiin.",
+        "Älä kättele."
+      ],
+      "title_en": "Reducing close contacts",
+      "text_en": [
+        "Reducing close contact is now also important, as this slows down the spread of the  epidemic.",
+        "When you are in the campus or outdoors, stay at least one - two meter away from others.",
+        "Avoid shaking hands."
+      ]
+    },
+    {
+      "title_fi": "Hissien käyttäminen",
+      "text_fi": [
+        "Hissien käyttöä pyydetään mahdollisuuksien mukaan välttämään. Jos kuitenkin on tarve kulkea hissillä, on suositeltava kulkea yksin tai muutoin turvaväleistä huolehtien.",
+        "Puhumista toisille tai puhelimeen tulee hississä välttää, jotta riski mahdolliseen pisaratartuntaan vähenee.",
+        "Nyökkäys tai hymy työ- tai opiskelukaverille riittää."
+      ],
+      "title_en": "Using the lift",
+      "text_en": [
+        "Avoid using the lift whenever possible. However, if you have to use one, we recommend that you are only person to enter a lift, or at least ensure social distancing.",
+        "You should not talk to anyone in the lift or on the phone to minimise the risk of droplet transmission.",
+        "A friendly nod or a smile is enough."
+      ]
+    },
+    {
+      "title_fi": "Käsidesien käyttäminen",
+      "text_fi": [
+        "Käsidesiä löytyy pääovien yhteydestä, mutta Metropolia suosittelee myös oman henkilökohtaisen mukana kannettavan käsidesin hankkimista.",
+        "Kampusten siivouksessa keskitytään tartuntariskien minimoimiseen ja tilojen siisteyttä seurataan aktiivisesti."
+      ],
+      "title_en": "Use of hand disinfectant",
+      "text_en": [
+        "Hand disinfectant is available near the main entrances, but Metropolia also suggests that you have your own bottle of disinfectant with you.",
+        "Campus cleaning focuses on minimising infection risk, and the cleanliness of the premises is followed actively."
+      ]
+    },
+    {
+      "title_fi": "Lataa Koronavilkku-sovellus",
+      "text_fi": [
+        "Lataa puhelimeesi Koronavilkku-sovellus, jonka avulla saat tiedon, jos olet altistunut. Jos sinulla todetaan tartunta, voit ilmoittaa siitä sovelluksella nimettömästi. Sovelluksessa yksityisyytesi on vahvasti suojattu.",
+        "Voit ladata sovelluksen Google Play -kaupassa ja App Storessa"
+      ],
+      "title_en": "Download Koronavilkku app",
+      "text_en": [
+        "Download Koronavilkku app, which is a contact tracing app. It help's you find out whether you may have been exposed to coronavirus. If you have a coronavirus test and are diagnosed as infected, you can use the app to share this anonymously with those you have been in close contact with. Your privacy is strongly protected.",
+        "Download on Google Play or App Store."
+      ]
+    }
+  ]
+}
