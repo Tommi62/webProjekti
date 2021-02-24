@@ -18,6 +18,8 @@ const arabia = document.querySelector('.arabia');
 const carouselRight = document.querySelector('.carouselRight');
 const carouselLeft = document.querySelector('.carouselLeft');
 
+let carouselTimer;
+
 const restaurants = [{
   title_fi: 'Myyrmäen kampus',
   title_en: 'Myyrmäki campus',
@@ -123,41 +125,76 @@ const makeSlides = () => {
   }
 };
 
-let carouselPosition = -1;
+const changeSlide = (direction) => {
+  let slide = document.querySelector('.slide');
+  slide.style.opacity = '0';
+  if (direction === 'right') {
+    slide.style.transform = 'rotate(-0.02turn) scale(0.9) translate(-50%, 0%)';
+  }
+  if (direction === 'left') {
+    slide.style.transform = 'rotate(0.02turn) scale(0.9) translate(50%, 0%)';
+  }
+  setTimeout(function () {
+    slide.style.transform = 'none';
+    infoContainer.innerHTML = "";
+    infoContainer.appendChild(slides[carouselPosition]);
+    slide = slides[carouselPosition];
+    if (direction === 'right') {
+      slide.style.transform = 'rotate(0.02turn) scale(0.9) translate(50%, 0%)';
+    }
+    if (direction === 'left') {
+      slide.style.transform = 'rotate(-0.02turn) scale(0.9) translate(-50%, 0%)';
+    }
+    setTimeout(function () {
+      slide = document.querySelector('.slide');
+      slide.style.opacity = '1';
+      slide.style.transform = 'rotate(0turn) scale(1) translate(0%, 0%)';
+    }, 10);
+  }, 500);
+};
+
+let carouselPosition = 0;
 
 const infoCarouselRight = () => {
   if (carouselPosition < slides.length - 1) {
-    infoContainer.innerHTML = "";
     carouselPosition++;
-    infoContainer.appendChild(slides[carouselPosition]);
+    changeSlide('right');
   } else {
     carouselPosition = 0;
-    infoContainer.innerHTML = "";
-    infoContainer.appendChild(slides[carouselPosition]);
+    changeSlide('right');
   }
 };
 
 const infoCarouselLeft = () => {
   if (carouselPosition > 0) {
-    infoContainer.innerHTML = "";
     carouselPosition--;
-    infoContainer.appendChild(slides[carouselPosition]);
+    changeSlide('left');
   } else {
     carouselPosition = slides.length;
-    infoContainer.innerHTML = "";
     carouselPosition--;
-    infoContainer.appendChild(slides[carouselPosition]);
+    changeSlide('left');
   }
 };
 
 const infoCarouselRefresh = () => {
   infoContainer.innerHTML = "";
   infoContainer.appendChild(slides[carouselPosition]);
+  setTimeout(function () {
+    const slide = document.querySelector('.slide');
+    slide.style.opacity = '1';
+  }, 500);
+};
+
+const clearCarouselTimer = () => {
+  console.log('clearTimer');
+  clearTimeout(carouselTimer);
+  carouselTimer = setInterval(infoCarouselRight, 13000);
 };
 
 carouselRight.addEventListener('click', infoCarouselRight);
 carouselLeft.addEventListener('click', infoCarouselLeft);
-
+carouselLeft.addEventListener('click', clearCarouselTimer);
+carouselRight.addEventListener('click', clearCarouselTimer);
 
 const renderMenu = (data, name) => {
   resContainer.innerHTML = '';
@@ -287,12 +324,12 @@ const getStops = async () => {
 };
 
 const updateUi = () => {
-  banner.style.backgroundImage = 'url("./assets/' + currentCampus +'.jpg")';
-  for(const restaurant of restaurants){
-    if(restaurant.name === currentCampus){
-      if(language === 'fi'){
+  banner.style.backgroundImage = 'url("./assets/' + currentCampus + '.jpg")';
+  for (const restaurant of restaurants) {
+    if (restaurant.name === currentCampus) {
+      if (language === 'fi') {
         title.innerHTML = restaurant.title_fi;
-      }else {
+      } else {
         title.innerHTML = restaurant.title_en;
       }
     }
@@ -304,7 +341,8 @@ const init = () => {
   getStops();
   getNearestCampus();
   makeSlides();
-  infoCarouselRight();
+  infoCarouselRefresh();
+  carouselTimer = setInterval(infoCarouselRight, 13000);
 };
 
 const refresh = () => {
