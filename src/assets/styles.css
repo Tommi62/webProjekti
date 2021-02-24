@@ -3,39 +3,7 @@
   --shadowColor: rgba(104, 104, 104, 0.75);
 }
 
-.fade-in {
-  animation: fadeIn ease 2s;
-  -webkit-animation: fadeIn ease 2s;
-  -moz-animation: fadeIn ease 2s;
-  -o-animation: fadeIn ease 2s;
-  -ms-animation: fadeIn ease 2s;
-  }
-  @keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-  }
-
-  @-moz-keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-  }
-
-  @-webkit-keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-  }
-
-  @-o-keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-  }
-
-  @-ms-keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
-  }
-
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -122,47 +90,39 @@
   max-width: 40rem;
 }
 
-.restaurant ul, .stop ul{
+.restaurant ul {
   list-style-type: none;
   padding: 1rem;
 }
 
-.restaurant h3{
+.restaurant h3 {
   margin-bottom: 1rem;
   text-align: center;
 }
 
-.menuItem{
+.menuItem {
   display: flex;
   justify-content: space-between;
 }
 
-.mealInfo{
+.mealInfo {
   display: flex;
 }
 
-.menuName{
+.menuName {
   max-width: 15rem;
   margin: 0.5rem;
 }
 
-.menuPrice{
+.menuPrice {
   margin: 0.5rem;
 }
 
-.menuCode{
+.menuCode {
   margin: 0.5rem;
 }
 
-.restaurant h3, .stop h3{
-  border-top-right-radius: 15px;
-  border-top-left-radius: 15px;
-  padding: 1rem;
-  background-color: var(--restBorders);
-  text-align: center;
-}
-
-.restaurant h3, .stop h3{
+.restaurant h3{
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
   padding: 1rem;
@@ -189,4 +149,43 @@
 
 .slide ul li {
   padding: 10px 0 0 0;
+}
+
+.stop h3 {
+  padding: 0.5rem 3rem 0.5rem 3rem;
+  background-color: var(--restBorders);
+  text-align: center;
+  outline: none;
+
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.stop {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1px;
+  box-shadow: 0px 4px 5px -3px var(--shadowColor);
+  -webkit-box-shadow: 0px 4px 5px -3px var(--shadowColor);
+  -moz-box-shadow: 0px 4px 5px -3px var(--shadowColor);
+  border: 1px solid var(--restBorders);
+  max-width: 40rem;
+}
+
+.stopList {
+  height: 0;
+  width: 100%;
+  transition: 0.5s;
+  overflow-y: hidden;
+  padding: 0 1rem 0 2rem;
+}
+
+.stopList li {
+  padding-top: 4px;
 }

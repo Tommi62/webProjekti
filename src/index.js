@@ -126,7 +126,7 @@ const makeSlides = () => {
 let carouselPosition = -1;
 
 const infoCarouselRight = () => {
-  if (carouselPosition < slides.length-1) {
+  if (carouselPosition < slides.length - 1) {
     infoContainer.innerHTML = "";
     carouselPosition++;
     infoContainer.appendChild(slides[carouselPosition]);
@@ -151,8 +151,8 @@ const infoCarouselLeft = () => {
 };
 
 const infoCarouselRefresh = () => {
-    infoContainer.innerHTML = "";
-    infoContainer.appendChild(slides[carouselPosition]);
+  infoContainer.innerHTML = "";
+  infoContainer.appendChild(slides[carouselPosition]);
 };
 
 carouselRight.addEventListener('click', infoCarouselRight);
@@ -212,19 +212,33 @@ const loadHSLData = async (id) => {
   const result = await HSLData.getRidesByStopId(id);
   const stop = result.data.stop;
   const stopElement = document.createElement('div');
+  const stopName = document.createElement('h3');
   const stopList = document.createElement('ul');
-  stopElement.className = 'stop';
+  stopList.classList.add('stopList');
 
+  stopElement.className = 'stop';
   if (language === 'fi') {
-    stopElement.innerHTML = `<h3>Seuraavat vuorot pysäkiltä ${stop.name}</h3>`;
+    stopName.innerHTML = `${stop.name}`;
+    stopElement.appendChild(stopName);
   } else {
-    stopElement.innerHTML = `<h3>Next shifts from the stop ${stop.name}</h3>`;
+    stopName.innerHTML = `${stop.name}`;
+    stopElement.appendChild(stopName);
   }
   for (const ride of stop.stoptimesWithoutPatterns) {
-    stopList.innerHTML += `<li>${ride.trip.routeShortName},
+    const li = document.createElement('li');
+    li.classList.add('timeTable');
+    li.innerHTML += `${ride.trip.routeShortName},
       ${ride.trip.tripHeadsign},
-      ${HSLData.formatTime(ride.scheduledDeparture)}</li>`;
+      ${HSLData.formatTime(ride.scheduledDeparture)}`;
+    stopList.appendChild(li);
   }
+  stopName.tabIndex = 0;
+  stopName.addEventListener('focus', () => {
+    stopList.style.height = '115px';
+  });
+  stopName.addEventListener('focusout', () => {
+    stopList.style.height = '0';
+  });
   stopElement.appendChild(stopList);
   document.querySelector('.hsl-data').appendChild(stopElement);
 };
@@ -241,23 +255,23 @@ const NoMenuFoundNotification = (message, name) => {
 const getNearestCampus = () => {
   let distances = [];
   getLocation()
-  .then((position) => {
-    const currentLatitude = position.coords.latitude;
-    const currentLongitude = position.coords.longitude;
-    for(const restaurant of restaurants){
-      const distance = getDistance(currentLatitude, currentLongitude, restaurant.lat, restaurant.long, 'K');
-      distances.push(distance);
-    }
-    const i = distances.indexOf(Math.min(...distances));
-    currentCampus = restaurants[i].name;
-    console.log('Ready ' + currentCampus);
-    getMenu();
-    getStops();
-  })
-  .catch((err) => {
-    console.error(err.message);
-    getMenu();
-  });
+    .then((position) => {
+      const currentLatitude = position.coords.latitude;
+      const currentLongitude = position.coords.longitude;
+      for (const restaurant of restaurants) {
+        const distance = getDistance(currentLatitude, currentLongitude, restaurant.lat, restaurant.long, 'K');
+        distances.push(distance);
+      }
+      const i = distances.indexOf(Math.min(...distances));
+      currentCampus = restaurants[i].name;
+      console.log('Ready ' + currentCampus);
+      getMenu();
+      getStops();
+    })
+    .catch((err) => {
+      console.error(err.message);
+      getMenu();
+    });
 };
 
 const getStops = async () => {
