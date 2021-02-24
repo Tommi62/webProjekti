@@ -6,16 +6,29 @@
     <link rel="stylesheet" href="assets/styles.css">
   </head>
   <body>
-    <button class="fi">fi</button>
-    <button class="en">en</button>
-    <button class="myyrmaki">Myyrmäki</button>
-    <button class="karamalmi">Karamalmi</button>
-    <button class="myllypuro">Myllypuro</button>
-    <button class="arabia">Arabia</button>
-    <button class="carouselRight">Right</button>
-    <button class="carouselLeft">Left</button>
-    <aside class="info"></aside>
+    <div class="navbar">
+      <div class="logo language">
+        <img src="./assets/Metropolia_Ammattikorkeakoulu_logo.svg" alt="Metropolia logo">
+        <button class="fi">fi</button>
+        <button class="en">en</button>
+      </div>
+      <div class="campuses">
+        <button class="myyrmaki">Myyrmäki</button>
+        <button class="karamalmi">Karamalmi</button>
+        <button class="myllypuro">Myllypuro</button>
+        <button class="arabia">Arabia</button>
+      </div>
+    </div>
+
     <main class="container fade-in">
+      <section class="banner">
+        <h1 class="title"></h1>
+      </section>
+      <div class="carouselDirection">
+        <button class="carouselLeft">Left</button>
+        <button class="carouselRight">Right</button>
+      </div>
+      <aside class="info"></aside>
       <section class="restaurant"></section>
       <section class="hsl-data"></section>
     </main>

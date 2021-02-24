@@ -7,6 +7,8 @@ import InfoData from './modules/info-data';
 
 const resContainer = document.querySelector('.restaurant');
 const infoContainer = document.querySelector('.info');
+const banner = document.querySelector('.banner');
+const title = document.querySelector('.title');
 const langFi = document.querySelector('.fi');
 const langEn = document.querySelector('.en');
 const myyrmaki = document.querySelector('.myyrmaki');
@@ -17,6 +19,8 @@ const carouselRight = document.querySelector('.carouselRight');
 const carouselLeft = document.querySelector('.carouselLeft');
 
 const restaurants = [{
+  title_fi: 'Myyrmäen kampus',
+  title_en: 'Myyrmäki campus',
   displayName: 'Myyrmäen Sodexo',
   name: 'myyrmaki',
   id: 152,
@@ -24,6 +28,8 @@ const restaurants = [{
   long: 24.8432836,
   type: SodexoData
 }, {
+  title_fi: 'Karamalmin kampus',
+  title_en: 'Karamalmi campus',
   displayName: 'Karaportin Fazer Food & Co',
   name: 'karamalmi',
   id: 270540,
@@ -31,6 +37,8 @@ const restaurants = [{
   long: 24.7559603,
   type: FazerData
 }, {
+  title_fi: 'Myllypuron kampus',
+  title_en: 'Myllypuro campus',
   displayName: 'Myllypuron Sodexo',
   name: 'myllypuro',
   id: 158,
@@ -38,6 +46,8 @@ const restaurants = [{
   long: 25.0761622,
   type: SodexoData
 }, {
+  title_fi: 'Arabian kampus',
+  title_en: 'Arabia campus',
   displayName: 'Arabian Sodexo',
   name: 'arabia',
   id: 158,
@@ -57,10 +67,11 @@ if ('serviceWorker' in navigator) {
 }
 
 const today = new Date().toISOString().split('T')[0];
-let currentCampus = 'arabia';
+let currentCampus = 'myllypuro';
 let language = 'fi';
 
 const getMenu = async () => {
+  updateUi();
   for (const restaurant of restaurants) {
     if (restaurant.name === currentCampus) {
       try {
@@ -256,6 +267,19 @@ const getStops = async () => {
       for (const stop of stops.data.stopsByRadius.edges) {
         const id = stop.node.stop.gtfsId;
         loadHSLData(id);
+      }
+    }
+  }
+};
+
+const updateUi = () => {
+  banner.style.backgroundImage = 'url("./assets/' + currentCampus +'.jpg")';
+  for(const restaurant of restaurants){
+    if(restaurant.name === currentCampus){
+      if(language === 'fi'){
+        title.innerHTML = restaurant.title_fi;
+      }else {
+        title.innerHTML = restaurant.title_en;
       }
     }
   }
