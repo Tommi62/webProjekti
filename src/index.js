@@ -289,7 +289,16 @@ const getStops = async () => {
 const updateUi = () => {
   banner.style.backgroundImage = 'url("./assets/' + currentCampus +'.jpg")';
   for(const restaurant of restaurants){
+    const campusButton = document.querySelector('.' + restaurant.name);
+    if(!campusButton.classList.contains('campus')){
+      campusButton.classList.add('campus');
+    }
+    if(campusButton.classList.contains('activeCampus')){
+      campusButton.classList.remove('activeCampus');
+    }
     if(restaurant.name === currentCampus){
+      campusButton.classList.remove('campus');
+      campusButton.classList.add('activeCampus');
       if(language === 'fi'){
         title.innerHTML = restaurant.title_fi;
       }else {
@@ -297,6 +306,19 @@ const updateUi = () => {
       }
     }
   }
+  let activeLanguageButton;
+  let inactiveLanguageButton;
+  if(language === 'fi'){
+    activeLanguageButton = document.querySelector('.fi');
+    inactiveLanguageButton = document.querySelector('.en');
+  }else{
+    activeLanguageButton = document.querySelector('.en');
+    inactiveLanguageButton = document.querySelector('.fi');
+  }
+  activeLanguageButton.classList.remove('notSelectedLanguage');
+  activeLanguageButton.classList.add('selectedLanguage');
+  inactiveLanguageButton.classList.remove('selectedLanguage');
+  inactiveLanguageButton.classList.add('notSelectedLanguage');
 };
 
 const init = () => {

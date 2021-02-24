@@ -21,12 +21,26 @@
   align-items: center;
 }
 
-.logo img{
+.logo a img{
   width: 9rem;
   margin: 1rem;
 }
 
-.language button, .campuses button {
+.activeCampus{
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  border: none;
+  background-color: #111;
+  color: white;
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 1rem;
+  cursor: pointer;
+}
+
+.campus{
   display: block;
   text-align: center;
   padding: 14px 16px;
@@ -36,9 +50,51 @@
   text-align: center;
   font-size: 1.5rem;
   margin: 1rem;
+  cursor: pointer;
 }
 
-.language button:hover, .campuses button:hover {
+.language button {
+  height: 2rem;
+  padding: 14px 16px;
+  text-decoration: none;
+  border: none;
+  background-color: white;
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 1rem;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position-y: center;
+}
+
+.notSelectedLanguage:hover{
+  width: 3rem;
+  background-size: 100%;
+  margin-right: 0;
+  box-shadow: 0px 0px 7px #111;
+}
+
+.selectedLanguage{
+  width: 3rem;
+  background-size: 100%;
+  margin-right: 0;
+  box-shadow: 0px 0px 7px #111;
+}
+
+.language button:focus{
+  outline: none;
+  border: none;
+}
+
+.fi{
+  background-image: url('finland.svg');
+}
+
+.en{
+  background-image: url('united-kingdom.svg');
+}
+
+.campuses button:hover {
   background-color: #111;
   color: white;
 }
@@ -46,6 +102,7 @@
 .language, .campuses {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .carouselDirection{
