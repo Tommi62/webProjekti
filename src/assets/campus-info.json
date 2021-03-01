@@ -18,7 +18,7 @@
         {
           "title_fi": "Aukioloajat",
           "title_en": "Opening Hours",
-          "text_fi": "Ma - pe  klo 7:30 - 21:00<b>HUOM. Ulko-ovet suljetaan klo 20:30.",
+          "text_fi": "Ma - pe  klo 7:30 - 21:00<br>HUOM. Ulko-ovet suljetaan klo 20:30.",
           "text_en": "Mon - Fri  7:30 - 21:00<br>NOTE: Exterior doors close at 8:30 p.m."
         },
         {
@@ -29,7 +29,7 @@
         },
         {
           "title_fi": "Kampuskoordinaattori",
-          "title_en": "Campus Coordinatori",
+          "title_en": "Campus Coordinator",
           "text_fi": "Suvi Ollikainen<br>040 147 7904<br>suvi.ollikainen@metropolia.fi",
           "text_en": "Suvi Ollikainen<br>040 147 7904<br>suvi.ollikainen@metropolia.fi"
         }
@@ -59,7 +59,7 @@
         {
           "title_fi": "Aukioloajat",
           "title_en": "Opening Hours",
-          "text_fi": "Ma - pe  klo 7:30 - 21:00<b>HUOM. Ulko-ovet suljetaan klo 20:30.",
+          "text_fi": "Ma - pe  klo 7:30 - 21:00<br>HUOM. Ulko-ovet suljetaan klo 20:30.",
           "text_en": "Mon - Fri  7:30 - 21:00<br>NOTE: Exterior doors close at 8:30 p.m."
         },
         {
@@ -88,7 +88,7 @@
         {
           "title_fi": "Aukioloajat",
           "title_en": "Opening Hours",
-          "text_fi": "Ma - pe  klo 7:30 - 21:00<b>HUOM. Ulko-ovet suljetaan klo 20:30.",
+          "text_fi": "Ma - pe  klo 7:30 - 21:00<br>HUOM. Ulko-ovet suljetaan klo 20:30.",
           "text_en": "Mon - Fri  7:30 - 21:00<br>NOTE: Exterior doors close at 8:30 p.m."
         },
         {
@@ -117,7 +117,7 @@
         {
           "title_fi": "Aukioloajat",
           "title_en": "Opening Hours",
-          "text_fi": "Ma - pe  klo 7:30 - 21:00<b>HUOM. Ulko-ovet suljetaan klo 20:30.",
+          "text_fi": "Ma - pe  klo 7:30 - 21:00<br>HUOM. Ulko-ovet suljetaan klo 20:30.",
           "text_en": "Mon - Fri  7:30 - 21:00<br>NOTE: Exterior doors close at 8:30 p.m."
         },
         {
@@ -128,7 +128,7 @@
         },
         {
           "title_fi": "Kampuskoordinaattori",
-          "title_en": "Campus Coordinatori",
+          "title_en": "Campus Coordinator",
           "text_fi": "Mira Simsiö<br>040 663 2329<br>mira.simsio@metropolia.fi",
           "text_en": "Mira Simsiö<br>040 663 2329<br>mira.simsio@metropolia.fi"
         }

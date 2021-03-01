@@ -17,6 +17,7 @@ const myllypuro = document.querySelector('.myllypuro');
 const arabia = document.querySelector('.arabia');
 const carouselRight = document.querySelector('.carouselRight');
 const carouselLeft = document.querySelector('.carouselLeft');
+const footer = document.querySelector('.footer');
 
 let carouselTimer;
 
@@ -323,8 +324,9 @@ const getStops = async () => {
   }
 };
 
-const getCampusInfo = (lang, campus) => {
+const createCampusInfo = (lang, campus) => {
   const data = parseCampusInfo(lang, campus);
+  footer.innerHTML = '';
   for(const object of data){
     const div = document.createElement('div');
     const h3 = document.createElement('h3');
@@ -333,11 +335,13 @@ const getCampusInfo = (lang, campus) => {
     p.innerHTML = object.text;
     div.appendChild(h3);
     div.appendChild(p);
+    footer.appendChild(div);
   }
   console.log('CampusInfo: ' + data);
 };
 
 const updateUi = () => {
+  createCampusInfo(language, currentCampus);
   banner.style.backgroundImage = 'url("./assets/' + currentCampus +'.jpg")';
   for(const restaurant of restaurants){
     const campusButton = document.querySelector('.' + restaurant.name);
@@ -379,7 +383,6 @@ const init = () => {
   makeSlides();
   infoCarouselRefresh();
   carouselTimer = setInterval(infoCarouselRight, 13000);
-  getCampusInfo(language, currentCampus);
 };
 
 const refresh = () => {
