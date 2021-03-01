@@ -20,6 +20,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto 200px;
   position: absolute;
   top: 28rem;
 }
@@ -33,11 +34,25 @@
 .col1 {
   grid-column-start: 4;
   grid-column-end: 9;
+  grid-row-start: 1;
+  grid-row-end: 2;
 }
 
 .col2 {
   grid-column-start: 9;
   grid-column-end: 13;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.footer {
+  grid-column-start: 1;
+  grid-column-end: 15;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  background-color: white;
+  width: 100%;
+  height: 100%;
 }
 
 .navbar {
@@ -258,10 +273,11 @@
 }
 
 .slide {
-  border: 1px solid black;
+  border: 1px solid #e9e9e9;
+  border-radius: 15px;
   margin: 10px;
   width: 100%;
-  padding: 5px;
+  padding: 20px;
   background-color: white;
   opacity: 0;
   transform: none;
@@ -280,6 +296,11 @@
 
 .slide h3 {
   text-align: center;
+  margin-bottom: 10px;
+}
+
+.slide h3:only-child {
+  margin: 0;
 }
 
 .carousel {
@@ -316,13 +337,13 @@
 .carouselLeft:hover {
   background: rgb(242,101,34);
   background: linear-gradient(90deg, rgba(242,101,34,0.8379552504595589) 0%, rgba(255,255,255,0) 100%);
-  opacity: 1;
+  opacity: 0.6;
 }
 
 .carouselRight:hover {
   background: rgb(255,255,255);
   background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(242,101,34,0.8379552504595589) 100%);
-  opacity: 1;
+  opacity: 0.6;
 }
 
 .arrowLeft {
@@ -368,6 +389,7 @@
 }
 
 .stopList {
+  background-color: white;
   height: 0;
   width: 100%;
   transition: 0.5s;
@@ -376,7 +398,7 @@
 }
 
 .stopList li {
-  padding-top: 4px;
+  padding-top: 10px;
 }
 
 @media only screen and (max-width: 830px) {
