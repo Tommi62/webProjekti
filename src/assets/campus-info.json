@@ -20,6 +20,117 @@
           "title_en": "Opening Hours",
           "text_fi": "Ma - pe  klo 7:30 - 21:00<b>HUOM. Ulko-ovet suljetaan klo 20:30.",
           "text_en": "Mon - Fri  7:30 - 21:00<br>NOTE: Exterior doors close at 8:30 p.m."
+        },
+        {
+          "title_fi": "Aulapalvelut",
+          "title_en": "Reception",
+          "text_fi": "040 545 1573<br>aulapalvelut.myyrmaki@metropolia.fi",
+          "text_en": "+358 40 545 1573<br>aulapalvelut.myyrmaki@metropolia.fi"
+        },
+        {
+          "title_fi": "Kampuskoordinaattori",
+          "title_en": "Campus Coordinatori",
+          "text_fi": "Suvi Ollikainen<br>040 147 7904<br>suvi.ollikainen@metropolia.fi",
+          "text_en": "Suvi Ollikainen<br>040 147 7904<br>suvi.ollikainen@metropolia.fi"
+        }
+      ]
+    },
+    {
+      "name": "karamalmi",
+      "data": [
+        {
+          "title_fi": "Käyntiosoite",
+          "title_en": "Visiting Address",
+          "text_fi": "Karaportti 2<br>02610 Espoo",
+          "text_en": "Karaportti 2<br>02610 Espoo<br>Finland"
+        },
+        {
+          "title_fi": "Pysäköinti",
+          "title_en": "Parking",
+          "text_fi": "Vieraspaikat sijaitsevat paikoitusalueella kiinteistön edessä.",
+          "text_en": "There are parking spaces reserved for visitors in front of the building."
+        },
+        {
+          "title_fi": "Postiosoite",
+          "title_en": "Postal Address",
+          "text_fi": "Metropolia Ammattikorkeakoulu<br>PL 4070<br>00079 Metropolia",
+          "text_en": "Metropolia<br>University of Applied Sciences<br>PL 4070<br>00079 Metropolia<br>FINLAND"
+        },
+        {
+          "title_fi": "Aukioloajat",
+          "title_en": "Opening Hours",
+          "text_fi": "Ma - pe  klo 7:30 - 21:00<b>HUOM. Ulko-ovet suljetaan klo 20:30.",
+          "text_en": "Mon - Fri  7:30 - 21:00<br>NOTE: Exterior doors close at 8:30 p.m."
+        },
+        {
+          "title_fi": "Aulapalvelut",
+          "title_en": "Reception",
+          "text_fi": "040 545 1572<br>aulapalvelut.karamalmi@metropolia.fi",
+          "text_en": "+358 40 545 1572<br>aulapalvelut.karamalmi@metropolia.fi"
+        }
+      ]
+    },
+    {
+      "name": "myllypuro",
+      "data": [
+        {
+          "title_fi": "Käyntiosoite",
+          "title_en": "Visiting Address",
+          "text_fi": "Myllypurontie 1<br>00920 Helsinki",
+          "text_en": "Myllypurontie 1<br>00920 Helsinki<br>Finland"
+        },
+        {
+          "title_fi": "Postiosoite",
+          "title_en": "Postal Address",
+          "text_fi": "Metropolia Ammattikorkeakoulu<br>PL 4000<br>00079 Metropolia",
+          "text_en": "Metropolia<br>University of Applied Sciences<br>PL 4000<br>00079 Metropolia<br>FINLAND"
+        },
+        {
+          "title_fi": "Aukioloajat",
+          "title_en": "Opening Hours",
+          "text_fi": "Ma - pe  klo 7:30 - 21:00<b>HUOM. Ulko-ovet suljetaan klo 20:30.",
+          "text_en": "Mon - Fri  7:30 - 21:00<br>NOTE: Exterior doors close at 8:30 p.m."
+        },
+        {
+          "title_fi": "Aulapalvelut",
+          "title_en": "Reception",
+          "text_fi": "040 193 7758<br>aulapalvelut.myllypuro@metropolia.fi",
+          "text_en": "+358 40 193 7758<br>aulapalvelut.myllypuro@metropolia.fi"
+        }
+      ]
+    },
+    {
+      "name": "arabia",
+      "data": [
+        {
+          "title_fi": "Käyntiosoite",
+          "title_en": "Visiting Address",
+          "text_fi": "Hämeentie 135 D<br>00560 Helsinki",
+          "text_en": "Hämeentie 135 D<br>00560 Helsinki<br>Finland"
+        },
+        {
+          "title_fi": "Postiosoite",
+          "title_en": "Postal Address",
+          "text_fi": "Metropolia Ammattikorkeakoulu<br>PL 4072<br>00079 Metropolia",
+          "text_en": "Metropolia<br>University of Applied Sciences<br>PL 4072<br>00079 Metropolia<br>FINLAND"
+        },
+        {
+          "title_fi": "Aukioloajat",
+          "title_en": "Opening Hours",
+          "text_fi": "Ma - pe  klo 7:30 - 21:00<b>HUOM. Ulko-ovet suljetaan klo 20:30.",
+          "text_en": "Mon - Fri  7:30 - 21:00<br>NOTE: Exterior doors close at 8:30 p.m."
+        },
+        {
+          "title_fi": "Aulapalvelut",
+          "title_en": "Reception",
+          "text_fi": "040 579 8403<br>aulapalvelut.arabia@metropolia.fi",
+          "text_en": "+358 40 579 8403<br>aulapalvelut.arabia@metropolia.fi"
+        },
+        {
+          "title_fi": "Kampuskoordinaattori",
+          "title_en": "Campus Coordinatori",
+          "text_fi": "Mira Simsiö<br>040 663 2329<br>mira.simsio@metropolia.fi",
+          "text_en": "Mira Simsiö<br>040 663 2329<br>mira.simsio@metropolia.fi"
         }
       ]
     }

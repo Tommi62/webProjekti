@@ -2,7 +2,7 @@ import SodexoData from './modules/sodexo-data';
 import FazerData from './modules/fazer-data';
 import { getLocation, getDistance } from './modules/calculate-distance';
 import HSLData from './modules/hsl-data';
-import InfoData from './modules/info-data';
+import {parseInfo, parseCampusInfo} from './modules/info-data';
 
 
 const resContainer = document.querySelector('.restaurant');
@@ -103,7 +103,7 @@ let slides = [];
 const makeSlides = () => {
   slides.splice(0, slides.length);
   infoContainer.innerHTML = "";
-  const data = InfoData.parseInfo(language);
+  const data = parseInfo(language);
   for (const set of data) {
     const slide = document.createElement('div');
     slide.className = 'slide';
@@ -323,6 +323,14 @@ const getStops = async () => {
   }
 };
 
+const getCampusInfo = (lang, campus) => {
+  const data = parseCampusInfo(lang, campus);
+  for(const object of data){
+    console.log('DataObject: ' + object.title);
+  }
+  console.log('CampusInfo: ' + data);
+};
+
 const updateUi = () => {
   banner.style.backgroundImage = 'url("./assets/' + currentCampus +'.jpg")';
   for(const restaurant of restaurants){
@@ -365,6 +373,7 @@ const init = () => {
   makeSlides();
   infoCarouselRefresh();
   carouselTimer = setInterval(infoCarouselRight, 13000);
+  getCampusInfo(language, currentCampus);
 };
 
 const refresh = () => {
