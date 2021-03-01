@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mukta:wght@800&family=Work+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
     <div class="navbar">
       <div class="logo language">
-        <a href="index.html"><img src="./assets/Metropolia_Ammattikorkeakoulu_logo.svg" alt="Metropolia logo"></a>
+        <a href="index.html"
+          ><img
+            src="./assets/Metropolia_Ammattikorkeakoulu_logo.svg"
+            alt="Metropolia logo"
+        /></a>
         <button class="fi"></button>
         <button class="en"></button>
       </div>
@@ -23,16 +30,32 @@
     </div>
 
     <main class="container fade-in">
-      <section class="banner">
+      <div class="gridRel">
+        <section class="banner">
+        </section>
         <h1 class="title"></h1>
-      </section>
-      <div class="carouselDirection">
-        <button class="carouselLeft">Left</button>
-        <button class="carouselRight">Right</button>
+        <div class="grid">
+          <div class="col col1">
+            <div class="carousel">
+              <div class="carouselDirection">
+                <div class="carouselLeft">
+                  <img class="arrowLeft" src="./assets/back.svg" alt="" />
+                </div>
+                <div class="carouselRight">
+                  <img class="arrowRight" src="./assets/back.svg" alt="" />
+                </div>
+              </div>
+              <aside class="info colPadding"></aside>
+            </div>
+            <div class="colPadding">
+              <section class="restaurant"></section>
+            </div>
+          </div>
+          <div class="col col2">
+            <section class="hsl-data"></section>
+          </div>
+        </div>
       </div>
-      <aside class="info"></aside>
-      <section class="restaurant"></section>
-      <section class="hsl-data"></section>
     </main>
   </body>
 </html>
