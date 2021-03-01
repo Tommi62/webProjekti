@@ -19,6 +19,19 @@ const carouselRight = document.querySelector('.carouselRight');
 const carouselLeft = document.querySelector('.carouselLeft');
 
 let carouselTimer;
+let dateTimer;
+let secondsFromMidnight;
+
+const setTime = () => {
+  const now = new Date();
+  const then = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    0, 0, 0);
+  secondsFromMidnight = Math.round((now.getTime() - then.getTime()) / 1000);
+  console.log('seconds from midnight: ' + secondsFromMidnight);
+};
 
 const restaurants = [{
   title_fi: 'Myyrmäen kampus',
@@ -264,14 +277,16 @@ const loadHSLData = async (id) => {
   for (const ride of stop.stoptimesWithoutPatterns) {
     const li = document.createElement('li');
     li.classList.add('timeTable');
-    li.innerHTML += `${ride.trip.routeShortName},
-      ${ride.trip.tripHeadsign},
-      ${HSLData.formatTime(ride.scheduledDeparture)}`;
+    const departure = ride.scheduledDeparture - secondsFromMidnight;
+    li.innerHTML += `
+    <div class="time">${HSLData.formatTime(departure)}</div>
+    <div class="bus">${ride.trip.routeShortName}</div>
+    <div class="destination">${ride.trip.tripHeadsign}</div>`;
     stopList.appendChild(li);
   }
   stopName.tabIndex = 0;
   stopName.addEventListener('focus', () => {
-    stopList.style.height = '155px';
+    stopList.style.height = '195px';
   });
   stopName.addEventListener('focusout', () => {
     stopList.style.height = '0';
@@ -324,19 +339,19 @@ const getStops = async () => {
 };
 
 const updateUi = () => {
-  banner.style.backgroundImage = 'url("./assets/' + currentCampus +'.jpg")';
-  for(const restaurant of restaurants){
+  banner.style.backgroundImage = 'url("./assets/' + currentCampus + '.jpg")';
+  for (const restaurant of restaurants) {
     const campusButton = document.querySelector('.' + restaurant.name);
-    if(!campusButton.classList.contains('campus')){
+    if (!campusButton.classList.contains('campus')) {
       campusButton.classList.add('campus');
     }
-    if(campusButton.classList.contains('activeCampus')){
+    if (campusButton.classList.contains('activeCampus')) {
       campusButton.classList.remove('activeCampus');
     }
-    if(restaurant.name === currentCampus){
+    if (restaurant.name === currentCampus) {
       campusButton.classList.remove('campus');
       campusButton.classList.add('activeCampus');
-      if(language === 'fi'){
+      if (language === 'fi') {
         title.innerHTML = restaurant.title_fi;
       } else {
         title.innerHTML = restaurant.title_en;
@@ -345,10 +360,10 @@ const updateUi = () => {
   }
   let activeLanguageButton;
   let inactiveLanguageButton;
-  if(language === 'fi'){
+  if (language === 'fi') {
     activeLanguageButton = document.querySelector('.fi');
     inactiveLanguageButton = document.querySelector('.en');
-  }else{
+  } else {
     activeLanguageButton = document.querySelector('.en');
     inactiveLanguageButton = document.querySelector('.fi');
   }
@@ -359,12 +374,15 @@ const updateUi = () => {
 };
 
 const init = () => {
+  setTime();
   getMenu();
   getStops();
   getNearestCampus();
   makeSlides();
   infoCarouselRefresh();
   carouselTimer = setInterval(infoCarouselRight, 13000);
+  dateTimer = setInterval(setTime, 60000);
+  const refreshStops = setInterval(getStops, 60000);
 };
 
 const refresh = () => {

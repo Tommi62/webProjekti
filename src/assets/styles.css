@@ -394,11 +394,37 @@
   width: 100%;
   transition: 0.5s;
   overflow-y: hidden;
-  padding: 0 1rem 0 2rem;
+}
+
+.timeTable {
+  display: flex;
+
+}
+
+.time {
+  width: 50px;
+  text-align: center;
+  border-radius: 5px;
+  color: green;
+  border: 1px solid green;
+  padding: 3px;
+}
+
+.bus {
+  color: blue;
+  width: 50px;
+  text-align: end;
+  padding: 3px;
+  padding-left: 10px;
+}
+
+.destination {
+  padding: 3px;
 }
 
 .stopList li {
   padding-top: 10px;
+  padding-left: 10px;
 }
 
 @media only screen and (max-width: 830px) {
