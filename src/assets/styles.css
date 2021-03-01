@@ -1,12 +1,14 @@
 :root {
   --restBorders: rgb(233, 233, 233);
   --shadowColor: rgba(104, 104, 104, 0.75);
+  --orange: #f26522;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .navbar {
@@ -32,12 +34,13 @@
   padding: 14px 16px;
   text-decoration: none;
   border: none;
-  background-color: #111;
+  background-color: var(--orange);
   color: white;
   text-align: center;
   font-size: 1.5rem;
   margin: 1rem;
   cursor: pointer;
+  border-radius: 0.3rem;
 }
 
 .campus{
@@ -78,7 +81,7 @@
   width: 3rem;
   background-size: 100%;
   margin-right: 0;
-  box-shadow: 0px 0px 7px #111;
+  box-shadow: 0px 0px 7px var(--orange);
 }
 
 .language button:focus{
@@ -95,14 +98,24 @@
 }
 
 .campuses button:hover {
-  background-color: #111;
+  background-color: var(--orange);
   color: white;
+  border-radius: 0.3rem;
+}
+
+.campuses button:focus{
+  border: none;
+  outline: none;
 }
 
 .language, .campuses {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.logo a{
+  margin-top: 0.2rem;
 }
 
 .carouselDirection{
@@ -128,10 +141,11 @@
 }
 
 .banner h1{
-  font-size: 5rem;
+  font-size: 6rem;
   color: white;
-  font-weight: bold;
   text-shadow: 0px 0px 10px black;
+  font-family: 'Mukta', sans-serif;
+  font-weight: 800;
 }
 
 .restaurant {

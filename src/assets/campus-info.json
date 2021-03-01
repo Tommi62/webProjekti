@@ -1,0 +1,27 @@
+{
+  "info":[
+    {
+      "name": "myyrmaki",
+      "data": [
+        {
+          "title_fi": "Käyntiosoite",
+          "title_en": "Visiting Address",
+          "text_fi": "Leiritie 1,<br>01600 Myyrmäki, Vantaa",
+          "text_en": "Leiritie 1<br>01600 Vantaa<br>Finland"
+        },
+        {
+          "title_fi": "Postiosoite",
+          "title_en": "Postal Address",
+          "text_fi": "Metropolia Ammattikorkeakoulu<br>PL 4071<br>00079 Metropolia",
+          "text_en": "Metropolia<br>University of Applied Sciences<br>PL 4071<br>00079 Metropolia<br>FINLAND"
+        },
+        {
+          "title_fi": "Aukioloajat",
+          "title_en": "Opening Hours",
+          "text_fi": "Ma - pe  klo 7:30 - 21:00<b>HUOM. Ulko-ovet suljetaan klo 20:30.",
+          "text_en": "Mon - Fri  7:30 - 21:00<br>NOTE: Exterior doors close at 8:30 p.m."
+        }
+      ]
+    }
+  ]
+}
