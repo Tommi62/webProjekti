@@ -11,6 +11,35 @@
   font-family: 'Work Sans', sans-serif;
 }
 
+.gridRel {
+  position: relative;
+  width: 100%;
+}
+
+.grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  position: absolute;
+  top: 28rem;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.col1 {
+  grid-column-start: 4;
+  grid-column-end: 9;
+}
+
+.col2 {
+  grid-column-start: 9;
+  grid-column-end: 13;
+}
+
 .navbar {
   list-style-type: none;
   margin: 0;
@@ -21,6 +50,11 @@
   justify-content: space-between;
   height: 5rem;
   align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 20;
+  background-color: white;
 }
 
 .logo a img{
@@ -119,7 +153,6 @@
 }
 
 .carouselDirection{
-  margin: auto;
   width: 5rem;
   text-align: center;
 }
@@ -135,30 +168,39 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-position-y: center;
   width: 100%;
-  height: 60vh;
+  height: 100vh;
+  background-size:     cover;
+  background-repeat:   no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  position: fixed;
 }
 
-.banner h1{
-  font-size: 6rem;
+.title{
+  font-size: 5rem;
   color: white;
   text-shadow: 0px 0px 10px black;
   font-family: 'Mukta', sans-serif;
   font-weight: 800;
+  text-align: center;
+  position: absolute;
+  top: 18rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .restaurant {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 2rem;
   box-shadow: 0px 4px 5px -3px var(--shadowColor);
   -webkit-box-shadow: 0px 4px 5px -3px var(--shadowColor);
   -moz-box-shadow: 0px 4px 5px -3px var(--shadowColor);
   border-radius: 15px;
   border: 1px solid var(--restBorders);
-  max-width: 40rem;
+  width: 100%;
+  background-color: white;
 }
 
 .restaurant ul {
@@ -206,15 +248,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 280px;
-  width: 340px;
+  min-height: 280px;
+  width: 100%;
+}
+
+.colPadding {
+  width: 100%;
+  padding: 20px;
 }
 
 .slide {
   border: 1px solid black;
   margin: 10px;
-  max-width: 20rem;
+  width: 100%;
   padding: 5px;
+  background-color: white;
   opacity: 0;
   transform: none;
   transition: .25s ease-in-out;
@@ -228,6 +276,70 @@
 
 .slide ul li {
   padding: 10px 0 0 0;
+}
+
+.slide h3 {
+  text-align: center;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+}
+
+.carouselLeft {
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  height: 100%;
+  width: 3rem;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.carouselRight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  height: 100%;
+  width: 3rem;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.carouselLeft:hover {
+  background: rgb(242,101,34);
+  background: linear-gradient(90deg, rgba(242,101,34,0.8379552504595589) 0%, rgba(255,255,255,0) 100%);
+  opacity: 1;
+}
+
+.carouselRight:hover {
+  background: rgb(255,255,255);
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(242,101,34,0.8379552504595589) 100%);
+  opacity: 1;
+}
+
+.arrowLeft {
+  width: 15px;
+  height: 15px;
+  transform: translate(0%, -50%);
+}
+
+.arrowRight {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1) translate(0%, -50%);
+  width: 15px;
+  height: 15px;
+}
+
+.hsl-data {
+  margin-top: 4rem;
 }
 
 .stop h3 {
@@ -253,7 +365,6 @@
   -webkit-box-shadow: 0px 4px 5px -3px var(--shadowColor);
   -moz-box-shadow: 0px 4px 5px -3px var(--shadowColor);
   border: 1px solid var(--restBorders);
-  max-width: 40rem;
 }
 
 .stopList {
@@ -266,4 +377,24 @@
 
 .stopList li {
   padding-top: 4px;
+}
+
+@media only screen and (max-width: 830px) {
+  .grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+
+  .col {
+    align-items: center;
+  }
+
+  .col1 {
+    grid-column-start: 2;
+    grid-column-end: 8;
+  }
+
+  .col2 {
+    grid-column-start: 9;
+    grid-column-end: 15;
+  }
 }
