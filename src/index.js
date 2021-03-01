@@ -326,7 +326,13 @@ const getStops = async () => {
 const getCampusInfo = (lang, campus) => {
   const data = parseCampusInfo(lang, campus);
   for(const object of data){
-    console.log('DataObject: ' + object.title);
+    const div = document.createElement('div');
+    const h3 = document.createElement('h3');
+    const p = document.createElement('p');
+    h3.innerHTML = object.title;
+    p.innerHTML = object.text;
+    div.appendChild(h3);
+    div.appendChild(p);
   }
   console.log('CampusInfo: ' + data);
 };
