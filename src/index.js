@@ -129,10 +129,10 @@ const changeSlide = (direction) => {
   let slide = document.querySelector('.slide');
   slide.style.opacity = '0';
   if (direction === 'right') {
-    slide.style.transform = 'rotate(-0.02turn) scale(0.9) translate(-50%, 0%)';
+    slide.style.transform = ' scale(0.9) translate(-20%, 0%)';
   }
   if (direction === 'left') {
-    slide.style.transform = 'rotate(0.02turn) scale(0.9) translate(50%, 0%)';
+    slide.style.transform = ' scale(0.9) translate(20%, 0%)';
   }
   setTimeout(function () {
     slide.style.transform = 'none';
@@ -140,10 +140,10 @@ const changeSlide = (direction) => {
     infoContainer.appendChild(slides[carouselPosition]);
     slide = slides[carouselPosition];
     if (direction === 'right') {
-      slide.style.transform = 'rotate(0.02turn) scale(0.9) translate(50%, 0%)';
+      slide.style.transform = ' scale(0.9) translate(20%, 0%)';
     }
     if (direction === 'left') {
-      slide.style.transform = 'rotate(-0.02turn) scale(0.9) translate(-50%, 0%)';
+      slide.style.transform = ' scale(0.9) translate(-20%, 0%)';
     }
     setTimeout(function () {
       slide = document.querySelector('.slide');
@@ -271,7 +271,7 @@ const loadHSLData = async (id) => {
   }
   stopName.tabIndex = 0;
   stopName.addEventListener('focus', () => {
-    stopList.style.height = '115px';
+    stopList.style.height = '155px';
   });
   stopName.addEventListener('focusout', () => {
     stopList.style.height = '0';
