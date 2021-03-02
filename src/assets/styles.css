@@ -99,6 +99,11 @@ footer div:nth-child(2) h3 {
   background-color: white;
 }
 
+.navbar .icon{
+  display: none;
+  color: var(--orange);
+}
+
 .logo a img{
   width: 8rem;
   margin: 1rem 3rem 1rem 1.5rem;
@@ -467,25 +472,5 @@ footer div:nth-child(2) h3 {
 .stopList li {
   padding-top: 10px;
   padding-left: 10px;
-}
-
-@media only screen and (max-width: 830px) {
-  .grid {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  }
-
-  .col {
-    align-items: center;
-  }
-
-  .col1 {
-    grid-column-start: 2;
-    grid-column-end: 8;
-  }
-
-  .col2 {
-    grid-column-start: 9;
-    grid-column-end: 15;
-  }
 }
 

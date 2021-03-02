@@ -22,6 +22,7 @@ const footer = document.querySelector('.footer');
 let carouselTimer;
 let dateTimer;
 let secondsFromMidnight;
+let menuOpened = false;
 
 const setTime = () => {
   const now = new Date();
@@ -428,21 +429,50 @@ langEn.addEventListener('click', () => {
 myyrmaki.addEventListener('click', () => {
   currentCampus = 'myyrmaki';
   refresh();
+  if(menuOpened){
+    changeNavBar();
+  }
 });
 
 karamalmi.addEventListener('click', () => {
   currentCampus = 'karamalmi';
   refresh();
+  if(menuOpened){
+    changeNavBar();
+  }
 });
 
 myllypuro.addEventListener('click', () => {
   currentCampus = 'myllypuro';
   refresh();
+  if(menuOpened){
+    changeNavBar();
+  }
 });
 
 arabia.addEventListener('click', () => {
   currentCampus = 'arabia';
   refresh();
+  if(menuOpened){
+    changeNavBar();
+  }
+});
+
+const changeNavBar = () => {
+  let x = document.querySelector('.navbar');
+  if (x.className === "navbar") {
+    x.className += " responsive";
+    menuOpened = true;
+  } else {
+    x.className = "navbar";
+    menuOpened = false;
+  }
+};
+
+const navIcon = document.querySelector('.icon');
+navIcon.addEventListener('click', () => {
+  console.log('Click');
+  changeNavBar();
 });
 
 
