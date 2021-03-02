@@ -8,7 +8,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Work Sans', sans-serif;
+  font-family: "Work Sans", sans-serif;
 }
 
 .gridRel {
@@ -55,7 +55,7 @@
   height: 100%;
 }
 
-footer{
+footer {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -99,12 +99,12 @@ footer div:nth-child(2) h3 {
   background-color: white;
 }
 
-.logo a img{
+.logo a img {
   width: 8rem;
   margin: 1rem 3rem 1rem 1.5rem;
 }
 
-.activeCampus{
+.activeCampus {
   display: block;
   text-align: center;
   padding: 14px 16px;
@@ -119,7 +119,7 @@ footer div:nth-child(2) h3 {
   border-radius: 0.3rem;
 }
 
-.campus{
+.campus {
   display: block;
   text-align: center;
   padding: 14px 16px;
@@ -149,36 +149,38 @@ footer div:nth-child(2) h3 {
 }
 
 .notSelectedLanguage {
- width: 1.5rem;
- transition: 0.2s;
- border-radius: 3px;
+  width: 1.5rem;
+  transition: 0.2s;
+  border-radius: 3px;
 }
 
-.notSelectedLanguage:hover{
+.notSelectedLanguage:hover {
   width: 3rem;
   background-size: 100%;
   margin-right: 0;
 }
 
-.selectedLanguage{
+.selectedLanguage {
   width: 3rem;
   background-size: 100%;
   margin-right: 0;
-  -webkit-box-shadow: 0px 10px 13px -7px var(--orange), 5px 5px 15px 5px rgba(0,0,0,0);
-  box-shadow: 0px 10px 13px -7px var(--orange), 5px 5px 15px 5px rgba(0,0,0,0);
+  -webkit-box-shadow: 0px 10px 13px -7px var(--orange),
+    5px 5px 15px 5px rgba(0, 0, 0, 0);
+  box-shadow: 0px 10px 13px -7px var(--orange),
+    5px 5px 15px 5px rgba(0, 0, 0, 0);
 }
 
-.language button:focus{
+.language button:focus {
   outline: none;
   border: none;
 }
 
-.fi{
-  background-image: url('finland.svg');
+.fi {
+  background-image: url("finland.svg");
 }
 
-.en{
-  background-image: url('united-kingdom.svg');
+.en {
+  background-image: url("united-kingdom.svg");
 }
 
 .campuses button:hover {
@@ -187,51 +189,52 @@ footer div:nth-child(2) h3 {
   border-radius: 0.3rem;
 }
 
-.campuses button:focus{
+.campuses button:focus {
   border: none;
   outline: none;
 }
 
-.language, .campuses {
+.language,
+.campuses {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.logo a{
+.logo a {
   margin-top: 0.2rem;
 }
 
-.carouselDirection{
+.carouselDirection {
   width: 5rem;
   text-align: center;
 }
 
-.container{
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.banner{
+.banner {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100vh;
-  background-size:     cover;
-  background-repeat:   no-repeat;
+  background-size: cover;
+  background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
   position: fixed;
 }
 
-.title{
+.title {
   font-size: 5rem;
   color: white;
   text-shadow: 0px 0px 10px black;
-  font-family: 'Mukta', sans-serif;
+  font-family: "Mukta", sans-serif;
   font-weight: 800;
   text-align: center;
   position: absolute;
@@ -290,7 +293,7 @@ footer div:nth-child(2) h3 {
   margin: 0.5rem;
 }
 
-.restaurant h3{
+.restaurant h3 {
   border-top-right-radius: 13px;
   border-top-left-radius: 13px;
   padding: 1rem;
@@ -322,9 +325,9 @@ footer div:nth-child(2) h3 {
   background-color: white;
   opacity: 0;
   transform: none;
-  transition: .25s ease-in-out;
-  -moz-transition: .25s ease-in-out;
-  -webkit-transition: .25s ease-in-out;
+  transition: 0.25s ease-in-out;
+  -moz-transition: 0.25s ease-in-out;
+  -webkit-transition: 0.25s ease-in-out;
 }
 
 .slide ul {
@@ -376,14 +379,22 @@ footer div:nth-child(2) h3 {
 }
 
 .carouselLeft:hover {
-  background: rgb(242,101,34);
-  background: linear-gradient(90deg, rgba(242,101,34,0.8379552504595589) 0%, rgba(255,255,255,0) 100%);
+  background: rgb(242, 101, 34);
+  background: linear-gradient(
+    90deg,
+    rgba(242, 101, 34, 0.8379552504595589) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
   opacity: 0.6;
 }
 
 .carouselRight:hover {
-  background: rgb(255,255,255);
-  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(242,101,34,0.8379552504595589) 100%);
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(242, 101, 34, 0.8379552504595589) 100%
+  );
   opacity: 0.6;
 }
 
@@ -409,13 +420,15 @@ footer div:nth-child(2) h3 {
   background-color: var(--restBorders);
   text-align: center;
   outline: none;
+  font-size: 1rem;
+  font-weight: 100;
 
   -webkit-touch-callout: none;
-    -webkit-user-select: none;
-     -khtml-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .stop {
@@ -430,6 +443,45 @@ footer div:nth-child(2) h3 {
   border: 1px solid var(--restBorders);
 }
 
+.busStop h3 {
+  background-color: white;
+  color: #007ac9;
+}
+
+.busStop h3:focus + ul {
+  border-top: 1px solid #007ac9;
+}
+
+.busStop .bus {
+  color: #007ac9;
+}
+
+.metroStop h3 {
+  background-color: white;
+  color: #f26522;
+}
+
+.metroStop h3:focus + ul {
+  border-top: 1px solid #f26522;
+}
+
+.metroStop .bus {
+  color: #f26522;
+}
+
+.trainStop h3 {
+  background-color: white;
+  color: #8c4799;
+}
+
+.trainStop h3:focus + ul {
+  border-top: 1px solid #8c4799;
+}
+
+.trainStop .bus {
+  color: #8c4799;
+}
+
 .stopList {
   background-color: white;
   height: 0;
@@ -440,34 +492,51 @@ footer div:nth-child(2) h3 {
 
 .timeTable {
   display: flex;
-
 }
 
 .time {
-  width: 50px;
+  width: 75px;
   text-align: center;
   border-radius: 5px;
-  color: #009B72;
-  border: 1px solid #009B72;
+  color: #009b72;
+  border: 1px solid #009b72;
   padding: 3px;
 }
 
 .bus {
-  color: #0D3B66;
+  color: #0d3b66;
   width: 50px;
   text-align: end;
   padding: 3px;
   padding-left: 10px;
+  font-size: 1.1rem;
 }
 
 .destination {
   padding: 3px;
+  padding-right: 10px;
 }
 
 .stopList li {
   padding-top: 10px;
   padding-left: 10px;
 }
+
+/*
+  .col2 {
+    grid-column-start: 9;
+    grid-column-end: 15;
+  }
+
+  .footer {
+    grid-column-end: 16;
+    height: 400px;
+  }
+
+  footer {
+    flex-direction: column;
+  }
+*/
 
 @media only screen and (max-width: 830px) {
   .grid {
@@ -482,10 +551,4 @@ footer div:nth-child(2) h3 {
     grid-column-start: 2;
     grid-column-end: 8;
   }
-
-  .col2 {
-    grid-column-start: 9;
-    grid-column-end: 15;
-  }
 }
-

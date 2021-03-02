@@ -29,6 +29,26 @@ const getRidesByStopId = async (id) => {
 
 };
 
+const getStationsByName = async (name) => {
+  const query = `{
+    stations(name: "${name}") {
+      gtfsId
+      name
+      lat
+      lon
+      stops {
+        gtfsId
+        name
+        code
+        platformCode
+      }
+    }
+  }`;
+  // TODO: add try-catch error handling
+  return await fetchPostJson(apiUrl, 'application/graphql', query);
+
+};
+
 const getStopsByLocation = async (lat, lon) => {
   const query = `{
     stopsByRadius(lat:${lat}, lon:${lon}, radius:500) {
@@ -60,5 +80,5 @@ const formatTime = (seconds) => {
   return `${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
 };
 
-const HSLData = {getRidesByStopId, getStopsByLocation, formatTime};
+const HSLData = {getRidesByStopId, getStopsByLocation, getStationsByName, formatTime};
 export default HSLData;
