@@ -1,6 +1,6 @@
 .grid {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: auto auto 400px;
+  grid-template-rows: auto 400px;
 }
 
 .col {
@@ -85,3 +85,4 @@ footer div {
   padding: 10px 0px;
   overflow-wrap: break-word;
 }
+
