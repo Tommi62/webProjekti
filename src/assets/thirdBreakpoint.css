@@ -1,0 +1,11 @@
+.fi, .en{
+  display: none;
+}
+
+.navbar.responsive .language{
+  flex-direction: column;
+}
+
+.navbar.responsive .fi, .navbar.responsive .en{
+  display: block;
+}
