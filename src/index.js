@@ -2,7 +2,7 @@ import SodexoData from './modules/sodexo-data';
 import FazerData from './modules/fazer-data';
 import { getLocation, getDistance } from './modules/calculate-distance';
 import HSLData from './modules/hsl-data';
-import {parseInfo, parseCampusInfo} from './modules/info-data';
+import { parseInfo, parseCampusInfo } from './modules/info-data';
 
 
 const resContainer = document.querySelector('.restaurant');
@@ -259,8 +259,25 @@ const renderSodexoMenu = (data, name) => {
   resContainer.appendChild(menuContainer);
 };
 
+const isNumeric = (str) => {
+  if (typeof str != "string") return false;
+  return !isNaN(str) && !isNaN(parseFloat(str));
+};
+
+const timeString = (seconds) => {
+  let minutes = Math.floor(seconds/60);
+  let time = '';
+  if (minutes >= 60) {
+    let hours = Math.floor(minutes/60);
+    time = hours + 'h' + (minutes-(hours*60)) + 'min';
+    console.log((minutes-(hours*60))+' hours * 60 = '+(hours*60)+' hours:'+ hours +' minutes:'+minutes);
+  } else {
+    time = minutes + 'min';
+  }
+  return time;
+};
+
 const loadHSLData = async (id) => {
-  document.querySelector('.hsl-data').innerHTML = '';
   const result = await HSLData.getRidesByStopId(id);
   const stop = result.data.stop;
   const stopElement = document.createElement('div');
@@ -276,15 +293,31 @@ const loadHSLData = async (id) => {
     stopName.innerHTML = `${stop.name}`;
     stopElement.appendChild(stopName);
   }
+  const isBusMetroTrain = stop.stoptimesWithoutPatterns[0].trip.routeShortName;
+  let stopCategory = "";
+  if (isNumeric(isBusMetroTrain.charAt(0))) {
+    stopCategory = 'bus';
+    stopElement.classList.add('busStop');
+  } else if (isBusMetroTrain.length === 1) {
+    stopCategory = 'train';
+    stopElement.classList.add('trainStop');
+  } else if (isBusMetroTrain.length === 2) {
+    stopCategory = 'metro';
+    stopElement.classList.add('metroStop');
+  }
   for (const ride of stop.stoptimesWithoutPatterns) {
+    const departureSeconds = ride.scheduledDeparture - secondsFromMidnight;
+    const departureTime =  timeString(departureSeconds);
+    console.log( ride.trip.tripHeadsign+' '+departureSeconds+' '+ride.scheduledDeparture+ ' ' + secondsFromMidnight + ' ' +HSLData.formatTime(ride.scheduledDeparture));
+    if (departureSeconds >= 0){
     const li = document.createElement('li');
     li.classList.add('timeTable');
-    const departure = ride.scheduledDeparture - secondsFromMidnight;
     li.innerHTML += `
-    <div class="time">${HSLData.formatTime(departure)}</div>
+    <div class="time">${departureTime}</div>
     <div class="bus">${ride.trip.routeShortName}</div>
     <div class="destination">${ride.trip.tripHeadsign}</div>`;
     stopList.appendChild(li);
+    }
   }
   stopName.tabIndex = 0;
   stopName.addEventListener('focus', () => {
@@ -329,8 +362,17 @@ const getNearestCampus = () => {
 };
 
 const getStops = async () => {
+  document.querySelector('.hsl-data').innerHTML = '';
   for (const restaurant of restaurants) {
     if (restaurant.name === currentCampus) {
+      if (restaurant.name === 'myyrmaki') {
+        loadHSLData('HSL:4150551');
+        loadHSLData('HSL:4150501');
+      }
+      if (restaurant.name === 'karamalmi') {
+        loadHSLData('HSL:2132552');
+        loadHSLData('HSL:2132502');
+      }
       const stops = await HSLData.getStopsByLocation(restaurant.lat, restaurant.long);
       for (const stop of stops.data.stopsByRadius.edges) {
         const id = stop.node.stop.gtfsId;
@@ -343,7 +385,7 @@ const getStops = async () => {
 const createCampusInfo = (lang, campus) => {
   const data = parseCampusInfo(lang, campus);
   footer.innerHTML = '';
-  for(const object of data){
+  for (const object of data) {
     const div = document.createElement('div');
     const h3 = document.createElement('h3');
     const p = document.createElement('p');
@@ -358,8 +400,8 @@ const createCampusInfo = (lang, campus) => {
 
 const updateUi = () => {
   createCampusInfo(language, currentCampus);
-  banner.style.backgroundImage = 'url("./assets/' + currentCampus +'.jpg")';
-  for(const restaurant of restaurants){
+  banner.style.backgroundImage = 'url("./assets/' + currentCampus + '.jpg")';
+  for (const restaurant of restaurants) {
     const campusButton = document.querySelector('.' + restaurant.name);
     if (!campusButton.classList.contains('campus')) {
       campusButton.classList.add('campus');
