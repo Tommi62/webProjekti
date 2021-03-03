@@ -84,8 +84,8 @@ if ('serviceWorker' in navigator) {
 }
 
 const today = new Date().toISOString().split('T')[0];
-let currentCampus = 'myllypuro';
-let language = 'fi';
+let currentCampus = localStorage.getItem('currentCampus') || 'myllypuro';
+let language = localStorage.getItem('language') || 'fi';
 
 const getMenu = async () => {
   updateUi();
@@ -456,6 +456,7 @@ const refresh = () => {
 langFi.addEventListener('click', () => {
   if (language === 'en') {
     language = 'fi';
+    localStorage.setItem('language', language);
     refresh();
   }
 });
@@ -464,12 +465,14 @@ langFi.addEventListener('click', () => {
 langEn.addEventListener('click', () => {
   if (language === 'fi') {
     language = 'en';
+    localStorage.setItem('language', language);
     refresh();
   }
 });
 
 myyrmaki.addEventListener('click', () => {
   currentCampus = 'myyrmaki';
+  localStorage.setItem('currentCampus', currentCampus);
   refresh();
   if(menuOpened){
     changeNavBar();
@@ -478,6 +481,7 @@ myyrmaki.addEventListener('click', () => {
 
 karamalmi.addEventListener('click', () => {
   currentCampus = 'karamalmi';
+  localStorage.setItem('currentCampus', currentCampus);
   refresh();
   if(menuOpened){
     changeNavBar();
@@ -486,6 +490,7 @@ karamalmi.addEventListener('click', () => {
 
 myllypuro.addEventListener('click', () => {
   currentCampus = 'myllypuro';
+  localStorage.setItem('currentCampus', currentCampus);
   refresh();
   if(menuOpened){
     changeNavBar();
@@ -494,6 +499,7 @@ myllypuro.addEventListener('click', () => {
 
 arabia.addEventListener('click', () => {
   currentCampus = 'arabia';
+  localStorage.setItem('currentCampus', currentCampus);
   refresh();
   if(menuOpened){
     changeNavBar();
