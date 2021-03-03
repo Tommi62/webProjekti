@@ -2,7 +2,7 @@
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: auto auto auto;
   position: absolute;
-  top: 28rem;
+  top: 17rem;
 }
 
 .col {
@@ -33,8 +33,10 @@
 }
 
 .title{
-  font-size: 4rem;
+  font-size: 3rem;
+  top: 12rem;
 }
+
 .footer div {
   height: 100px;
   width: 100%;
@@ -52,6 +54,12 @@ footer div:nth-child(2) {
 
 .hsl-data {
   margin: 1rem 0;
+  width: 100%;
+}
+
+.hslBox {
+  margin-top: 0;
+  width: 90%;
 }
 
 .info {

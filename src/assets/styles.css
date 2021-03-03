@@ -331,13 +331,14 @@ footer div:nth-child(2) h3 {
   border-radius: 15px;
   margin: 10px;
   width: 100%;
-  padding: 20px;
+  padding-top: 56.25%;
   background-color: white;
   opacity: 0;
   transform: none;
   transition: 0.25s ease-in-out;
   -moz-transition: 0.25s ease-in-out;
   -webkit-transition: 0.25s ease-in-out;
+  background-size: contain;
 }
 
 .slide ul {
@@ -433,7 +434,23 @@ footer div:nth-child(2) h3 {
 }
 
 .hsl-data {
+  margin-top: 0;
+  width: 16rem;
+}
+
+.hslBox {
   margin-top: 4rem;
+  padding: 2rem 1rem;
+  width: fit-content;
+  background-color: rgb(255 255 255 / 90%);
+  border-radius: 3px;
+  text-align: center;
+}
+
+.hslLogo {
+  height: 3rem;
+  padding: 3px;
+  margin-bottom: 1rem;
 }
 
 .stop h3 {

@@ -1,5 +1,8 @@
-const info = require('../assets/info.json');
+
+//const info = require('../assets/info.json');
 const campusInfo = require('../assets/campus-info.json');
+const slideAmount = 15;
+/* TEXT SLIDES
 
 const parseInfo = (lang) => {
   let infoList = [];
@@ -19,6 +22,15 @@ const parseInfo = (lang) => {
       infoList.push(dataEn);
     }
   }
+  return infoList;
+};
+*/
+const parseImgs = (lang) => {
+  let infoList = [];
+  for (let i = 1; i <= slideAmount; i++) {
+    infoList.push("./assets/slides/" + lang + "/" + i + ".png");
+  }
+  console.log(infoList);
   return infoList;
 };
 
@@ -47,4 +59,5 @@ const parseCampusInfo = (lang, campusName) => {
     return infoList;
 };
 
-export {parseInfo, parseCampusInfo};
+//export {parseInfo, parseCampusInfo};
+export {parseImgs, parseCampusInfo};
