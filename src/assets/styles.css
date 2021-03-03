@@ -233,6 +233,7 @@ footer div:nth-child(2) h3 {
   background-position: center center;
   background-attachment: fixed;
   position: fixed;
+  filter: brightness(75%);
 }
 
 .title {
