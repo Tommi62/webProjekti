@@ -268,11 +268,6 @@ footer div:nth-child(2) h3 {
   padding: 1rem;
 }
 
-.restaurant h3 {
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
 .menu {
   padding: 10px;
 }
@@ -299,13 +294,74 @@ footer div:nth-child(2) h3 {
   margin: 0.5rem;
 }
 
-.restaurant h3 {
+.restaurant h3{
   border-top-right-radius: 13px;
   border-top-left-radius: 13px;
   padding: 1rem;
   color: white;
   background-color: var(--orange);
   text-align: center;
+}
+
+.resTitle{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  position: relative;
+  border-top-right-radius: 13px;
+  border-top-left-radius: 13px;
+  padding: 1rem;
+  color: white;
+  background-color: var(--orange);
+  text-align: center;
+}
+
+.resCarouselLeft {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  height: 100%;
+  width: 3rem;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.resCarouselRight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  height: 100%;
+  width: 3rem;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.resCarouselLeft:hover {
+  background: rgb(242, 101, 34);
+  background: linear-gradient(
+    90deg,
+    rgba(242, 101, 34, 0.8379552504595589) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  opacity: 0.6;
+}
+
+.resCarouselRight:hover {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(242, 101, 34, 0.8379552504595589) 100%
+  );
+  opacity: 0.6;
 }
 
 .info {
@@ -407,12 +463,11 @@ footer div:nth-child(2) h3 {
 .arrowLeft {
   width: 15px;
   height: 15px;
-  transform: translate(0%, -50%);
 }
 
 .arrowRight {
   -webkit-transform: scaleX(-1);
-  transform: scaleX(-1) translate(0%, -50%);
+  transform: scaleX(-1);
   width: 15px;
   height: 15px;
 }

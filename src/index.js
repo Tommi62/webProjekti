@@ -83,7 +83,9 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-const today = new Date().toISOString().split('T')[0];
+let today = new Date().toISOString().split('T')[0];
+let todayAlt = new Date().toLocaleDateString();
+let dateVar = new Date();
 let currentCampus = localStorage.getItem('currentCampus') || 'myllypuro';
 let language = localStorage.getItem('language') || 'fi';
 
@@ -213,20 +215,21 @@ carouselRight.addEventListener('click', clearCarouselTimer);
 
 const renderMenu = (data, name) => {
   resContainer.innerHTML = '';
-  const restaurantName = '<h3>' + name + '</h3>';
+  const titleDiv = createTitleDiv(name);
   const ul = document.createElement('ul');
   for (const item of data) {
     const listItem = document.createElement('li');
     listItem.textContent = item;
     ul.appendChild(listItem);
   }
-  resContainer.innerHTML += restaurantName;
+  resContainer.appendChild(titleDiv);
   resContainer.appendChild(ul);
+  addResCarouselEventListeners();
 };
 
 const renderSodexoMenu = (data, name) => {
   resContainer.innerHTML = '';
-  const restaurantName = '<h3>' + name + '</h3>';
+  const titleDiv = createTitleDiv(name);
   const menuContainer = document.createElement('div');
   menuContainer.classList.add('menu');
   for (const item of data) {
@@ -255,8 +258,58 @@ const renderSodexoMenu = (data, name) => {
     mealContainer.appendChild(infoContainer);
     menuContainer.appendChild(mealContainer);
   }
-  resContainer.innerHTML += restaurantName;
+  resContainer.appendChild(titleDiv);
   resContainer.appendChild(menuContainer);
+  addResCarouselEventListeners();
+};
+
+const createTitleDiv = (name) => {
+  const titleDiv = document.createElement('div');
+  titleDiv.classList.add('resTitle');
+  const arrowLeft = document.createElement('div');
+  arrowLeft.classList.add('resCarouselLeft');
+  const leftImg = '<img class="arrowLeft" src="./assets/back.svg" alt="Left Arrow"/>';
+  arrowLeft.innerHTML = leftImg;
+  const restaurantName = '<h3>' + name + '<br>' + todayAlt + '</h3>';
+  const arrowRight = document.createElement('div');
+  arrowRight.classList.add('resCarouselRight');
+  const rightImg = '<img class="arrowRight" src="./assets/back.svg" alt="Right Arrow"/>';
+  arrowRight.innerHTML = rightImg;
+  titleDiv.appendChild(arrowLeft);
+  titleDiv.innerHTML += restaurantName;
+  titleDiv.appendChild(arrowRight);
+  return titleDiv;
+};
+
+const changeDay = (direction) => {
+  let newDate = new Date(dateVar);
+  console.log('NewDate: ' + newDate.getDate());
+  if(direction === 'forward'){
+    console.log('Forward');
+    newDate.setDate(newDate.getDate() + 1);
+  }else{
+    console.log('Back');
+    newDate.setDate(newDate.getDate() - 1);
+  }
+  dateVar = newDate;
+  todayAlt = newDate.toLocaleDateString();
+  console.log('TodayAlt: ' + todayAlt);
+  today = new Date(newDate).toISOString().split('T')[0];
+  getMenu();
+};
+
+const addResCarouselEventListeners = () => {
+  const left = document.querySelector('.resCarouselLeft');
+  left.addEventListener('click', () => {
+    console.log('arrowLeft');
+    changeDay('backward');
+  });
+
+  const right = document.querySelector('.resCarouselRight');
+  right.addEventListener('click', () => {
+    console.log('arrowRight');
+    changeDay('forward');
+  });
 };
 
 const isNumeric = (str) => {
@@ -333,10 +386,11 @@ const loadHSLData = async (id) => {
 const NoMenuFoundNotification = (message, name) => {
   console.log('NoMenuFound ' + name);
   resContainer.innerHTML = '';
-  const restaurantName = '<h3>' + name + '</h3>';
+  const titleDiv = createTitleDiv(name);
   const noMenuMessage = `<p>${message}</p>`;
-  resContainer.innerHTML = restaurantName;
+  resContainer.appendChild(titleDiv);
   resContainer.innerHTML += noMenuMessage;
+  addResCarouselEventListeners();
 };
 
 const getNearestCampus = () => {
