@@ -1,6 +1,6 @@
 .grid {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: auto auto 400px;
+  grid-template-rows: auto auto;
 }
 
 .col {
@@ -8,13 +8,13 @@
 }
 
 .col1 {
-  grid-column-start: 2;
-  grid-column-end: 8;
+  grid-column-start: 1;
+  grid-column-end: 10;
 }
 
 .col2 {
-  grid-column-start: 9;
-  grid-column-end: 15;
+  grid-column-start: 10;
+  grid-column-end: 16;
 }
 
 .navbar .icon{
@@ -58,10 +58,6 @@
   margin-top: -0.15rem;
 }
 
-.col2 {
-  grid-column-start: 9;
-  grid-column-end: 15;
-}
 .footer {
   grid-column-end: 16;
   height: 400px;
@@ -85,3 +81,4 @@ footer div {
   padding: 10px 0px;
   overflow-wrap: break-word;
 }
+
