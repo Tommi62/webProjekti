@@ -99,12 +99,12 @@ footer div:nth-child(2) h3 {
   background-color: white;
 }
 
-.navbar .icon{
+.navbar .icon {
   display: none;
   color: var(--orange);
 }
 
-.logo a img{
+.logo a img {
   width: 8rem;
   margin: 1rem 3rem 1rem 1rem;
 }
@@ -271,6 +271,9 @@ footer div:nth-child(2) h3 {
 .restaurant h3 {
   margin-bottom: 1rem;
   text-align: center;
+  letter-spacing: 1px;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
 .menu {
@@ -338,15 +341,26 @@ footer div:nth-child(2) h3 {
 
 .slide ul {
   padding: 0 0 0 15px;
+  list-style: none;
 }
 
 .slide ul li {
   padding: 10px 0 0 0;
 }
 
+.slide ul li::before {
+  content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  color: var(--orange); /* Change the color */
+  font-weight: bold; /* If you want it to be bold */
+  display: inline-block; /* Needed to add space between the bullet and the text */
+  width: 1em; /* Also needed for space (tweak if needed) */
+  margin-left: -1em; /* Also needed for space (tweak if needed) */
+}
+
 .slide h3 {
   text-align: center;
   margin-bottom: 10px;
+  font-weight: 500;
 }
 
 .slide h3:only-child {
@@ -388,10 +402,10 @@ footer div:nth-child(2) h3 {
   background: rgb(242, 101, 34);
   background: linear-gradient(
     90deg,
-    rgba(242, 101, 34, 0.8379552504595589) 0%,
+    rgba(242, 101, 34, 0.8379552504595589) -50%,
     rgba(255, 255, 255, 0) 100%
   );
-  opacity: 0.6;
+  opacity: 1;
 }
 
 .carouselRight:hover {
@@ -399,9 +413,9 @@ footer div:nth-child(2) h3 {
   background: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0) 0%,
-    rgba(242, 101, 34, 0.8379552504595589) 100%
+    rgba(242, 101, 34, 0.8379552504595589) 150%
   );
-  opacity: 0.6;
+  opacity: 1;
 }
 
 .arrowLeft {
@@ -526,4 +540,10 @@ footer div:nth-child(2) h3 {
 .stopList li {
   padding-top: 10px;
   padding-left: 10px;
+}
+
+h4 {
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--orange);
 }
