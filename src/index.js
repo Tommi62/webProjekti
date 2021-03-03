@@ -375,8 +375,20 @@ const getNearestCampus = () => {
     });
 };
 
+const insertHslHeader = () => {
+  const header = document.querySelector('.hslHeader');
+  header.innerHTML = '';
+
+  if (language === 'fi'){
+    header.innerHTML = 'Aikataulut';
+  } if (language === 'en') {
+    header.innerHTML = 'Timetables';
+  }
+};
+
 const getStops = async () => {
   document.querySelector('.hsl-data').innerHTML = '';
+  insertHslHeader();
   for (const restaurant of restaurants) {
     if (restaurant.name === currentCampus) {
       if (restaurant.name === 'myyrmaki') {

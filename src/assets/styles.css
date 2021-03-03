@@ -435,7 +435,7 @@ footer div:nth-child(2) h3 {
 
 .hsl-data {
   margin-top: 0;
-  width: 16rem;
+  width: 17rem;
 }
 
 .hslBox {
@@ -451,12 +451,24 @@ footer div:nth-child(2) h3 {
   height: 3rem;
   padding: 3px;
   margin-bottom: 1rem;
+  float: left;
+  width: 8.5rem;
+}
+
+.hslHeader {
+  height: 3rem;
+  padding: 3px;
+  margin-bottom: 1rem;
+  width: 8.5rem;
+  float: right;
+  font-weight: 500;
+  color: #1c87c9;
 }
 
 .stop h3 {
   padding: 0.5rem 3rem 0.5rem 3rem;
   background-color: var(--restBorders);
-  text-align: center;
+  text-align: left;
   outline: none;
   font-size: 1rem;
   font-weight: 100;
