@@ -16,7 +16,7 @@ const parseFazerMenu = (setMenus) => {
 };
 
 const getDailyMenu = async (restaurantId, lang, date) => {
-  let dayOfWeek = new Date().getDay();
+  let dayOfWeek = new Date(date).getDay();
   dayOfWeek -= 1;
   if (dayOfWeek === -1) {
     dayOfWeek = 6;

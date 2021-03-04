@@ -269,6 +269,33 @@ footer div:nth-child(2) h3 {
   padding: 1rem;
 }
 
+.restaurant ul li {
+  margin: 1rem;
+}
+
+.fazerContent{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.fazerPrices{
+  margin: 1rem 2rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--orange);
+  border-radius: 0.3rem;
+}
+
+.fazerPrices h4{
+  text-align: center;
+  margin: 0.5rem;
+}
+
+.priceListObject{
+  margin: 0.5rem;
+}
+
 .menu {
   padding: 10px;
 }
