@@ -2,7 +2,7 @@ import SodexoData from './modules/sodexo-data';
 import FazerData from './modules/fazer-data';
 import { getLocation, getDistance } from './modules/calculate-distance';
 import HSLData from './modules/hsl-data';
-import { parseInfo, parseCampusInfo } from './modules/info-data';
+import { parseImgs, parseCampusInfo } from './modules/info-data';
 
 
 const resContainer = document.querySelector('.restaurant');
@@ -18,6 +18,9 @@ const arabia = document.querySelector('.arabia');
 const carouselRight = document.querySelector('.carouselRight');
 const carouselLeft = document.querySelector('.carouselLeft');
 const footer = document.querySelector('.footer');
+const hslBox = document.querySelector('.hslBox');
+
+
 
 let carouselTimer;
 let dateTimer;
@@ -120,6 +123,19 @@ let slides = [];
 const makeSlides = () => {
   slides.splice(0, slides.length);
   infoContainer.innerHTML = "";
+  const imgs = parseImgs(language);
+  for (const img of imgs) {
+    const slide = document.createElement('div');
+    slide.className = 'slide';
+    slide.style.backgroundImage="url("+img+")";
+    slides.push(slide);
+  }
+};
+
+/* TEXT SLIDES
+const makeSlides = () => {
+  slides.splice(0, slides.length);
+  infoContainer.innerHTML = "";
   const data = parseInfo(language);
   for (const set of data) {
     const slide = document.createElement('div');
@@ -141,7 +157,7 @@ const makeSlides = () => {
     slides.push(slide);
   }
 };
-
+*/
 const changeSlide = (direction) => {
   let slide = document.querySelector('.slide');
   slide.style.opacity = '0';
@@ -329,7 +345,6 @@ const timeString = (seconds) => {
   if (minutes >= 60) {
     let hours = Math.floor(minutes/60);
     time = hours + 'h' + (minutes-(hours*60)) + 'min';
-    console.log((minutes-(hours*60))+' hours * 60 = '+(hours*60)+' hours:'+ hours +' minutes:'+minutes);
   } else {
     time = minutes + 'min';
   }
@@ -367,7 +382,6 @@ const loadHSLData = async (id) => {
   for (const ride of stop.stoptimesWithoutPatterns) {
     const departureSeconds = ride.scheduledDeparture - secondsFromMidnight;
     const departureTime =  timeString(departureSeconds);
-    console.log( ride.trip.tripHeadsign+' '+departureSeconds+' '+ride.scheduledDeparture+ ' ' + secondsFromMidnight + ' ' +HSLData.formatTime(ride.scheduledDeparture));
     if (departureSeconds >= 0){
     const li = document.createElement('li');
     li.classList.add('timeTable');
@@ -516,7 +530,6 @@ const refresh = () => {
 langFi.addEventListener('click', () => {
   if (language === 'en') {
     language = 'fi';
-    localStorage.setItem('language', language);
     refresh();
   }
 });
@@ -525,7 +538,6 @@ langFi.addEventListener('click', () => {
 langEn.addEventListener('click', () => {
   if (language === 'fi') {
     language = 'en';
-    localStorage.setItem('language', language);
     refresh();
   }
 });

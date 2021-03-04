@@ -99,12 +99,12 @@ footer div:nth-child(2) h3 {
   background-color: white;
 }
 
-.navbar .icon{
+.navbar .icon {
   display: none;
   color: var(--orange);
 }
 
-.logo a img{
+.logo a img {
   width: 8rem;
   margin: 1rem 3rem 1rem 1rem;
 }
@@ -233,6 +233,7 @@ footer div:nth-child(2) h3 {
   background-position: center center;
   background-attachment: fixed;
   position: fixed;
+  filter: brightness(75%);
 }
 
 .title {
@@ -301,6 +302,9 @@ footer div:nth-child(2) h3 {
   color: white;
   background-color: var(--orange);
   text-align: center;
+  letter-spacing: 1px;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
 .resTitle{
@@ -326,7 +330,7 @@ footer div:nth-child(2) h3 {
   z-index: 1;
   height: 100%;
   width: 3rem;
-  opacity: 0.5;
+  opacity: 0.6;
   transition: 0.3s;
   cursor: pointer;
 }
@@ -341,7 +345,7 @@ footer div:nth-child(2) h3 {
   z-index: 1;
   height: 100%;
   width: 3rem;
-  opacity: 0.5;
+  opacity: 0.6;
   transition: 0.3s;
   cursor: pointer;
 }
@@ -353,7 +357,7 @@ footer div:nth-child(2) h3 {
     rgba(242, 101, 34, 0.8379552504595589) 0%,
     rgba(255, 255, 255, 0) 100%
   );
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .resCarouselRight:hover {
@@ -363,7 +367,7 @@ footer div:nth-child(2) h3 {
     rgba(255, 255, 255, 0) 0%,
     rgba(242, 101, 34, 0.8379552504595589) 100%
   );
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .info {
@@ -385,26 +389,38 @@ footer div:nth-child(2) h3 {
   border-radius: 15px;
   margin: 10px;
   width: 100%;
-  padding: 20px;
+  padding-top: 56.25%;
   background-color: white;
   opacity: 0;
   transform: none;
   transition: 0.25s ease-in-out;
   -moz-transition: 0.25s ease-in-out;
   -webkit-transition: 0.25s ease-in-out;
+  background-size: contain;
 }
 
 .slide ul {
   padding: 0 0 0 15px;
+  list-style: none;
 }
 
 .slide ul li {
   padding: 10px 0 0 0;
 }
 
+.slide ul li::before {
+  content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  color: var(--orange); /* Change the color */
+  font-weight: bold; /* If you want it to be bold */
+  display: inline-block; /* Needed to add space between the bullet and the text */
+  width: 1em; /* Also needed for space (tweak if needed) */
+  margin-left: -1em; /* Also needed for space (tweak if needed) */
+}
+
 .slide h3 {
   text-align: center;
   margin-bottom: 10px;
+  font-weight: 500;
 }
 
 .slide h3:only-child {
@@ -446,10 +462,10 @@ footer div:nth-child(2) h3 {
   background: rgb(242, 101, 34);
   background: linear-gradient(
     90deg,
-    rgba(242, 101, 34, 0.8379552504595589) 0%,
+    rgba(242, 101, 34, 0.8379552504595589) -50%,
     rgba(255, 255, 255, 0) 100%
   );
-  opacity: 0.6;
+  opacity: 1;
 }
 
 .carouselRight:hover {
@@ -457,9 +473,9 @@ footer div:nth-child(2) h3 {
   background: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0) 0%,
-    rgba(242, 101, 34, 0.8379552504595589) 100%
+    rgba(242, 101, 34, 0.8379552504595589) 150%
   );
-  opacity: 0.6;
+  opacity: 1;
 }
 
 .arrowLeft {
@@ -475,7 +491,23 @@ footer div:nth-child(2) h3 {
 }
 
 .hsl-data {
+  margin-top: 0;
+  width: 16rem;
+}
+
+.hslBox {
   margin-top: 4rem;
+  padding: 2rem 1rem;
+  width: fit-content;
+  background-color: rgb(255 255 255 / 90%);
+  border-radius: 3px;
+  text-align: center;
+}
+
+.hslLogo {
+  height: 3rem;
+  padding: 3px;
+  margin-bottom: 1rem;
 }
 
 .stop h3 {
@@ -583,4 +615,10 @@ footer div:nth-child(2) h3 {
 .stopList li {
   padding-top: 10px;
   padding-left: 10px;
+}
+
+h4 {
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--orange);
 }
