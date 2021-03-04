@@ -313,12 +313,21 @@ const loadHSLData = async (id) => {
   if (isNumeric(isBusMetroTrain.charAt(0))) {
     stopCategory = 'bus';
     stopElement.classList.add('busStop');
+    const icon = document.createElement('div');
+    icon.classList.add('hslBusIcon');
+    stopElement.appendChild(icon);
   } else if (isBusMetroTrain.length === 1) {
     stopCategory = 'train';
     stopElement.classList.add('trainStop');
+    const icon = document.createElement('div');
+    icon.classList.add('hslTrainIcon');
+    stopElement.appendChild(icon);
   } else if (isBusMetroTrain.length === 2) {
     stopCategory = 'metro';
     stopElement.classList.add('metroStop');
+    const icon = document.createElement('div');
+    icon.classList.add('hslMetroIcon');
+    stopElement.appendChild(icon);
   }
   for (const ride of stop.stoptimesWithoutPatterns) {
     const departureSeconds = ride.scheduledDeparture - secondsFromMidnight;
