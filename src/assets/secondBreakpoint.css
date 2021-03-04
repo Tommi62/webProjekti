@@ -81,5 +81,20 @@ footer div:nth-child(2) {
   width: 100%;
 }
 
+.campuses {
+  transition: 0.3s;
+  height: 0px;
+}
+
+.campuses button {
+  width: 90%;
+  margin: 0;
+  margin-bottom: 0.4rem;
+}
+
+.navbar.responsive {
+  flex-direction: column;
+  align-items: center;
+}
 
 

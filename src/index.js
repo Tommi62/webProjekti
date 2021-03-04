@@ -605,11 +605,14 @@ arabia.addEventListener('click', () => {
 
 const changeNavBar = () => {
   let x = document.querySelector('.navbar');
+  let campus = document.querySelector('.campuses');
   if (x.className === "navbar") {
     x.className += " responsive";
+    campus.style.height = '230px';
     menuOpened = true;
   } else {
     x.className = "navbar";
+    campus.style.height = '0px';
     menuOpened = false;
   }
 };

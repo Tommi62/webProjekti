@@ -82,3 +82,47 @@ footer div {
   overflow-wrap: break-word;
 }
 
+
+
+
+
+.responsive {
+  flex-direction: column;
+}
+
+.logo {
+  margin-right: auto;
+}
+
+.navbar .icon {
+  display: block;
+}
+
+.logo a img {
+  margin-right: 1.6rem;
+}
+
+.navbar.responsive .campuses {
+  margin-top: 0;
+  width: 100vw;
+  transition: height 1s;
+}
+
+.campuses button {
+  width: 90%;
+  margin: 0;
+  margin-bottom: 0.4rem;
+}
+
+.navbar.responsive .icon {
+  text-align: right;
+  margin-right: 0;
+  margin-top: 2rem;
+  position: absolute;
+  top: 0;
+  right: 1rem;
+}
+
+.navbar.responsive {
+  align-items: center;
+}

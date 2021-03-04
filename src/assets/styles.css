@@ -102,6 +102,8 @@ footer div:nth-child(2) h3 {
 .navbar .icon {
   display: none;
   color: var(--orange);
+  outline: none;
+  border: none;
 }
 
 .logo a img {
@@ -189,7 +191,7 @@ footer div:nth-child(2) h3 {
 }
 
 .campuses button:hover {
-  background-color: var(--orange);
+  background-color: #ff9968;
   color: white;
   border-radius: 0.3rem;
 }
