@@ -298,6 +298,12 @@ const changeDay = (direction) => {
   getMenu();
 };
 
+const refreshDate = () => {
+  today = new Date().toISOString().split('T')[0];
+  todayAlt = new Date().toLocaleDateString();
+  dateVar = new Date();
+};
+
 const addResCarouselEventListeners = () => {
   const left = document.querySelector('.resCarouselLeft');
   left.addEventListener('click', () => {
@@ -527,6 +533,7 @@ langEn.addEventListener('click', () => {
 myyrmaki.addEventListener('click', () => {
   currentCampus = 'myyrmaki';
   localStorage.setItem('currentCampus', currentCampus);
+  refreshDate();
   refresh();
   if(menuOpened){
     changeNavBar();
@@ -536,6 +543,7 @@ myyrmaki.addEventListener('click', () => {
 karamalmi.addEventListener('click', () => {
   currentCampus = 'karamalmi';
   localStorage.setItem('currentCampus', currentCampus);
+  refreshDate();
   refresh();
   if(menuOpened){
     changeNavBar();
@@ -545,6 +553,7 @@ karamalmi.addEventListener('click', () => {
 myllypuro.addEventListener('click', () => {
   currentCampus = 'myllypuro';
   localStorage.setItem('currentCampus', currentCampus);
+  refreshDate();
   refresh();
   if(menuOpened){
     changeNavBar();
@@ -554,6 +563,7 @@ myllypuro.addEventListener('click', () => {
 arabia.addEventListener('click', () => {
   currentCampus = 'arabia';
   localStorage.setItem('currentCampus', currentCampus);
+  refreshDate();
   refresh();
   if(menuOpened){
     changeNavBar();

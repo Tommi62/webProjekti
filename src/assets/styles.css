@@ -326,8 +326,9 @@ footer div:nth-child(2) h3 {
   z-index: 1;
   height: 100%;
   width: 3rem;
-  opacity: 0;
+  opacity: 0.5;
   transition: 0.3s;
+  cursor: pointer;
 }
 
 .resCarouselRight {
@@ -340,8 +341,9 @@ footer div:nth-child(2) h3 {
   z-index: 1;
   height: 100%;
   width: 3rem;
-  opacity: 0;
+  opacity: 0.5;
   transition: 0.3s;
+  cursor: pointer;
 }
 
 .resCarouselLeft:hover {
@@ -351,7 +353,7 @@ footer div:nth-child(2) h3 {
     rgba(242, 101, 34, 0.8379552504595589) 0%,
     rgba(255, 255, 255, 0) 100%
   );
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .resCarouselRight:hover {
@@ -361,7 +363,7 @@ footer div:nth-child(2) h3 {
     rgba(255, 255, 255, 0) 0%,
     rgba(242, 101, 34, 0.8379552504595589) 100%
   );
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .info {
