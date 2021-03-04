@@ -458,14 +458,23 @@ const loadHSLData = async (id) => {
   const isBusMetroTrain = stop.stoptimesWithoutPatterns[0].trip.routeShortName;
   let stopCategory = "";
   if (isNumeric(isBusMetroTrain.charAt(0))) {
-    stopCategory = "bus";
-    stopElement.classList.add("busStop");
+    stopCategory = 'bus';
+    stopElement.classList.add('busStop');
+    const icon = document.createElement('div');
+    icon.classList.add('hslBusIcon');
+    stopElement.appendChild(icon);
   } else if (isBusMetroTrain.length === 1) {
-    stopCategory = "train";
-    stopElement.classList.add("trainStop");
+    stopCategory = 'train';
+    stopElement.classList.add('trainStop');
+    const icon = document.createElement('div');
+    icon.classList.add('hslTrainIcon');
+    stopElement.appendChild(icon);
   } else if (isBusMetroTrain.length === 2) {
-    stopCategory = "metro";
-    stopElement.classList.add("metroStop");
+    stopCategory = 'metro';
+    stopElement.classList.add('metroStop');
+    const icon = document.createElement('div');
+    icon.classList.add('hslMetroIcon');
+    stopElement.appendChild(icon);
   }
   for (const ride of stop.stoptimesWithoutPatterns) {
     const departureSeconds = ride.scheduledDeparture - secondsFromMidnight;
@@ -529,8 +538,20 @@ const getNearestCampus = () => {
     });
 };
 
+const insertHslHeader = () => {
+  const header = document.querySelector('.hslHeader');
+  header.innerHTML = '';
+
+  if (language === 'fi'){
+    header.innerHTML = 'Aikataulut';
+  } if (language === 'en') {
+    header.innerHTML = 'Timetables';
+  }
+};
+
 const getStops = async () => {
-  document.querySelector(".hsl-data").innerHTML = "";
+  document.querySelector('.hsl-data').innerHTML = '';
+  insertHslHeader();
   for (const restaurant of restaurants) {
     if (restaurant.name === currentCampus) {
       if (restaurant.name === "myyrmaki") {
@@ -679,12 +700,15 @@ arabia.addEventListener("click", () => {
 });
 
 const changeNavBar = () => {
-  let x = document.querySelector(".navbar");
+  let x = document.querySelector('.navbar');
+  let campus = document.querySelector('.campuses');
   if (x.className === "navbar") {
     x.className += " responsive";
+    campus.style.height = '230px';
     menuOpened = true;
   } else {
     x.className = "navbar";
+    campus.style.height = '0px';
     menuOpened = false;
   }
 };
