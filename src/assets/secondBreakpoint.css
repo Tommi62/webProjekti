@@ -62,8 +62,23 @@ footer div:nth-child(2) {
   width: 90%;
 }
 
+.hslLogo {
+  margin-right: auto;
+  text-align: left;
+}
+
+.hslHeader {
+  width: 50%;
+  text-align: right;
+}
+
+
 .info {
   overflow-x: hidden;
+}
+
+.stop {
+  width: 100%;
 }
 
 

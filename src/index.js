@@ -372,12 +372,21 @@ const loadHSLData = async (id) => {
   if (isNumeric(isBusMetroTrain.charAt(0))) {
     stopCategory = 'bus';
     stopElement.classList.add('busStop');
+    const icon = document.createElement('div');
+    icon.classList.add('hslBusIcon');
+    stopElement.appendChild(icon);
   } else if (isBusMetroTrain.length === 1) {
     stopCategory = 'train';
     stopElement.classList.add('trainStop');
+    const icon = document.createElement('div');
+    icon.classList.add('hslTrainIcon');
+    stopElement.appendChild(icon);
   } else if (isBusMetroTrain.length === 2) {
     stopCategory = 'metro';
     stopElement.classList.add('metroStop');
+    const icon = document.createElement('div');
+    icon.classList.add('hslMetroIcon');
+    stopElement.appendChild(icon);
   }
   for (const ride of stop.stoptimesWithoutPatterns) {
     const departureSeconds = ride.scheduledDeparture - secondsFromMidnight;
@@ -435,8 +444,20 @@ const getNearestCampus = () => {
     });
 };
 
+const insertHslHeader = () => {
+  const header = document.querySelector('.hslHeader');
+  header.innerHTML = '';
+
+  if (language === 'fi'){
+    header.innerHTML = 'Aikataulut';
+  } if (language === 'en') {
+    header.innerHTML = 'Timetables';
+  }
+};
+
 const getStops = async () => {
   document.querySelector('.hsl-data').innerHTML = '';
+  insertHslHeader();
   for (const restaurant of restaurants) {
     if (restaurant.name === currentCampus) {
       if (restaurant.name === 'myyrmaki') {

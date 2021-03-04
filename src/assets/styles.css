@@ -387,7 +387,6 @@ footer div:nth-child(2) h3 {
 .slide {
   border: 1px solid #e9e9e9;
   border-radius: 15px;
-  margin: 10px;
   width: 100%;
   padding-top: 56.25%;
   background-color: white;
@@ -492,11 +491,10 @@ footer div:nth-child(2) h3 {
 
 .hsl-data {
   margin-top: 0;
-  width: 16rem;
+  width: 17rem;
 }
 
 .hslBox {
-  margin-top: 4rem;
   padding: 2rem 1rem;
   width: fit-content;
   background-color: rgb(255 255 255 / 90%);
@@ -508,12 +506,60 @@ footer div:nth-child(2) h3 {
   height: 3rem;
   padding: 3px;
   margin-bottom: 1rem;
+  float: left;
+  width: 8.5rem;
+}
+
+.hslHeader {
+  height: 3rem;
+  padding: 3px;
+  margin-bottom: 1rem;
+  width: 8.5rem;
+  float: right;
+  font-weight: 500;
+  color: #1c87c9;
+}
+
+.hslBusIcon {
+  width: 112px;
+  height: 108px;
+  background: url("94f6276c61602211b768bb7a910fcb2a.png") no-repeat;
+  position: absolute;
+  background-position: -122px 0;
+  left: -32px;
+  top: -36px;
+  z-index: 2;
+  transform: scale(0.2, 0.2);
+}
+
+.hslMetroIcon {
+  width: 112px;
+  height: 108px;
+  background: url("94f6276c61602211b768bb7a910fcb2a.png") no-repeat;
+  position: absolute;
+  background-position: 2px -124px;
+  left: -32px;
+  top: -36px;
+  z-index: 2;
+  transform: scale(0.2, 0.2);
+}
+
+.hslTrainIcon {
+  width: 112px;
+  height: 108px;
+  background: url("94f6276c61602211b768bb7a910fcb2a.png") no-repeat;
+  position: absolute;
+  background-position: -370px 0;
+  left: -32px;
+  top: -36px;
+  z-index: 2;
+  transform: scale(0.2, 0.2);
 }
 
 .stop h3 {
   padding: 0.5rem 3rem 0.5rem 3rem;
   background-color: var(--restBorders);
-  text-align: center;
+  text-align: left;
   outline: none;
   font-size: 1rem;
   font-weight: 100;
@@ -536,6 +582,7 @@ footer div:nth-child(2) h3 {
   -webkit-box-shadow: 0px 4px 5px -3px var(--shadowColor);
   -moz-box-shadow: 0px 4px 5px -3px var(--shadowColor);
   border: 1px solid var(--restBorders);
+  position: relative;
 }
 
 .busStop h3 {
