@@ -25,6 +25,25 @@ let dateTimer;
 let secondsFromMidnight;
 let menuOpened = false;
 
+const background = document.querySelector(".banner");
+let x = window.matchMedia("(max-width: 800px)");
+
+document.addEventListener("scroll", (evt) => {
+  let scrollArea = 1000 - window.innerHeight;
+  let scrollTop = window.pageYOffset || window.scrollTop;
+  let scrollPercent = scrollTop/scrollArea || 0;
+  let backgroundY = - (scrollPercent*window.innerHeight) / 800;
+  console.log('backgrounf y:'+backgroundY);
+  if (x.matches) {
+    background.style.transform =
+    "translateY(" + backgroundY + "%) " + "scale(" + 1.3 + ")";
+  } else {
+    background.style.transform =
+    "translateY(" + backgroundY + "%) " + "scale(" + 1.15 + ")";
+  }
+});
+
+
 const setTime = () => {
   const now = new Date();
   const then = new Date(
@@ -174,8 +193,8 @@ const makeSlides = () => {
   infoContainer.innerHTML = "";
   const imgs = parseImgs(language);
   for (const img of imgs) {
-    const slide = document.createElement("div");
-    slide.className = "slide";
+    const slide = document.createElement('div');
+    slide.className = 'slide';
     slide.style.backgroundImage = "url(" + img + ")";
     slides.push(slide);
   }
@@ -557,7 +576,7 @@ const insertHslHeader = () => {
   const header = document.querySelector('.hslHeader');
   header.innerHTML = '';
 
-  if (language === 'fi'){
+  if (language === 'fi') {
     header.innerHTML = 'Aikataulut';
   } if (language === 'en') {
     header.innerHTML = 'Timetables';

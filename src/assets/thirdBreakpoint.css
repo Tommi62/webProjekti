@@ -3,60 +3,13 @@
   display: none;
 }
 
-.responsive {
-  flex-direction: column;
-}
-
 .navbar.responsive .fi,
 .navbar.responsive .en {
   display: block;
 }
 
-.logo {
-  margin-right: auto;
-}
-
-.navbar .icon {
-  display: block;
-}
-
-.logo a img {
-  margin-right: 1.6rem;
-}
-
-.navbar.responsive .campuses {
-  margin-top: 0;
-  width: 100vw;
-  transition: height 1s;
-}
-
-.campuses button {
-  width: 90%;
-  margin: 0;
-  margin-bottom: 0.4rem;
-}
-
-.navbar.responsive .icon {
-  text-align: right;
-  margin-right: 0;
-  margin-top: 2rem;
-  position: absolute;
-  top: 0;
-  right: 1rem;
-}
-
-.navbar.responsive {
-  align-items: center;
-}
-
-.language button {
-  margin: 0.2rem;
-  transform: scale(0.7);
-}
-
-.logo {
-  margin-right: 0rem;
-  width: 100%;
+.hslHeader {
+  width: 42%;
 }
 
 .fazerContent{
