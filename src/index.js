@@ -1,28 +1,48 @@
-import SodexoData from "./modules/sodexo-data";
-import FazerData from "./modules/fazer-data";
-import { getLocation, getDistance } from "./modules/calculate-distance";
-import HSLData from "./modules/hsl-data";
-import { parseImgs, parseCampusInfo } from "./modules/info-data";
+import SodexoData from './modules/sodexo-data';
+import FazerData from './modules/fazer-data';
+import { getLocation, getDistance } from './modules/calculate-distance';
+import HSLData from './modules/hsl-data';
+import { parseImgs, parseCampusInfo } from './modules/info-data';
 
-const resContainer = document.querySelector(".restaurant");
-const infoContainer = document.querySelector(".info");
-const banner = document.querySelector(".banner");
-const title = document.querySelector(".title");
-const langFi = document.querySelector(".fi");
-const langEn = document.querySelector(".en");
-const myyrmaki = document.querySelector(".myyrmaki");
-const karamalmi = document.querySelector(".karamalmi");
-const myllypuro = document.querySelector(".myllypuro");
-const arabia = document.querySelector(".arabia");
-const carouselRight = document.querySelector(".carouselRight");
-const carouselLeft = document.querySelector(".carouselLeft");
-const footer = document.querySelector(".footer");
-const hslBox = document.querySelector(".hslBox");
+
+const resContainer = document.querySelector('.restaurant');
+const infoContainer = document.querySelector('.info');
+const banner = document.querySelector('.banner');
+const title = document.querySelector('.title');
+const langFi = document.querySelector('.fi');
+const langEn = document.querySelector('.en');
+const myyrmaki = document.querySelector('.myyrmaki');
+const karamalmi = document.querySelector('.karamalmi');
+const myllypuro = document.querySelector('.myllypuro');
+const arabia = document.querySelector('.arabia');
+const carouselRight = document.querySelector('.carouselRight');
+const carouselLeft = document.querySelector('.carouselLeft');
+const footer = document.querySelector('.footer');
+const hslBox = document.querySelector('.hslBox');
 
 let carouselTimer;
 let dateTimer;
 let secondsFromMidnight;
 let menuOpened = false;
+
+const background = document.querySelector(".banner");
+let x = window.matchMedia("(max-width: 800px)");
+
+document.addEventListener("scroll", (evt) => {
+  let scrollArea = 1000 - window.innerHeight;
+  let scrollTop = window.pageYOffset || window.scrollTop;
+  let scrollPercent = scrollTop/scrollArea || 0;
+  let backgroundY = - (scrollPercent*window.innerHeight) / 800;
+  console.log('backgrounf y:'+backgroundY);
+  if (x.matches) {
+    background.style.transform =
+    "translateY(" + backgroundY + "%) " + "scale(" + 1.3 + ")";
+  } else {
+    background.style.transform =
+    "translateY(" + backgroundY + "%) " + "scale(" + 1.15 + ")";
+  }
+});
+
 
 const setTime = () => {
   const now = new Date();
@@ -173,8 +193,8 @@ const makeSlides = () => {
   infoContainer.innerHTML = "";
   const imgs = parseImgs(language);
   for (const img of imgs) {
-    const slide = document.createElement("div");
-    slide.className = "slide";
+    const slide = document.createElement('div');
+    slide.className = 'slide';
     slide.style.backgroundImage = "url(" + img + ")";
     slides.push(slide);
   }
@@ -542,7 +562,7 @@ const insertHslHeader = () => {
   const header = document.querySelector('.hslHeader');
   header.innerHTML = '';
 
-  if (language === 'fi'){
+  if (language === 'fi') {
     header.innerHTML = 'Aikataulut';
   } if (language === 'en') {
     header.innerHTML = 'Timetables';
