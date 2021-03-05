@@ -229,13 +229,14 @@ footer div:nth-child(2) h3 {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  background-attachment: fixed;
   position: fixed;
+  transform: scale(1.15);
   filter: brightness(75%);
+  top: 5.2rem;
 }
 
 .title {
@@ -353,22 +354,10 @@ footer div:nth-child(2) h3 {
 }
 
 .resCarouselLeft:hover {
-  background: rgb(242, 101, 34);
-  background: linear-gradient(
-    90deg,
-    rgba(242, 101, 34, 0.8379552504595589) 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
   opacity: 1;
 }
 
 .resCarouselRight:hover {
-  background: rgb(255, 255, 255);
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(242, 101, 34, 0.8379552504595589) 100%
-  );
   opacity: 1;
 }
 
@@ -659,6 +648,8 @@ footer div:nth-child(2) h3 {
 .destination {
   padding: 3px;
   padding-right: 10px;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .stopList li {

@@ -20,12 +20,29 @@ const carouselLeft = document.querySelector('.carouselLeft');
 const footer = document.querySelector('.footer');
 const hslBox = document.querySelector('.hslBox');
 
-
-
 let carouselTimer;
 let dateTimer;
 let secondsFromMidnight;
 let menuOpened = false;
+
+const background = document.querySelector(".banner");
+let x = window.matchMedia("(max-width: 800px)");
+
+document.addEventListener("scroll", (evt) => {
+  let scrollArea = 1000 - window.innerHeight;
+  let scrollTop = window.pageYOffset || window.scrollTop;
+  let scrollPercent = scrollTop/scrollArea || 0;
+  let backgroundY = - (scrollPercent*window.innerHeight) / 800;
+  console.log('backgrounf y:'+backgroundY);
+  if (x.matches) {
+    background.style.transform =
+    "translateY(" + backgroundY + "%) " + "scale(" + 1.3 + ")";
+  } else {
+    background.style.transform =
+    "translateY(" + backgroundY + "%) " + "scale(" + 1.15 + ")";
+  }
+});
+
 
 const setTime = () => {
   const now = new Date();
@@ -127,7 +144,7 @@ const makeSlides = () => {
   for (const img of imgs) {
     const slide = document.createElement('div');
     slide.className = 'slide';
-    slide.style.backgroundImage="url("+img+")";
+    slide.style.backgroundImage = "url(" + img + ")";
     slides.push(slide);
   }
 };
@@ -300,10 +317,10 @@ const createTitleDiv = (name) => {
 const changeDay = (direction) => {
   let newDate = new Date(dateVar);
   console.log('NewDate: ' + newDate.getDate());
-  if(direction === 'forward'){
+  if (direction === 'forward') {
     console.log('Forward');
     newDate.setDate(newDate.getDate() + 1);
-  }else{
+  } else {
     console.log('Back');
     newDate.setDate(newDate.getDate() - 1);
   }
@@ -340,11 +357,11 @@ const isNumeric = (str) => {
 };
 
 const timeString = (seconds) => {
-  let minutes = Math.floor(seconds/60);
+  let minutes = Math.floor(seconds / 60);
   let time = '';
   if (minutes >= 60) {
-    let hours = Math.floor(minutes/60);
-    time = hours + 'h' + (minutes-(hours*60)) + 'min';
+    let hours = Math.floor(minutes / 60);
+    time = hours + 'h' + (minutes - (hours * 60)) + 'min';
   } else {
     time = minutes + 'min';
   }
@@ -390,15 +407,15 @@ const loadHSLData = async (id) => {
   }
   for (const ride of stop.stoptimesWithoutPatterns) {
     const departureSeconds = ride.scheduledDeparture - secondsFromMidnight;
-    const departureTime =  timeString(departureSeconds);
-    if (departureSeconds >= 0){
-    const li = document.createElement('li');
-    li.classList.add('timeTable');
-    li.innerHTML += `
+    const departureTime = timeString(departureSeconds);
+    if (departureSeconds >= 0) {
+      const li = document.createElement('li');
+      li.classList.add('timeTable');
+      li.innerHTML += `
     <div class="time">${departureTime}</div>
     <div class="bus">${ride.trip.routeShortName}</div>
     <div class="destination">${ride.trip.tripHeadsign}</div>`;
-    stopList.appendChild(li);
+      stopList.appendChild(li);
     }
   }
   stopName.tabIndex = 0;
@@ -448,7 +465,7 @@ const insertHslHeader = () => {
   const header = document.querySelector('.hslHeader');
   header.innerHTML = '';
 
-  if (language === 'fi'){
+  if (language === 'fi') {
     header.innerHTML = 'Aikataulut';
   } if (language === 'en') {
     header.innerHTML = 'Timetables';
@@ -568,7 +585,7 @@ myyrmaki.addEventListener('click', () => {
   localStorage.setItem('currentCampus', currentCampus);
   refreshDate();
   refresh();
-  if(menuOpened){
+  if (menuOpened) {
     changeNavBar();
   }
 });
@@ -578,7 +595,7 @@ karamalmi.addEventListener('click', () => {
   localStorage.setItem('currentCampus', currentCampus);
   refreshDate();
   refresh();
-  if(menuOpened){
+  if (menuOpened) {
     changeNavBar();
   }
 });
@@ -588,7 +605,7 @@ myllypuro.addEventListener('click', () => {
   localStorage.setItem('currentCampus', currentCampus);
   refreshDate();
   refresh();
-  if(menuOpened){
+  if (menuOpened) {
     changeNavBar();
   }
 });
@@ -598,7 +615,7 @@ arabia.addEventListener('click', () => {
   localStorage.setItem('currentCampus', currentCampus);
   refreshDate();
   refresh();
-  if(menuOpened){
+  if (menuOpened) {
     changeNavBar();
   }
 });
