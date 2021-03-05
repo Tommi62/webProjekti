@@ -18,6 +18,7 @@ const carouselRight = document.querySelector(".carouselRight");
 const carouselLeft = document.querySelector(".carouselLeft");
 const footer = document.querySelector(".footer");
 const hslBox = document.querySelector(".hslBox");
+const mediaQuery = window.matchMedia('(max-width: 500px)');
 
 let carouselTimer;
 let dateTimer;
@@ -344,7 +345,8 @@ const renderSodexoMenu = (data, name) => {
 
     const priceContainer = document.createElement("div");
     priceContainer.classList.add("menuPrice");
-    priceContainer.innerHTML = "<br><p>" + item.price + "</p>";
+    const price = handleChange(mediaQuery, item.price);
+    priceContainer.innerHTML = "<br><p>" + price + "</p>";
 
     const codeContainer = document.createElement("div");
     codeContainer.classList.add("menuCode");
@@ -364,6 +366,19 @@ const renderSodexoMenu = (data, name) => {
   resContainer.appendChild(menuContainer);
   addResCarouselEventListeners();
 };
+
+const handleChange = (e, price) => {
+  if (e.matches) {
+    console.log('Media Query Matched!');
+    let modPrice = price.replace(/\//g, '');
+    let regex = /\s+([€])/g;
+    return modPrice.replace(regex, '€');
+  } else {
+    return price;
+  }
+};
+
+mediaQuery.addListener(handleChange);
 
 const createTitleDiv = (name) => {
   const titleDiv = document.createElement("div");
