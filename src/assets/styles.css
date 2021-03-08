@@ -67,6 +67,11 @@ footer h3 {
   color: var(--orange);
 }
 
+footer div {
+  overflow-wrap: break-word;
+  padding: 1rem;
+}
+
 footer div:nth-child(2) {
   background-color: var(--orange);
   color: white;
@@ -161,7 +166,7 @@ footer div:nth-child(2) h3 {
   border-radius: 3px;
 }
 
-.notSelectedLanguage:hover {
+.notSelectedLanguage:hover .notSelectedLanguage:active {
   width: 3rem;
   background-size: 100%;
   margin-right: 0;
@@ -190,7 +195,7 @@ footer div:nth-child(2) h3 {
   background-image: url("united-kingdom.svg");
 }
 
-.campuses button:hover {
+.campuses button:hover .campuses button:active {
   background-color: #ff9968;
   color: white;
   border-radius: 0.3rem;
@@ -381,11 +386,11 @@ footer div:nth-child(2) h3 {
   cursor: pointer;
 }
 
-.resCarouselLeft:hover {
+.resCarouselLeft:hover .resCarouselLeft:active {
   opacity: 1;
 }
 
-.resCarouselRight:hover {
+.resCarouselRight:hover .resCarouselRight:active{
   opacity: 1;
 }
 
@@ -478,7 +483,7 @@ footer div:nth-child(2) h3 {
   cursor: pointer;
 }
 
-.carouselLeft:hover {
+.carouselLeft:hover .carouselLeft:active {
   background: rgb(242, 101, 34);
   background: linear-gradient(
     90deg,
@@ -488,7 +493,7 @@ footer div:nth-child(2) h3 {
   opacity: 1;
 }
 
-.carouselRight:hover {
+.carouselRight:hover .carouselRight:active {
   background: rgb(255, 255, 255);
   background: linear-gradient(
     90deg,
