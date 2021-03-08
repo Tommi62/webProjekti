@@ -132,15 +132,17 @@ const swipeChangeSlide = (evt) => {
 
 const swipeChangeMenuDay = (evt) => {
   let touch = handleTouchMove(evt);
-  let title = document.querySelector('.restaurantName');
-  title.style.opacity = 0;
   if (touch === 'right') {
+    let title = document.querySelector('.restaurantName');
+    title.style.opacity = 0;
     title.style.transform = "translate(20%, 0%)";
     setTimeout(function () {
       changeDay("backward");
     }, 300);
   }
   if (touch === 'left') {
+    let title = document.querySelector('.restaurantName');
+    title.style.opacity = 0;
     title.style.transform = "translate(-20%, 0%)";
     setTimeout(function () {
       changeDay("forward");
