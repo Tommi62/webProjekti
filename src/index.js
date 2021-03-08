@@ -36,8 +36,10 @@ document.addEventListener("scroll", (evt) => {
   let scrollPercent = scrollTop / scrollArea || 0;
   let backgroundY = - (scrollPercent * window.innerHeight) / 800;
   if (x.matches) {
+    backgroundY = - (scrollPercent * window.innerHeight) / 550;
+    let backgroundX = - (scrollPercent * window.innerHeight) / 1500;
     background.style.transform =
-      "translateY(" + backgroundY + "%) " + "scale(" + 1.3 + ")";
+      "translateY(" + backgroundY + "%) " + "translateX(" + backgroundX + "%) " + "scale(" + 1.3 + ")";
   } else {
     background.style.transform =
       "translateY(" + backgroundY + "%) " + "scale(" + 1.20 + ")";
@@ -125,13 +127,24 @@ const swipeChangeSlide = (evt) => {
   }
 };
 
+
+
+
 const swipeChangeMenuDay = (evt) => {
   let touch = handleTouchMove(evt);
+  let title = document.querySelector('.restaurantName');
+  title.style.opacity = 0;
   if (touch === 'right') {
-    changeDay("backward");
+    title.style.transform = "translate(20%, 0%)";
+    setTimeout(function () {
+      changeDay("backward");
+    }, 300);
   }
   if (touch === 'left') {
-    changeDay("forward");
+    title.style.transform = "translate(-20%, 0%)";
+    setTimeout(function () {
+      changeDay("forward");
+    }, 300);
   }
 };
 
@@ -377,8 +390,8 @@ const createTitleDiv = (name) => {
   arrowLeft.innerHTML = leftImg;
   const thisDay = new Date().toLocaleDateString();
   let date;
-  if(todayAlt === thisDay){
-    if(language === 'fi'){
+  if (todayAlt === thisDay) {
+    if (language === 'fi') {
       date = 'Tänään';
     } else {
       date = 'Today';
@@ -386,7 +399,7 @@ const createTitleDiv = (name) => {
   } else {
     date = todayAlt;
   }
-  const restaurantName = "<h3>" + name + "<br>" + date + "</h3>";
+  const restaurantName = "<h3 class='restaurantName'>" + name + "<br>" + date + "</h3>";
   const arrowRight = document.createElement("div");
   arrowRight.classList.add("resCarouselRight");
   const rightImg =
@@ -425,13 +438,24 @@ const addResCarouselEventListeners = () => {
   const left = document.querySelector(".resCarouselLeft");
   left.addEventListener("click", () => {
     console.log("arrowLeft");
-    changeDay("backward");
+    let title = document.querySelector('.restaurantName');
+    title.style.opacity = 0;
+    title.style.transform = "translate(20%, 0%)";
+    setTimeout(function () {
+      changeDay("backward");
+    }, 300);
   });
 
   const right = document.querySelector(".resCarouselRight");
   right.addEventListener("click", () => {
     console.log("arrowRight");
-    changeDay("forward");
+    let title = document.querySelector('.restaurantName');
+    title.style.opacity = 0;
+    title.style.transform = "translate(-20%, 0%)";
+    setTimeout(function () {
+      changeDay("forward");
+    }, 300);
+
   });
 };
 
