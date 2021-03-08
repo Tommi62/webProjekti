@@ -128,6 +128,15 @@ const fazerPrices = [
   },
 ];
 
+const menuTranslator = {
+  Kotiruoka: 'Home cooking',
+  Kasvisruoka: 'Vegetarian food',
+  Leipälounas: 'Bread lunch',
+  Jälkiruoka: 'Dessert',
+  ['Kotiruoka 1']: 'Home cooking 1',
+  ['Kotiruoka 2']: 'Home cooking 2',
+};
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
@@ -355,7 +364,12 @@ const renderSodexoMenu = (data, name) => {
 
     const nameContainer = document.createElement("div");
     nameContainer.classList.add("menuName");
-    nameContainer.innerHTML = "<h4>" + item.category + "</h4>";
+    if(language === 'en'){
+      const translated = translateCategoryName(item.category);
+      nameContainer.innerHTML = "<h4>" + translated + "</h4>";
+    } else {
+      nameContainer.innerHTML = "<h4>" + item.category + "</h4>";
+    }
     nameContainer.innerHTML += "<p>" + item.title + "</p>";
 
     const infoContainer = document.createElement("div");
@@ -383,6 +397,15 @@ const renderSodexoMenu = (data, name) => {
   resContainer.appendChild(titleDiv);
   resContainer.appendChild(menuContainer);
   addResCarouselEventListeners();
+};
+
+const translateCategoryName = (name) => {
+  if(menuTranslator.hasOwnProperty(name)){
+    const translated = menuTranslator[name];
+    return translated;
+  } else {
+    return name;
+  }
 };
 
 const handleChange = (e, price) => {
