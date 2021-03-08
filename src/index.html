@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="fi">
   <head>
     <meta charset="utf-8" />
+    <meta name="description" content="Shows you information of four Metropolia campuses.">
+    <meta name="keywords" content="Metropolia, University of applied scienses, Karamalmi, Myllypuro, Myyrmäki, Arabia, Sodexo, Fazer, HSL">
     <title><%= htmlWebpackPlugin.options.title %></title>
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
@@ -23,8 +25,8 @@
             src="./assets/Metropolia_Ammattikorkeakoulu_logo.svg"
             alt="Metropolia logo"
         /></a>
-        <button class="fi"></button>
-        <button class="en"></button>
+        <button class="fi" aria-label="finnish"></button>
+        <button class="en" aria-label="english"></button>
       </div>
       <div class="btns">
         <a href="javascript:void(0);" class="icon">
@@ -50,10 +52,10 @@
             <div class="carousel">
               <div class="carouselDirection">
                 <div class="carouselLeft">
-                  <img class="arrowLeft" src="./assets/back.svg" alt="" />
+                  <img class="arrowLeft" src="./assets/back.svg" alt="Previous slide arrow" />
                 </div>
                 <div class="carouselRight">
-                  <img class="arrowRight" src="./assets/back.svg" alt="" />
+                  <img class="arrowRight" src="./assets/back.svg" alt="Next slide arrow" />
                 </div>
               </div>
               <aside class="info colPadding"></aside>
@@ -66,7 +68,7 @@
             <div class="weatherBox">
             </div>
             <div class="hslBox">
-              <img class="hslLogo" src="./assets/HSL_logo.svg" alt="" />
+              <img class="hslLogo" src="./assets/HSL_logo.svg" alt="Hsl logo" />
               <h3 class="hslHeader"></h3>
               <div class="hsl-data"></div>
             </div>

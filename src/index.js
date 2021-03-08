@@ -63,7 +63,7 @@ const restaurants = [
   {
     title_fi: "Myyrmäen kampus",
     title_en: "Myyrmäki campus",
-    displayName: "Myyrmäen Sodexo",
+    displayName: "Sodexo Myyrmäki",
     name: "myyrmaki",
     id: 152,
     lat: 60.2586191,
@@ -73,7 +73,7 @@ const restaurants = [
   {
     title_fi: "Karamalmin kampus",
     title_en: "Karamalmi campus",
-    displayName: "Karaportin Fazer Food & Co",
+    displayName: "Fazer Food & Co Karaportti",
     name: "karamalmi",
     id: 270540,
     lat: 60.2238794,
@@ -83,7 +83,7 @@ const restaurants = [
   {
     title_fi: "Myllypuron kampus",
     title_en: "Myllypuro campus",
-    displayName: "Myllypuron Sodexo",
+    displayName: "Sodexo Myllypuro",
     name: "myllypuro",
     id: 158,
     lat: 60.2236145,
@@ -93,7 +93,7 @@ const restaurants = [
   {
     title_fi: "Arabian kampus",
     title_en: "Arabia campus",
-    displayName: "Arabian Sodexo",
+    displayName: "Sodexo Arabia",
     name: "arabia",
     id: 158,
     lat: 60.2103774,
@@ -443,7 +443,18 @@ const createTitleDiv = (name) => {
   const leftImg =
     '<img class="arrowLeft" src="./assets/back.svg" alt="Left Arrow"/>';
   arrowLeft.innerHTML = leftImg;
-  const restaurantName = "<h3>" + name + "<br>" + todayAlt + "</h3>";
+  const thisDay = new Date().toLocaleDateString();
+  let date;
+  if(todayAlt === thisDay){
+    if(language === 'fi'){
+      date = 'Tänään';
+    } else {
+      date = 'Today';
+    }
+  } else {
+    date = todayAlt;
+  }
+  const restaurantName = "<h3>" + name + "<br>" + date + "</h3>";
   const arrowRight = document.createElement("div");
   arrowRight.classList.add("resCarouselRight");
   const rightImg =
@@ -746,6 +757,7 @@ const refresh = () => {
 langFi.addEventListener("click", () => {
   if (language === "en") {
     language = "fi";
+    localStorage.setItem('language', language);
     refresh();
   }
 });
@@ -753,6 +765,7 @@ langFi.addEventListener("click", () => {
 langEn.addEventListener("click", () => {
   if (language === "fi") {
     language = "en";
+    localStorage.setItem('language', language);
     refresh();
   }
 });
