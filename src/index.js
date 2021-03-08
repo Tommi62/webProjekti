@@ -1,10 +1,9 @@
-import SodexoData from "./modules/sodexo-data";
-import FazerData from "./modules/fazer-data";
 import { getLocation, getDistance } from "./modules/calculate-distance";
 import HSLData from "./modules/hsl-data";
 import { parseImgs, parseCampusInfo } from "./modules/info-data";
 import { getWeatherLatLon } from './modules/weather-data';
 import { handleTouchStart, handleTouchMove } from './modules/swiper';
+import RestaurantData from './modules/restaurant-info';
 
 
 const resContainer = document.querySelector(".restaurant");
@@ -59,86 +58,6 @@ const setTime = () => {
   secondsFromMidnight = Math.round((now.getTime() - then.getTime()) / 1000);
 };
 
-const restaurants = [
-  {
-    title_fi: "Myyrmäen kampus",
-    title_en: "Myyrmäki campus",
-    displayName: "Sodexo Myyrmäki",
-    name: "myyrmaki",
-    id: 152,
-    lat: 60.2586191,
-    lon: 24.8432836,
-    type: SodexoData,
-  },
-  {
-    title_fi: "Karamalmin kampus",
-    title_en: "Karamalmi campus",
-    displayName: "Fazer Food & Co Karaportti",
-    name: "karamalmi",
-    id: 270540,
-    lat: 60.2238794,
-    lon: 24.7559603,
-    type: FazerData,
-  },
-  {
-    title_fi: "Myllypuron kampus",
-    title_en: "Myllypuro campus",
-    displayName: "Sodexo Myllypuro",
-    name: "myllypuro",
-    id: 158,
-    lat: 60.2236145,
-    lon: 25.0761622,
-    type: SodexoData,
-  },
-  {
-    title_fi: "Arabian kampus",
-    title_en: "Arabia campus",
-    displayName: "Sodexo Arabia",
-    name: "arabia",
-    id: 158,
-    lat: 60.2103774,
-    lon: 24.9788837,
-    type: SodexoData,
-  },
-];
-
-const fazerPrices = [
-  {
-    group_fi: 'Opiskelijat',
-    group_en: 'Students',
-    prices: '1,90€/2,70€/5,71€'
-  },
-  {
-    group_fi: 'Metropolian henkilökunta',
-    group_en: 'Metropolia staff',
-    prices: '4,70€/6,10€/7,20€'
-  },
-  {
-    group_fi: 'Muut',
-    group_en: 'Other',
-    prices: '5,70€/7,15€/9,20€'
-  },
-  {
-    group_fi: 'Jälkiruokakahvi',
-    group_en: 'Dessert coffee',
-    prices: '1,10€'
-  },
-  {
-    group_fi: 'Päivän jälkiruoka',
-    group_en: 'Dessert of the day',
-    prices: '1,10€'
-  },
-];
-
-const menuTranslator = {
-  Kotiruoka: 'Home cooking',
-  Kasvisruoka: 'Vegetarian food',
-  Leipälounas: 'Bread lunch',
-  Jälkiruoka: 'Dessert',
-  ['Kotiruoka 1']: 'Home cooking 1',
-  ['Kotiruoka 2']: 'Home cooking 2',
-};
-
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
@@ -160,7 +79,7 @@ let language = localStorage.getItem("language") || "fi";
 
 const getMenu = async () => {
   updateUi();
-  for (const restaurant of restaurants) {
+  for (const restaurant of RestaurantData.restaurants) {
     if (restaurant.name === currentCampus) {
       try {
         const parsedMenu = await restaurant.type.getDailyMenu(
@@ -169,7 +88,7 @@ const getMenu = async () => {
           today
         );
         if (parsedMenu != "") {
-          if (restaurant.type === SodexoData) {
+          if (restaurant.type === RestaurantData.SodexoData) {
             renderSodexoMenu(parsedMenu, restaurant.displayName);
           } else {
             renderFazerMenu(parsedMenu, restaurant.displayName);
@@ -362,7 +281,7 @@ const createPriceContainer = () => {
     priceList.innerHTML = 'Price list';
   }
   priceContainer.appendChild(priceList);
-  for (const object of fazerPrices) {
+  for (const object of RestaurantData.fazerPrices) {
     const container = document.createElement('div');
     container.classList.add('priceListObject');
     const group = document.createElement('h5');
@@ -427,8 +346,8 @@ const renderSodexoMenu = (data, name) => {
 };
 
 const translateCategoryName = (name) => {
-  if (menuTranslator.hasOwnProperty(name)) {
-    const translated = menuTranslator[name];
+  if (RestaurantData.menuTranslator.hasOwnProperty(name)) {
+    const translated = RestaurantData.menuTranslator[name];
     return translated;
   } else {
     return name;
@@ -610,7 +529,7 @@ const getNearestCampus = () => {
     .then((position) => {
       const currentLatitude = position.coords.latitude;
       const currentLongitude = position.coords.longitude;
-      for (const restaurant of restaurants) {
+      for (const restaurant of RestaurantData.restaurants) {
         const distance = getDistance(
           currentLatitude,
           currentLongitude,
@@ -621,7 +540,7 @@ const getNearestCampus = () => {
         distances.push(distance);
       }
       const i = distances.indexOf(Math.min(...distances));
-      currentCampus = restaurants[i].name;
+      currentCampus = RestaurantData.restaurants[i].name;
       localStorage.setItem('currentCampus', currentCampus);
       console.log("Ready " + currentCampus);
       getMenu();
@@ -648,7 +567,7 @@ const insertHslHeader = () => {
 const getStops = async () => {
   document.querySelector('.hsl-data').innerHTML = '';
   insertHslHeader();
-  for (const restaurant of restaurants) {
+  for (const restaurant of RestaurantData.restaurants) {
     if (restaurant.name === currentCampus) {
       if (restaurant.name === "myyrmaki") {
         loadHSLData("HSL:4150551");
@@ -689,7 +608,7 @@ const createCampusInfo = (lang, campus) => {
 const updateUi = () => {
   createCampusInfo(language, currentCampus);
   banner.style.backgroundImage = 'url("./assets/' + currentCampus + '.jpg")';
-  for (const restaurant of restaurants) {
+  for (const restaurant of RestaurantData.restaurants) {
     const campusButton = document.querySelector("." + restaurant.name);
     if (!campusButton.classList.contains("campus")) {
       campusButton.classList.add("campus");
@@ -723,7 +642,7 @@ const updateUi = () => {
 };
 
 const renderWeather = async () => {
-  for (const restaurant of restaurants) {
+  for (const restaurant of RestaurantData.restaurants) {
     if (restaurant.name === currentCampus) {
       const weatherData = await getWeatherLatLon(restaurant.lat, restaurant.lon);
       const weatherBox = document.querySelector('.weatherBox');
