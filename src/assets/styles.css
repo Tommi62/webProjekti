@@ -234,7 +234,7 @@ footer div:nth-child(2) h3 {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -354,6 +354,11 @@ footer div:nth-child(2) h3 {
   color: white;
   background-color: var(--orange);
   text-align: center;
+}
+
+.resTitle + p {
+  text-align: center;
+  margin: 1rem;
 }
 
 .resCarouselLeft {
@@ -533,15 +538,28 @@ footer div:nth-child(2) h3 {
 }
 
 .weatherBox img {
+  height: 70px;
+  width: 70px;
   float: left;
 }
 
+.weatherDiv {
+  margin-left: 1rem;
+  height: 70px;
+  width: calc(100% - 70px - 1rem);
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  float: right;
+  justify-content: center;
+}
+
 .weatherBox h3 {
-  padding-right: 1rem;
   text-align: right;
   float: right;
-  width: calc(100% - 100px);
+  width: 100%;
   font-weight: 100;
+  padding-right: 1.5rem;
 }
 
 .weatherDegrees {
@@ -549,7 +567,6 @@ footer div:nth-child(2) h3 {
 }
 
 .weatherText {
-  margin-top: 20px;
   font-size: 1.4rem;
 }
 
