@@ -196,9 +196,7 @@ const noMenuError = (restaurant) => {
   console.log("current: " + currentCampus);
 };
 
-let slides = [];
-
-const swipeChange = (evt) => {
+const swipeChangeSlide = (evt) => {
   let touch = handleTouchMove(evt);
   if (touch === 'right') {
     infoCarouselLeft();
@@ -207,6 +205,21 @@ const swipeChange = (evt) => {
     infoCarouselRight();
   }
 };
+
+const swipeChangeMenuDay = (evt) => {
+  let touch = handleTouchMove(evt);
+  if (touch === 'right') {
+    changeDay("backward");
+  }
+  if (touch === 'left') {
+    changeDay("forward");
+  }
+};
+
+resContainer.addEventListener('touchstart', handleTouchStart);
+resContainer.addEventListener('touchmove', swipeChangeMenuDay);
+
+let slides = [];
 
 const makeSlides = () => {
   slides.splice(0, slides.length);
@@ -217,7 +230,7 @@ const makeSlides = () => {
     slide.className = 'slide';
     slide.style.backgroundImage = "url(" + img + ")";
     slide.addEventListener('touchstart', handleTouchStart);
-    slide.addEventListener('touchmove', swipeChange);
+    slide.addEventListener('touchmove', swipeChangeSlide);
     slides.push(slide);
   }
 };
@@ -378,7 +391,7 @@ const renderSodexoMenu = (data, name) => {
 
     const nameContainer = document.createElement("div");
     nameContainer.classList.add("menuName");
-    if(language === 'en'){
+    if (language === 'en') {
       const translated = translateCategoryName(item.category);
       nameContainer.innerHTML = "<h4>" + translated + "</h4>";
     } else {
@@ -414,7 +427,7 @@ const renderSodexoMenu = (data, name) => {
 };
 
 const translateCategoryName = (name) => {
-  if(menuTranslator.hasOwnProperty(name)){
+  if (menuTranslator.hasOwnProperty(name)) {
     const translated = menuTranslator[name];
     return translated;
   } else {
@@ -704,8 +717,11 @@ const renderWeather = async () => {
       const weatherData = await getWeatherLatLon(restaurant.lat, restaurant.lon);
       const weatherBox = document.querySelector('.weatherBox');
       const img = document.createElement('img');
+      const div = document.createElement('div');
       const text = document.createElement('h3');
       const degrees = document.createElement('h3');
+      img.alt = weatherData.weather[0].description;
+      div.classList.add('weatherDiv');
       text.classList.add('weatherText');
       degrees.classList.add('weatherDegrees');
 
@@ -715,8 +731,9 @@ const renderWeather = async () => {
 
       weatherBox.innerHTML = '';
       weatherBox.appendChild(img);
-      weatherBox.appendChild(text);
-      weatherBox.appendChild(degrees);
+      div.appendChild(text);
+      div.appendChild(degrees);
+      weatherBox.appendChild(div);
     }
   }
 };

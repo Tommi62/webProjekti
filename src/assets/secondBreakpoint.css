@@ -56,12 +56,17 @@ footer div:nth-child(2) {
   margin-bottom: 0;
 }
 
+.weatherBox{
+  width: 90%;
+}
+
 .hsl-data {
   margin: 1rem 0;
   width: 100%;
 }
 
 .hslBox {
+  margin-bottom: 20px;
   margin-top: 0;
   width: 90%;
 }
