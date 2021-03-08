@@ -322,7 +322,8 @@ footer div:nth-child(2) h3 {
 }
 
 .menuCode {
-  margin: 0.5rem;
+  margin: 0.5rem 0 0.5rem 1rem;
+  width: 3rem;
 }
 
 .restaurant h3{
@@ -460,6 +461,7 @@ footer div:nth-child(2) h3 {
   width: 3rem;
   opacity: 0;
   transition: 0.3s;
+  cursor: pointer;
 }
 
 .carouselRight {
@@ -473,6 +475,7 @@ footer div:nth-child(2) h3 {
   width: 3rem;
   opacity: 0;
   transition: 0.3s;
+  cursor: pointer;
 }
 
 .carouselLeft:hover {

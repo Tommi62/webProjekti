@@ -1,26 +1,25 @@
-import SodexoData from './modules/sodexo-data';
-import FazerData from './modules/fazer-data';
-import { getLocation, getDistance } from './modules/calculate-distance';
-import HSLData from './modules/hsl-data';
-import { parseImgs, parseCampusInfo } from './modules/info-data';
+import SodexoData from "./modules/sodexo-data";
+import FazerData from "./modules/fazer-data";
+import { getLocation, getDistance } from "./modules/calculate-distance";
+import HSLData from "./modules/hsl-data";
+import { parseImgs, parseCampusInfo } from "./modules/info-data";
 import { getWeatherLatLon } from './modules/weather-data';
 
-
-
-const resContainer = document.querySelector('.restaurant');
-const infoContainer = document.querySelector('.info');
-const banner = document.querySelector('.banner');
-const title = document.querySelector('.title');
-const langFi = document.querySelector('.fi');
-const langEn = document.querySelector('.en');
-const myyrmaki = document.querySelector('.myyrmaki');
-const karamalmi = document.querySelector('.karamalmi');
-const myllypuro = document.querySelector('.myllypuro');
-const arabia = document.querySelector('.arabia');
-const carouselRight = document.querySelector('.carouselRight');
-const carouselLeft = document.querySelector('.carouselLeft');
-const footer = document.querySelector('.footer');
-const hslBox = document.querySelector('.hslBox');
+const resContainer = document.querySelector(".restaurant");
+const infoContainer = document.querySelector(".info");
+const banner = document.querySelector(".banner");
+const title = document.querySelector(".title");
+const langFi = document.querySelector(".fi");
+const langEn = document.querySelector(".en");
+const myyrmaki = document.querySelector(".myyrmaki");
+const karamalmi = document.querySelector(".karamalmi");
+const myllypuro = document.querySelector(".myllypuro");
+const arabia = document.querySelector(".arabia");
+const carouselRight = document.querySelector(".carouselRight");
+const carouselLeft = document.querySelector(".carouselLeft");
+const footer = document.querySelector(".footer");
+const hslBox = document.querySelector(".hslBox");
+const mediaQuery = window.matchMedia('(max-width: 500px)');
 
 let carouselTimer;
 let dateTimer;
@@ -364,7 +363,8 @@ const renderSodexoMenu = (data, name) => {
 
     const priceContainer = document.createElement("div");
     priceContainer.classList.add("menuPrice");
-    priceContainer.innerHTML = "<br><p>" + item.price + "</p>";
+    const price = handleChange(mediaQuery, item.price);
+    priceContainer.innerHTML = "<br><p>" + price + "</p>";
 
     const codeContainer = document.createElement("div");
     codeContainer.classList.add("menuCode");
@@ -384,6 +384,19 @@ const renderSodexoMenu = (data, name) => {
   resContainer.appendChild(menuContainer);
   addResCarouselEventListeners();
 };
+
+const handleChange = (e, price) => {
+  if (e.matches) {
+    console.log('Media Query Matched!');
+    let modPrice = price.replace(/\//g, '');
+    let regex = /\s+([€])/g;
+    return modPrice.replace(regex, '€');
+  } else {
+    return price;
+  }
+};
+
+mediaQuery.addListener(handleChange);
 
 const createTitleDiv = (name) => {
   const titleDiv = document.createElement("div");
@@ -548,6 +561,7 @@ const getNearestCampus = () => {
       }
       const i = distances.indexOf(Math.min(...distances));
       currentCampus = restaurants[i].name;
+      localStorage.setItem('currentCampus', currentCampus);
       console.log("Ready " + currentCampus);
       getMenu();
       getStops();
@@ -555,6 +569,7 @@ const getNearestCampus = () => {
     .catch((err) => {
       console.error(err.message);
       getMenu();
+      getStops();
     });
 };
 
@@ -674,7 +689,6 @@ const renderWeather = async () => {
 const init = () => {
   setTime();
   getMenu();
-  getStops();
   getNearestCampus();
   makeSlides();
   infoCarouselRefresh();

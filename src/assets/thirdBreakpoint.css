@@ -11,3 +11,30 @@
 .hslHeader {
   width: 42%;
 }
+
+.fazerContent{
+  flex-direction: column;
+}
+
+.fazerPrices{
+  margin: 1rem;
+}
+
+.menuItem{
+  font-size: 0.9rem;
+}
+
+.menuName {
+  width: 70%;
+}
+
+.menuPrice {
+  width: 20%;
+  margin-left: auto;
+}
+
+.menuCode {
+  width: 1rem;
+  margin-left: 2rem;
+  margin-right: 0.5rem;
+}
