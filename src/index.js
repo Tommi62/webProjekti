@@ -41,7 +41,7 @@ document.addEventListener("scroll", (evt) => {
       "translateY(" + backgroundY + "%) " + "scale(" + 1.3 + ")";
   } else {
     background.style.transform =
-      "translateY(" + backgroundY + "%) " + "scale(" + 1.15 + ")";
+      "translateY(" + backgroundY + "%) " + "scale(" + 1.20 + ")";
   }
 });
 
