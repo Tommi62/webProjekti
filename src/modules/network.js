@@ -12,6 +12,20 @@ const getMenus = async (address) => {
   return menu;
 };
 
+const getWeather = async (address) => {
+  let response;
+  try {
+    response = await fetch(address);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} ${response.statusText}`);
+    }
+  } catch (error) {
+    console.error('getWeather error', error.message);
+  }
+  let weather = await response.json();
+  return weather;
+};
+
 const fetchPostJson = async (url, contentType, body, useProxy = false) => {
   const options = {
     method: 'POST',
@@ -33,4 +47,4 @@ const fetchPostJson = async (url, contentType, body, useProxy = false) => {
   return responseJson;
 };
 
-  export {getMenus, fetchPostJson};
+  export {getMenus, fetchPostJson, getWeather};

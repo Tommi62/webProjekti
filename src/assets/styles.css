@@ -512,6 +512,35 @@ footer div:nth-child(2) h3 {
   width: 17rem;
 }
 
+.weatherBox {
+  padding: 1rem;
+  width: 19rem;
+  background-color: rgb(255 255 255 / 90%);
+  border-radius: 3px;
+  margin-bottom: 40px;
+}
+
+.weatherBox img {
+  float: left;
+}
+
+.weatherBox h3 {
+  padding-right: 1rem;
+  text-align: right;
+  float: right;
+  width: calc(100% - 100px);
+  font-weight: 100;
+}
+
+.weatherDegrees {
+  font-size: 1.8rem;
+}
+
+.weatherText {
+  margin-top: 20px;
+  font-size: 1.4rem;
+}
+
 .hslBox {
   padding: 2rem 1rem;
   width: fit-content;

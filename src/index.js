@@ -3,6 +3,8 @@ import FazerData from './modules/fazer-data';
 import { getLocation, getDistance } from './modules/calculate-distance';
 import HSLData from './modules/hsl-data';
 import { parseImgs, parseCampusInfo } from './modules/info-data';
+import { getWeatherLatLon } from './modules/weather-data';
+
 
 
 const resContainer = document.querySelector('.restaurant');
@@ -33,7 +35,6 @@ document.addEventListener("scroll", (evt) => {
   let scrollTop = window.pageYOffset || window.scrollTop;
   let scrollPercent = scrollTop/scrollArea || 0;
   let backgroundY = - (scrollPercent*window.innerHeight) / 800;
-  console.log('backgrounf y:'+backgroundY);
   if (x.matches) {
     background.style.transform =
     "translateY(" + backgroundY + "%) " + "scale(" + 1.3 + ")";
@@ -55,7 +56,6 @@ const setTime = () => {
     0
   );
   secondsFromMidnight = Math.round((now.getTime() - then.getTime()) / 1000);
-  console.log("seconds from midnight: " + secondsFromMidnight);
 };
 
 const restaurants = [
@@ -66,7 +66,7 @@ const restaurants = [
     name: "myyrmaki",
     id: 152,
     lat: 60.2586191,
-    long: 24.8432836,
+    lon: 24.8432836,
     type: SodexoData,
   },
   {
@@ -76,7 +76,7 @@ const restaurants = [
     name: "karamalmi",
     id: 270540,
     lat: 60.2238794,
-    long: 24.7559603,
+    lon: 24.7559603,
     type: FazerData,
   },
   {
@@ -86,7 +86,7 @@ const restaurants = [
     name: "myllypuro",
     id: 158,
     lat: 60.2236145,
-    long: 25.0761622,
+    lon: 25.0761622,
     type: SodexoData,
   },
   {
@@ -96,7 +96,7 @@ const restaurants = [
     name: "arabia",
     id: 158,
     lat: 60.2103774,
-    long: 24.9788837,
+    lon: 24.9788837,
     type: SodexoData,
   },
 ];
@@ -541,7 +541,7 @@ const getNearestCampus = () => {
           currentLatitude,
           currentLongitude,
           restaurant.lat,
-          restaurant.long,
+          restaurant.lon,
           "K"
         );
         distances.push(distance);
@@ -584,7 +584,7 @@ const getStops = async () => {
       }
       const stops = await HSLData.getStopsByLocation(
         restaurant.lat,
-        restaurant.long
+        restaurant.lon
       );
       for (const stop of stops.data.stopsByRadius.edges) {
         const id = stop.node.stop.gtfsId;
@@ -646,6 +646,31 @@ const updateUi = () => {
   inactiveLanguageButton.classList.add("notSelectedLanguage");
 };
 
+const renderWeather = async () => {
+  for (const restaurant of restaurants) {
+    if (restaurant.name === currentCampus) {
+      const weatherData = await getWeatherLatLon(restaurant.lat, restaurant.lon);
+      const weatherBox = document.querySelector('.weatherBox');
+      const img = document.createElement('img');
+      const text = document.createElement('h3');
+      const degrees = document.createElement('h3');
+      text.classList.add('weatherText');
+      degrees.classList.add('weatherDegrees');
+
+      img.src = 'http://openweathermap.org/img/wn/'+weatherData.weather[0].icon+'@2x.png';
+      text.innerHTML = weatherData.weather[0].main;
+      degrees.innerHTML = Math.round(weatherData.main.temp)+'°C';
+
+      weatherBox.innerHTML = '';
+      weatherBox.appendChild(img);
+      weatherBox.appendChild(text);
+      weatherBox.appendChild(degrees);
+
+      console.log(weatherData);
+    }
+  }
+};
+
 const init = () => {
   setTime();
   getMenu();
@@ -653,6 +678,9 @@ const init = () => {
   getNearestCampus();
   makeSlides();
   infoCarouselRefresh();
+  renderWeather();
+
+
   carouselTimer = setInterval(infoCarouselRight, 13000);
   dateTimer = setInterval(setTime, 60000);
   const refreshStops = setInterval(getStops, 60000);
@@ -663,6 +691,7 @@ const refresh = () => {
   getStops();
   makeSlides();
   infoCarouselRefresh();
+  renderWeather();
 };
 
 langFi.addEventListener("click", () => {

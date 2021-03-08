@@ -66,6 +66,11 @@ footer div:nth-child(2) {
   width: 90%;
 }
 
+.weatherBox {
+  width: 90%;
+  padding: 1rem 2rem;
+}
+
 .hslLogo {
   margin-right: auto;
   text-align: left;
