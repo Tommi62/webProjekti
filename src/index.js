@@ -562,6 +562,7 @@ const getNearestCampus = () => {
       }
       const i = distances.indexOf(Math.min(...distances));
       currentCampus = restaurants[i].name;
+      localStorage.setItem('currentCampus', currentCampus);
       console.log("Ready " + currentCampus);
       getMenu();
       getStops();
@@ -569,6 +570,7 @@ const getNearestCampus = () => {
     .catch((err) => {
       console.error(err.message);
       getMenu();
+      getStops();
     });
 };
 
@@ -663,7 +665,6 @@ const updateUi = () => {
 const init = () => {
   setTime();
   getMenu();
-  getStops();
   getNearestCampus();
   makeSlides();
   infoCarouselRefresh();

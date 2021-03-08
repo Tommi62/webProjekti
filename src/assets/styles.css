@@ -461,6 +461,7 @@ footer div:nth-child(2) h3 {
   width: 3rem;
   opacity: 0;
   transition: 0.3s;
+  cursor: pointer;
 }
 
 .carouselRight {
@@ -474,6 +475,7 @@ footer div:nth-child(2) h3 {
   width: 3rem;
   opacity: 0;
   transition: 0.3s;
+  cursor: pointer;
 }
 
 .carouselLeft:hover {
