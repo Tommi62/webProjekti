@@ -42,13 +42,13 @@
 }
 
 .footer div {
-  height: 100px;
+  height: min-content;
   width: 100%;
-  padding: 0 20px;
+  padding: 10px 20px;
 }
 
 footer div:nth-child(2) {
-  height: 100px;
+  height: min-content;
   width: 100%;
 }
 
@@ -64,11 +64,6 @@ footer div:nth-child(2) {
 .hslBox {
   margin-top: 0;
   width: 90%;
-}
-
-.weatherBox {
-  width: 90%;
-  padding: 1rem 2rem;
 }
 
 .hslLogo {
