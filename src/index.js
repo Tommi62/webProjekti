@@ -4,6 +4,8 @@ import { getLocation, getDistance } from "./modules/calculate-distance";
 import HSLData from "./modules/hsl-data";
 import { parseImgs, parseCampusInfo } from "./modules/info-data";
 import { getWeatherLatLon } from './modules/weather-data';
+import { handleTouchStart, handleTouchMove } from './modules/swiper';
+
 
 const resContainer = document.querySelector(".restaurant");
 const infoContainer = document.querySelector(".info");
@@ -32,14 +34,14 @@ let x = window.matchMedia("(max-width: 800px)");
 document.addEventListener("scroll", (evt) => {
   let scrollArea = 1000 - window.innerHeight;
   let scrollTop = window.pageYOffset || window.scrollTop;
-  let scrollPercent = scrollTop/scrollArea || 0;
-  let backgroundY = - (scrollPercent*window.innerHeight) / 800;
+  let scrollPercent = scrollTop / scrollArea || 0;
+  let backgroundY = - (scrollPercent * window.innerHeight) / 800;
   if (x.matches) {
     background.style.transform =
-    "translateY(" + backgroundY + "%) " + "scale(" + 1.3 + ")";
+      "translateY(" + backgroundY + "%) " + "scale(" + 1.3 + ")";
   } else {
     background.style.transform =
-    "translateY(" + backgroundY + "%) " + "scale(" + 1.15 + ")";
+      "translateY(" + backgroundY + "%) " + "scale(" + 1.15 + ")";
   }
 });
 
@@ -187,6 +189,16 @@ const noMenuError = (restaurant) => {
 
 let slides = [];
 
+const swipeChange = (evt) => {
+  let touch = handleTouchMove(evt);
+  if (touch === 'right') {
+    infoCarouselLeft();
+  }
+  if (touch === 'left') {
+    infoCarouselRight();
+  }
+};
+
 const makeSlides = () => {
   slides.splice(0, slides.length);
   infoContainer.innerHTML = "";
@@ -195,6 +207,8 @@ const makeSlides = () => {
     const slide = document.createElement('div');
     slide.className = 'slide';
     slide.style.backgroundImage = "url(" + img + ")";
+    slide.addEventListener('touchstart', handleTouchStart);
+    slide.addEventListener('touchmove', swipeChange);
     slides.push(slide);
   }
 };
@@ -320,18 +334,18 @@ const createPriceContainer = () => {
   priceContainer.classList.add('fazerPrices');
   const priceList = document.createElement('h4');
 
-  if(language === 'fi'){
+  if (language === 'fi') {
     priceList.innerHTML = 'Hinnasto';
   } else {
     priceList.innerHTML = 'Price list';
   }
   priceContainer.appendChild(priceList);
-  for(const object of fazerPrices){
+  for (const object of fazerPrices) {
     const container = document.createElement('div');
     container.classList.add('priceListObject');
     const group = document.createElement('h5');
     const price = document.createElement('p');
-    if(language === 'fi'){
+    if (language === 'fi') {
       group.innerHTML = object.group_fi;
     } else {
       group.innerHTML = object.group_en;
@@ -368,7 +382,7 @@ const renderSodexoMenu = (data, name) => {
 
     const codeContainer = document.createElement("div");
     codeContainer.classList.add("menuCode");
-    if(item.code !== undefined){
+    if (item.code !== undefined) {
       codeContainer.innerHTML = "<br><p>" + item.code + "</p>";
     } else {
       codeContainer.innerHTML = "<br><p>" + ' ' + "</p>";
@@ -672,16 +686,14 @@ const renderWeather = async () => {
       text.classList.add('weatherText');
       degrees.classList.add('weatherDegrees');
 
-      img.src = 'http://openweathermap.org/img/wn/'+weatherData.weather[0].icon+'@2x.png';
+      img.src = 'http://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png';
       text.innerHTML = weatherData.weather[0].main;
-      degrees.innerHTML = Math.round(weatherData.main.temp)+'°C';
+      degrees.innerHTML = Math.round(weatherData.main.temp) + '°C';
 
       weatherBox.innerHTML = '';
       weatherBox.appendChild(img);
       weatherBox.appendChild(text);
       weatherBox.appendChild(degrees);
-
-      console.log(weatherData);
     }
   }
 };

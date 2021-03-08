@@ -30,7 +30,6 @@ const parseImgs = (lang) => {
   for (let i = 1; i <= slideAmount; i++) {
     infoList.push("./assets/slides/" + lang + "/" + i + ".png");
   }
-  console.log(infoList);
   return infoList;
 };
 
