@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --open --config webpack.dev.js",
+    "docs": "jsdoc src -r -c conf.json -d docs",
     "build": "webpack --config webpack.prod.js"
   },
   "keywords": [],
@@ -27,5 +28,7 @@
     "workbox-webpack-plugin": "^6.1.0",
     "write-file-webpack-plugin": "^4.5.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "jsdoc": "^3.6.6"
+  }
 }
