@@ -117,6 +117,211 @@ const noMenuError = (restaurant) => {
   console.log("current: " + currentCampus);
 };
 
+const NoMenuFoundNotification = (message, name) => {
+  console.log("NoMenuFound " + name);
+  resContainer.innerHTML = "";
+  const titleDiv = createTitleDiv(name);
+  const noMenuMessage = `<p>${message}</p>`;
+  resContainer.appendChild(titleDiv);
+  resContainer.innerHTML += noMenuMessage;
+  addResCarouselEventListeners();
+};
+
+const renderFazerMenu = (data, name) => {
+  resContainer.innerHTML = "";
+  const titleDiv = createTitleDiv(name);
+  const content = document.createElement('div');
+  content.classList.add('fazerContent');
+  const ul = document.createElement("ul");
+  for (const item of data) {
+    const listItem = document.createElement("li");
+    listItem.textContent = item;
+    ul.appendChild(listItem);
+  }
+  const priceContainer = createFazerPriceContainer();
+  content.appendChild(ul);
+  content.appendChild(priceContainer);
+  resContainer.appendChild(titleDiv);
+  resContainer.appendChild(content);
+  addResCarouselEventListeners();
+};
+
+const renderSodexoMenu = (data, name) => {
+  resContainer.innerHTML = "";
+  const titleDiv = createTitleDiv(name);
+  const menuContainer = document.createElement("div");
+  menuContainer.classList.add("menu");
+  for (const item of data) {
+    const mealContainer = document.createElement("div");
+    mealContainer.classList.add("menuItem");
+
+    const nameContainer = document.createElement("div");
+    nameContainer.classList.add("menuName");
+    if (language === 'en') {
+      const translated = translateCategoryName(item.category);
+      nameContainer.innerHTML = "<h4>" + translated + "</h4>";
+    } else {
+      nameContainer.innerHTML = "<h4>" + item.category + "</h4>";
+    }
+    nameContainer.innerHTML += "<p>" + item.title + "</p>";
+
+    const infoContainer = document.createElement("div");
+    infoContainer.classList.add("mealInfo");
+
+    const priceContainer = document.createElement("div");
+    priceContainer.classList.add("menuPrice");
+    const price = handleChange(mediaQuery, item.price);
+    priceContainer.innerHTML = "<br><p>" + price + "</p>";
+
+    const codeContainer = document.createElement("div");
+    codeContainer.classList.add("menuCode");
+    if (item.code !== undefined) {
+      codeContainer.innerHTML = "<br><p>" + item.code + "</p>";
+    } else {
+      codeContainer.innerHTML = "<br><p>" + ' ' + "</p>";
+    }
+
+    infoContainer.appendChild(priceContainer);
+    infoContainer.appendChild(codeContainer);
+    mealContainer.appendChild(nameContainer);
+    mealContainer.appendChild(infoContainer);
+    menuContainer.appendChild(mealContainer);
+  }
+  resContainer.appendChild(titleDiv);
+  resContainer.appendChild(menuContainer);
+  addResCarouselEventListeners();
+};
+
+const createFazerPriceContainer = () => {
+  const priceContainer = document.createElement('div');
+  priceContainer.classList.add('fazerPrices');
+  const priceList = document.createElement('h4');
+
+  if (language === 'fi') {
+    priceList.innerHTML = 'Hinnasto';
+  } else {
+    priceList.innerHTML = 'Price list';
+  }
+  priceContainer.appendChild(priceList);
+  for (const object of RestaurantData.fazerPrices) {
+    const container = document.createElement('div');
+    container.classList.add('priceListObject');
+    const group = document.createElement('h5');
+    const price = document.createElement('p');
+    if (language === 'fi') {
+      group.innerHTML = object.group_fi;
+    } else {
+      group.innerHTML = object.group_en;
+    }
+    price.innerHTML = object.prices;
+    container.appendChild(group);
+    container.appendChild(price);
+    priceContainer.appendChild(container);
+  }
+  return priceContainer;
+};
+
+const translateCategoryName = (name) => {
+  if (RestaurantData.menuTranslator.hasOwnProperty(name)) {
+    const translated = RestaurantData.menuTranslator[name];
+    return translated;
+  } else {
+    return name;
+  }
+};
+
+const handleChange = (e, price) => {
+  if (e.matches) {
+    console.log('Media Query Matched!');
+    let modPrice = price.replace(/\//g, '');
+    let regex = /\s+([€])/g;
+    return modPrice.replace(regex, '€');
+  } else {
+    return price;
+  }
+};
+
+mediaQuery.addListener(handleChange);
+
+const createTitleDiv = (name) => {
+  const titleDiv = document.createElement("div");
+  titleDiv.classList.add("resTitle");
+  const arrowLeft = document.createElement("div");
+  arrowLeft.classList.add("resCarouselLeft");
+  const leftImg =
+    '<img class="arrowLeft" src="./assets/back.svg" alt="Left Arrow"/>';
+  arrowLeft.innerHTML = leftImg;
+  const thisDay = new Date().toLocaleDateString();
+  let date;
+  if (todayAlt === thisDay) {
+    if (language === 'fi') {
+      date = 'Tänään';
+    } else {
+      date = 'Today';
+    }
+  } else {
+    date = todayAlt;
+  }
+  const restaurantName = "<h3 class='restaurantName'>" + name + "<br>" + date + "</h3>";
+  const arrowRight = document.createElement("div");
+  arrowRight.classList.add("resCarouselRight");
+  const rightImg =
+    '<img class="arrowRight" src="./assets/back.svg" alt="Right Arrow"/>';
+  arrowRight.innerHTML = rightImg;
+  titleDiv.appendChild(arrowLeft);
+  titleDiv.innerHTML += restaurantName;
+  titleDiv.appendChild(arrowRight);
+  return titleDiv;
+};
+
+const changeDay = (direction) => {
+  let newDate = new Date(dateVar);
+  console.log("NewDate: " + newDate.getDate());
+  if (direction === "forward") {
+    console.log("Forward");
+    newDate.setDate(newDate.getDate() + 1);
+  } else {
+    console.log("Back");
+    newDate.setDate(newDate.getDate() - 1);
+  }
+  dateVar = newDate;
+  todayAlt = newDate.toLocaleDateString();
+  console.log("TodayAlt: " + todayAlt);
+  today = new Date(newDate).toISOString().split("T")[0];
+  getMenu();
+};
+
+const refreshDate = () => {
+  today = new Date().toISOString().split("T")[0];
+  todayAlt = new Date().toLocaleDateString();
+  dateVar = new Date();
+};
+
+const addResCarouselEventListeners = () => {
+  const left = document.querySelector(".resCarouselLeft");
+  left.addEventListener("click", () => {
+    console.log("arrowLeft");
+    let title = document.querySelector('.restaurantName');
+    title.style.opacity = 0;
+    title.style.transform = "translate(20%, 0%)";
+    setTimeout(function () {
+      changeDay("backward");
+    }, 300);
+  });
+
+  const right = document.querySelector(".resCarouselRight");
+  right.addEventListener("click", () => {
+    console.log("arrowRight");
+    let title = document.querySelector('.restaurantName');
+    title.style.opacity = 0;
+    title.style.transform = "translate(-20%, 0%)";
+    setTimeout(function () {
+      changeDay("forward");
+    }, 300);
+
+  });
+};
+
 const swipeChangeSlide = (evt) => {
   let touch = handleTouchMove(evt);
   if (touch === 'right') {
@@ -126,9 +331,6 @@ const swipeChangeSlide = (evt) => {
     infoCarouselRight();
   }
 };
-
-
-
 
 const swipeChangeMenuDay = (evt) => {
   let touch = handleTouchMove(evt);
@@ -266,201 +468,6 @@ carouselLeft.addEventListener("click", infoCarouselLeft);
 carouselLeft.addEventListener("click", clearCarouselTimer);
 carouselRight.addEventListener("click", clearCarouselTimer);
 
-const renderFazerMenu = (data, name) => {
-  resContainer.innerHTML = "";
-  const titleDiv = createTitleDiv(name);
-  const content = document.createElement('div');
-  content.classList.add('fazerContent');
-  const ul = document.createElement("ul");
-  for (const item of data) {
-    const listItem = document.createElement("li");
-    listItem.textContent = item;
-    ul.appendChild(listItem);
-  }
-  const priceContainer = createPriceContainer();
-  content.appendChild(ul);
-  content.appendChild(priceContainer);
-  resContainer.appendChild(titleDiv);
-  resContainer.appendChild(content);
-  addResCarouselEventListeners();
-};
-
-const createPriceContainer = () => {
-  const priceContainer = document.createElement('div');
-  priceContainer.classList.add('fazerPrices');
-  const priceList = document.createElement('h4');
-
-  if (language === 'fi') {
-    priceList.innerHTML = 'Hinnasto';
-  } else {
-    priceList.innerHTML = 'Price list';
-  }
-  priceContainer.appendChild(priceList);
-  for (const object of RestaurantData.fazerPrices) {
-    const container = document.createElement('div');
-    container.classList.add('priceListObject');
-    const group = document.createElement('h5');
-    const price = document.createElement('p');
-    if (language === 'fi') {
-      group.innerHTML = object.group_fi;
-    } else {
-      group.innerHTML = object.group_en;
-    }
-    price.innerHTML = object.prices;
-    container.appendChild(group);
-    container.appendChild(price);
-    priceContainer.appendChild(container);
-  }
-  return priceContainer;
-};
-
-const renderSodexoMenu = (data, name) => {
-  resContainer.innerHTML = "";
-  const titleDiv = createTitleDiv(name);
-  const menuContainer = document.createElement("div");
-  menuContainer.classList.add("menu");
-  for (const item of data) {
-    const mealContainer = document.createElement("div");
-    mealContainer.classList.add("menuItem");
-
-    const nameContainer = document.createElement("div");
-    nameContainer.classList.add("menuName");
-    if (language === 'en') {
-      const translated = translateCategoryName(item.category);
-      nameContainer.innerHTML = "<h4>" + translated + "</h4>";
-    } else {
-      nameContainer.innerHTML = "<h4>" + item.category + "</h4>";
-    }
-    nameContainer.innerHTML += "<p>" + item.title + "</p>";
-
-    const infoContainer = document.createElement("div");
-    infoContainer.classList.add("mealInfo");
-
-    const priceContainer = document.createElement("div");
-    priceContainer.classList.add("menuPrice");
-    const price = handleChange(mediaQuery, item.price);
-    priceContainer.innerHTML = "<br><p>" + price + "</p>";
-
-    const codeContainer = document.createElement("div");
-    codeContainer.classList.add("menuCode");
-    if (item.code !== undefined) {
-      codeContainer.innerHTML = "<br><p>" + item.code + "</p>";
-    } else {
-      codeContainer.innerHTML = "<br><p>" + ' ' + "</p>";
-    }
-
-    infoContainer.appendChild(priceContainer);
-    infoContainer.appendChild(codeContainer);
-    mealContainer.appendChild(nameContainer);
-    mealContainer.appendChild(infoContainer);
-    menuContainer.appendChild(mealContainer);
-  }
-  resContainer.appendChild(titleDiv);
-  resContainer.appendChild(menuContainer);
-  addResCarouselEventListeners();
-};
-
-const translateCategoryName = (name) => {
-  if (RestaurantData.menuTranslator.hasOwnProperty(name)) {
-    const translated = RestaurantData.menuTranslator[name];
-    return translated;
-  } else {
-    return name;
-  }
-};
-
-const handleChange = (e, price) => {
-  if (e.matches) {
-    console.log('Media Query Matched!');
-    let modPrice = price.replace(/\//g, '');
-    let regex = /\s+([€])/g;
-    return modPrice.replace(regex, '€');
-  } else {
-    return price;
-  }
-};
-
-mediaQuery.addListener(handleChange);
-
-const createTitleDiv = (name) => {
-  const titleDiv = document.createElement("div");
-  titleDiv.classList.add("resTitle");
-  const arrowLeft = document.createElement("div");
-  arrowLeft.classList.add("resCarouselLeft");
-  const leftImg =
-    '<img class="arrowLeft" src="./assets/back.svg" alt="Left Arrow"/>';
-  arrowLeft.innerHTML = leftImg;
-  const thisDay = new Date().toLocaleDateString();
-  let date;
-  if (todayAlt === thisDay) {
-    if (language === 'fi') {
-      date = 'Tänään';
-    } else {
-      date = 'Today';
-    }
-  } else {
-    date = todayAlt;
-  }
-  const restaurantName = "<h3 class='restaurantName'>" + name + "<br>" + date + "</h3>";
-  const arrowRight = document.createElement("div");
-  arrowRight.classList.add("resCarouselRight");
-  const rightImg =
-    '<img class="arrowRight" src="./assets/back.svg" alt="Right Arrow"/>';
-  arrowRight.innerHTML = rightImg;
-  titleDiv.appendChild(arrowLeft);
-  titleDiv.innerHTML += restaurantName;
-  titleDiv.appendChild(arrowRight);
-  return titleDiv;
-};
-
-const changeDay = (direction) => {
-  let newDate = new Date(dateVar);
-  console.log("NewDate: " + newDate.getDate());
-  if (direction === "forward") {
-    console.log("Forward");
-    newDate.setDate(newDate.getDate() + 1);
-  } else {
-    console.log("Back");
-    newDate.setDate(newDate.getDate() - 1);
-  }
-  dateVar = newDate;
-  todayAlt = newDate.toLocaleDateString();
-  console.log("TodayAlt: " + todayAlt);
-  today = new Date(newDate).toISOString().split("T")[0];
-  getMenu();
-};
-
-const refreshDate = () => {
-  today = new Date().toISOString().split("T")[0];
-  todayAlt = new Date().toLocaleDateString();
-  dateVar = new Date();
-};
-
-const addResCarouselEventListeners = () => {
-  const left = document.querySelector(".resCarouselLeft");
-  left.addEventListener("click", () => {
-    console.log("arrowLeft");
-    let title = document.querySelector('.restaurantName');
-    title.style.opacity = 0;
-    title.style.transform = "translate(20%, 0%)";
-    setTimeout(function () {
-      changeDay("backward");
-    }, 300);
-  });
-
-  const right = document.querySelector(".resCarouselRight");
-  right.addEventListener("click", () => {
-    console.log("arrowRight");
-    let title = document.querySelector('.restaurantName');
-    title.style.opacity = 0;
-    title.style.transform = "translate(-20%, 0%)";
-    setTimeout(function () {
-      changeDay("forward");
-    }, 300);
-
-  });
-};
-
 const isNumeric = (str) => {
   if (typeof str != "string") return false;
   return !isNaN(str) && !isNaN(parseFloat(str));
@@ -537,16 +544,6 @@ const loadHSLData = async (id) => {
   });
   stopElement.appendChild(stopList);
   document.querySelector(".hsl-data").appendChild(stopElement);
-};
-
-const NoMenuFoundNotification = (message, name) => {
-  console.log("NoMenuFound " + name);
-  resContainer.innerHTML = "";
-  const titleDiv = createTitleDiv(name);
-  const noMenuMessage = `<p>${message}</p>`;
-  resContainer.appendChild(titleDiv);
-  resContainer.innerHTML += noMenuMessage;
-  addResCarouselEventListeners();
 };
 
 const getNearestCampus = () => {
