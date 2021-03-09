@@ -1,6 +1,6 @@
 import { getLocation, getDistance } from "./modules/calculate-distance";
 import { parseCampusInfo } from "./modules/info-data";
-import { getWeatherLatLon } from './modules/weather-data';
+import { renderWeather } from './modules/weather-data';
 import { handleTouchStart, handleTouchMove } from './modules/swiper';
 import RestaurantData from './modules/restaurant-info';
 import { makeSlides, infoCarouselRefresh } from './modules/slide-controller';
@@ -469,33 +469,9 @@ const updateUi = () => {
   inactiveLanguageButton.classList.add("notSelectedLanguage");
 };
 
-const renderWeather = async () => {
-  for (const restaurant of RestaurantData.restaurants) {
-    if (restaurant.name === currentCampus) {
-      const weatherData = await getWeatherLatLon(restaurant.lat, restaurant.lon);
-      const weatherBox = document.querySelector('.weatherBox');
-      const img = document.createElement('img');
-      const div = document.createElement('div');
-      const text = document.createElement('h3');
-      const degrees = document.createElement('h3');
-      img.alt = weatherData.weather[0].description;
-      div.classList.add('weatherDiv');
-      text.classList.add('weatherText');
-      degrees.classList.add('weatherDegrees');
-
-      img.src = 'http://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png';
-      text.innerHTML = weatherData.weather[0].main;
-      degrees.innerHTML = Math.round(weatherData.main.temp) + '°C';
-
-      weatherBox.innerHTML = '';
-      weatherBox.appendChild(img);
-      div.appendChild(text);
-      div.appendChild(degrees);
-      weatherBox.appendChild(div);
-    }
-  }
-};
-
+/**
+ * Initializes the web page
+ */
 const init = () => {
   addBackgroundParallax();
   setTime();
@@ -503,17 +479,20 @@ const init = () => {
   getNearestCampus();
   makeSlides(language);
   infoCarouselRefresh();
-  renderWeather();
+  renderWeather(currentCampus);
 
   //const refreshStops = setInterval(getStops(language, currentCampus), 60000);
 };
 
+/**
+ * Refreshes the web page content
+ */
 const refresh = () => {
   getMenu();
   getStops(language, currentCampus);
   makeSlides(language);
   infoCarouselRefresh();
-  renderWeather();
+  renderWeather(currentCampus);
 };
 
 langFi.addEventListener("click", () => {
