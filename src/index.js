@@ -79,6 +79,9 @@ let dateVar = new Date();
 let currentCampus = localStorage.getItem("currentCampus") || "myllypuro";
 let language = localStorage.getItem("language") || "fi";
 
+/**
+ * Retrieves restaurant's menu (Sodexo or Fazer depending currentCampus' value) and calls function which renders it.
+ */
 const getMenu = async () => {
   updateUi();
   for (const restaurant of RestaurantData.restaurants) {
@@ -106,6 +109,11 @@ const getMenu = async () => {
   }
 };
 
+/**
+ * Is called when that day's menu is empty.
+ * Checks site's language, creates message and calls function which renders that message.
+ * @param {object} restaurant - Selected campus' restaurant-object that has empty menu.
+ */
 const noMenuError = (restaurant) => {
   let message;
   if (language === "fi") {
@@ -114,11 +122,14 @@ const noMenuError = (restaurant) => {
     message = "No menu was found for today.";
   }
   NoMenuFoundNotification(message, restaurant.displayName);
-  console.log("current: " + currentCampus);
 };
 
+/**
+ * Creates a restaurant menu box which tells you that there is no menu for this day.
+ * @param {string} message - Message to be shown in menu box if the menu is empty. Can be either finnish or english.
+ * @param {string} name - The name of the restaurant.
+ */
 const NoMenuFoundNotification = (message, name) => {
-  console.log("NoMenuFound " + name);
   resContainer.innerHTML = "";
   const titleDiv = createTitleDiv(name);
   const noMenuMessage = `<p>${message}</p>`;
@@ -127,6 +138,11 @@ const NoMenuFoundNotification = (message, name) => {
   addResCarouselEventListeners();
 };
 
+/**
+ * Creates a box for Fazer menu and renders dishes and price list into it.
+ * @param {array} data - Array that includes dishes.
+ * @param {string} name - The name of the restaurant.
+ */
 const renderFazerMenu = (data, name) => {
   resContainer.innerHTML = "";
   const titleDiv = createTitleDiv(name);
@@ -146,6 +162,11 @@ const renderFazerMenu = (data, name) => {
   addResCarouselEventListeners();
 };
 
+/**
+ * Creates a box for Sodexo menu and renders dishes, categories, prices and codes into it.
+ * @param {array} data - Array that includes dishes, categories, prices and codes.
+ * @param {string} name - The name of the restaurant.
+ */
 const renderSodexoMenu = (data, name) => {
   resContainer.innerHTML = "";
   const titleDiv = createTitleDiv(name);
@@ -192,6 +213,10 @@ const renderSodexoMenu = (data, name) => {
   addResCarouselEventListeners();
 };
 
+/**
+ * Creates a price list for Fazer menu.
+ * @returns {HTMLElement} - Price list div.
+ */
 const createFazerPriceContainer = () => {
   const priceContainer = document.createElement('div');
   priceContainer.classList.add('fazerPrices');
@@ -221,6 +246,11 @@ const createFazerPriceContainer = () => {
   return priceContainer;
 };
 
+/**
+ * Translates Sodexo menu's category names into english.
+ * @param {string} name - One of the category names of the Sodexo menu.
+ * @returns {string} - Translated name (If translation was not found returns the same parameter)
+ */
 const translateCategoryName = (name) => {
   if (RestaurantData.menuTranslator.hasOwnProperty(name)) {
     const translated = RestaurantData.menuTranslator[name];
@@ -230,9 +260,14 @@ const translateCategoryName = (name) => {
   }
 };
 
+/**
+ * Removes slashes and some empty spaces of the price text when screen width is under 500px.
+ * @param {mediaQuery} e - Matches if the screen width is under 500px.
+ * @param {string} price - Sodexo menu's prices.
+ * @returns {string} - Modified price text (Or the parameter unchanged)
+ */
 const handleChange = (e, price) => {
   if (e.matches) {
-    console.log('Media Query Matched!');
     let modPrice = price.replace(/\//g, '');
     let regex = /\s+([€])/g;
     return modPrice.replace(regex, '€');
@@ -243,6 +278,11 @@ const handleChange = (e, price) => {
 
 mediaQuery.addListener(handleChange);
 
+/**
+ * Creates a title div for the restaurant menu box.
+ * @param {string} name - The name of the restaurant.
+ * @returns {HTMLElement} - The div whichs includes the restaurant name, date and the arrow divs to change a day.
+ */
 const createTitleDiv = (name) => {
   const titleDiv = document.createElement("div");
   titleDiv.classList.add("resTitle");
@@ -274,33 +314,38 @@ const createTitleDiv = (name) => {
   return titleDiv;
 };
 
+/**
+ *Changes the date variables when the menu box's arrow divs are clicked.
+ * @param {string} direction - Forward or Backward.
+ */
 const changeDay = (direction) => {
   let newDate = new Date(dateVar);
-  console.log("NewDate: " + newDate.getDate());
   if (direction === "forward") {
-    console.log("Forward");
     newDate.setDate(newDate.getDate() + 1);
   } else {
-    console.log("Back");
     newDate.setDate(newDate.getDate() - 1);
   }
   dateVar = newDate;
   todayAlt = newDate.toLocaleDateString();
-  console.log("TodayAlt: " + todayAlt);
   today = new Date(newDate).toISOString().split("T")[0];
   getMenu();
 };
 
+/**
+ * Changes the values of the date variables back to today's date.
+ */
 const refreshDate = () => {
   today = new Date().toISOString().split("T")[0];
   todayAlt = new Date().toLocaleDateString();
   dateVar = new Date();
 };
 
+/**
+ * Adds click eventlisteners to the arrow divs of restaurant menu box.
+ */
 const addResCarouselEventListeners = () => {
   const left = document.querySelector(".resCarouselLeft");
   left.addEventListener("click", () => {
-    console.log("arrowLeft");
     let title = document.querySelector('.restaurantName');
     title.style.opacity = 0;
     title.style.transform = "translate(20%, 0%)";
@@ -311,7 +356,6 @@ const addResCarouselEventListeners = () => {
 
   const right = document.querySelector(".resCarouselRight");
   right.addEventListener("click", () => {
-    console.log("arrowRight");
     let title = document.querySelector('.restaurantName');
     title.style.opacity = 0;
     title.style.transform = "translate(-20%, 0%)";
@@ -546,6 +590,12 @@ const loadHSLData = async (id) => {
   document.querySelector(".hsl-data").appendChild(stopElement);
 };
 
+/**
+ * If the user allows the app to use the device's gps, this function checks which campus is closest to user's
+ * current location and puts the name of that campus to the currentCampus variable. After that getMenu and getStops
+ * functions are called.
+ * If the user does not allow gps, only getMenu and getStops functions are called.
+ */
 const getNearestCampus = () => {
   let distances = [];
   getLocation()
@@ -565,7 +615,6 @@ const getNearestCampus = () => {
       const i = distances.indexOf(Math.min(...distances));
       currentCampus = RestaurantData.restaurants[i].name;
       localStorage.setItem('currentCampus', currentCampus);
-      console.log("Ready " + currentCampus);
       getMenu();
       getStops();
     })
@@ -612,6 +661,11 @@ const getStops = async () => {
   }
 };
 
+/**
+ * Retrieves information of the current campus and puts that into footer.
+ * @param {string} lang - Current language of the app; fi or en.
+ * @param {string} campus - The campus that is selected (The value of currentCampus).
+ */
 const createCampusInfo = (lang, campus) => {
   const data = parseCampusInfo(lang, campus);
   footer.innerHTML = "";
@@ -625,9 +679,12 @@ const createCampusInfo = (lang, campus) => {
     div.appendChild(p);
     footer.appendChild(div);
   }
-  console.log("CampusInfo: " + data);
 };
 
+/**
+ * Changes the background image and the title of the app depending on which campus is selected.
+ * Also changes style of the button of that campus.
+ */
 const updateUi = () => {
   createCampusInfo(language, currentCampus);
   banner.style.backgroundImage = 'url("./assets/' + currentCampus + '.jpg")';
@@ -769,6 +826,9 @@ arabia.addEventListener("click", () => {
   }
 });
 
+/**
+ * Opens and closes the hamburger menu.
+ */
 const changeNavBar = () => {
   let x = document.querySelector('.navbar');
   let campus = document.querySelector('.campuses');
@@ -785,7 +845,6 @@ const changeNavBar = () => {
 
 const navIcon = document.querySelector(".icon");
 navIcon.addEventListener("click", () => {
-  console.log("Click");
   changeNavBar();
 });
 
