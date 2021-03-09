@@ -188,11 +188,11 @@ footer div:nth-child(2) h3 {
 }
 
 .fi {
-  background-image: url("finland.svg");
+  background-image: url("../finland.svg");
 }
 
 .en {
-  background-image: url("united-kingdom.svg");
+  background-image: url("../united-kingdom.svg");
 }
 
 .campuses button:hover{
@@ -535,7 +535,7 @@ footer div:nth-child(2) h3 {
 }
 
 .weatherBox {
-  padding: 1rem;
+  padding: 0;
   width: 19rem;
   background-color: rgb(255 255 255 / 90%);
   border-radius: 3px;
@@ -543,15 +543,16 @@ footer div:nth-child(2) h3 {
 }
 
 .weatherBox img {
-  height: 70px;
-  width: 70px;
+  height: 80px;
+  width: 80px;
+  margin-left: 0.5rem;
   float: left;
 }
 
 .weatherDiv {
   margin-left: 1rem;
-  height: 70px;
-  width: calc(100% - 70px - 1rem);
+  height: 80px;
+  width: calc(100% - 80px - 1.5rem);
   display: flex;
   flex-direction: column;
   align-items: end;
@@ -564,7 +565,7 @@ footer div:nth-child(2) h3 {
   float: right;
   width: 100%;
   font-weight: 100;
-  padding-right: 1.5rem;
+  padding-right: 2rem;
 }
 
 .weatherDegrees {
@@ -604,7 +605,7 @@ footer div:nth-child(2) h3 {
 .hslBusIcon {
   width: 112px;
   height: 108px;
-  background: url("94f6276c61602211b768bb7a910fcb2a.png") no-repeat;
+  background: url("../94f6276c61602211b768bb7a910fcb2a.png") no-repeat;
   position: absolute;
   background-position: -122px 0;
   left: -32px;
@@ -616,7 +617,7 @@ footer div:nth-child(2) h3 {
 .hslMetroIcon {
   width: 112px;
   height: 108px;
-  background: url("94f6276c61602211b768bb7a910fcb2a.png") no-repeat;
+  background: url("../94f6276c61602211b768bb7a910fcb2a.png") no-repeat;
   position: absolute;
   background-position: 2px -124px;
   left: -32px;
@@ -628,7 +629,7 @@ footer div:nth-child(2) h3 {
 .hslTrainIcon {
   width: 112px;
   height: 108px;
-  background: url("94f6276c61602211b768bb7a910fcb2a.png") no-repeat;
+  background: url("../94f6276c61602211b768bb7a910fcb2a.png") no-repeat;
   position: absolute;
   background-position: -370px 0;
   left: -32px;

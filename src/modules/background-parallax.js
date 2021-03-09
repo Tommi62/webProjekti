@@ -1,6 +1,10 @@
 const background = document.querySelector(".banner");
 let x = window.matchMedia("(max-width: 800px)");
 
+/**
+ * Adds a parallax effect for the background image
+ *
+ */
 const addBackgroundParallax = () => {
   document.addEventListener("scroll", (evt) => {
     let scrollArea = 1000 - window.innerHeight;

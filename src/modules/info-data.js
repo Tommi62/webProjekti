@@ -1,6 +1,6 @@
 
-//const info = require('../assets/info.json');
-const campusInfo = require('../assets/campus-info.json');
+//const info = require('../assets/json/info.json');
+const campusInfo = require('../assets/json/campus-info.json');
 const slideAmount = 15;
 /* TEXT SLIDES
 

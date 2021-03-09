@@ -79,6 +79,11 @@ const noMenuError = (restaurant) => {
   console.log("current: " + currentCampus);
 };
 
+/**
+ * Changes menu day on a swipe in the restaurant element and makes a subtle swipe transition.
+ *
+ * @param {event} evt - swipe event
+ */
 const swipeChangeMenuDay = (evt) => {
   let touch = handleTouchMove(evt);
   if (touch === 'right') {

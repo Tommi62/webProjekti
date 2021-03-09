@@ -6,6 +6,12 @@ const carouselLeft = document.querySelector(".carouselLeft");
 let slides = [];
 let carouselPosition = 0;
 
+
+/**
+ * Creates slides to an array depending on the language in use.
+ *
+ * @param {string} language - language 'fi' or 'en'
+ */
 const makeSlides = (language) => {
   slides.splice(0, slides.length);
   infoContainer.innerHTML = "";
@@ -47,6 +53,11 @@ const makeSlides = () => {
 };
 */
 
+/**
+ * Changes slides on swipe event.
+ *
+ * @param {event} evt
+ */
 const swipeChangeSlide = (evt) => {
   let touch = handleTouchMove(evt);
   if (touch === 'right') {
@@ -57,6 +68,11 @@ const swipeChangeSlide = (evt) => {
   }
 };
 
+/**
+ * Changes the slide with an transition depending on the direction.
+ *
+ * @param {string} direction - 'right' or 'left'
+ */
 const changeSlide = (direction) => {
   let slide = document.querySelector(".slide");
   slide.style.opacity = "0";
@@ -85,7 +101,9 @@ const changeSlide = (direction) => {
   }, 500);
 };
 
-
+/**
+ * Makes the carousel go smoothly around right
+ */
 const infoCarouselRight = () => {
   if (carouselPosition < slides.length - 1) {
     carouselPosition++;
@@ -96,6 +114,9 @@ const infoCarouselRight = () => {
   }
 };
 
+/**
+ * Makes the carousel go smoothly around left
+ */
 const infoCarouselLeft = () => {
   if (carouselPosition > 0) {
     carouselPosition--;
@@ -107,6 +128,9 @@ const infoCarouselLeft = () => {
   }
 };
 
+/**
+ * Refreshes the slides. Used for changing language.
+ */
 const infoCarouselRefresh = () => {
   infoContainer.innerHTML = "";
   infoContainer.appendChild(slides[carouselPosition]);
@@ -116,6 +140,9 @@ const infoCarouselRefresh = () => {
   }, 500);
 };
 
+/**
+ * Clears the timer that is used to auto-rotate slides. Used when the user controls the carousel.
+ */
 const clearCarouselTimer = () => {
   console.log("clearTimer");
   clearTimeout(carouselTimer);
