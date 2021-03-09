@@ -1,11 +1,12 @@
 import { getLocation, getDistance } from "./modules/calculate-distance";
-import HSLData from "./modules/hsl-data";
 import { parseCampusInfo } from "./modules/info-data";
 import { getWeatherLatLon } from './modules/weather-data';
 import { handleTouchStart, handleTouchMove } from './modules/swiper';
 import RestaurantData from './modules/restaurant-info';
 import { makeSlides, infoCarouselRefresh } from './modules/slide-controller';
 import { addBackgroundParallax } from './modules/background-parallax';
+import { getStops, setTime} from './modules/hsl-controller';
+
 
 const resContainer = document.querySelector(".restaurant");
 const banner = document.querySelector(".banner");
@@ -19,21 +20,7 @@ const arabia = document.querySelector(".arabia");
 const footer = document.querySelector(".footer");
 const mediaQuery = window.matchMedia('(max-width: 500px)');
 
-let secondsFromMidnight;
 let menuOpened = false;
-
-const setTime = () => {
-  const now = new Date();
-  const then = new Date(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate(),
-    0,
-    0,
-    0
-  );
-  secondsFromMidnight = Math.round((now.getTime() - then.getTime()) / 1000);
-};
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -310,84 +297,6 @@ const addResCarouselEventListeners = () => {
   });
 };
 
-const isNumeric = (str) => {
-  if (typeof str != "string") return false;
-  return !isNaN(str) && !isNaN(parseFloat(str));
-};
-
-const timeString = (seconds) => {
-  let minutes = Math.floor(seconds / 60);
-  let time = "";
-  if (minutes >= 60) {
-    let hours = Math.floor(minutes / 60);
-    time = hours + "h" + (minutes - hours * 60) + "min";
-  } else {
-    time = minutes + "min";
-  }
-  return time;
-};
-
-const loadHSLData = async (id) => {
-  const result = await HSLData.getRidesByStopId(id);
-  const stop = result.data.stop;
-  const stopElement = document.createElement("div");
-  const stopName = document.createElement("h3");
-  const stopList = document.createElement("ul");
-  stopList.classList.add("stopList");
-
-  stopElement.className = "stop";
-  if (language === "fi") {
-    stopName.innerHTML = `${stop.name}`;
-    stopElement.appendChild(stopName);
-  } else {
-    stopName.innerHTML = `${stop.name}`;
-    stopElement.appendChild(stopName);
-  }
-  const isBusMetroTrain = stop.stoptimesWithoutPatterns[0].trip.routeShortName;
-  let stopCategory = "";
-  if (isNumeric(isBusMetroTrain.charAt(0))) {
-    stopCategory = 'bus';
-    stopElement.classList.add('busStop');
-    const icon = document.createElement('div');
-    icon.classList.add('hslBusIcon');
-    stopElement.appendChild(icon);
-  } else if (isBusMetroTrain.length === 1) {
-    stopCategory = 'train';
-    stopElement.classList.add('trainStop');
-    const icon = document.createElement('div');
-    icon.classList.add('hslTrainIcon');
-    stopElement.appendChild(icon);
-  } else if (isBusMetroTrain.length === 2) {
-    stopCategory = 'metro';
-    stopElement.classList.add('metroStop');
-    const icon = document.createElement('div');
-    icon.classList.add('hslMetroIcon');
-    stopElement.appendChild(icon);
-  }
-  for (const ride of stop.stoptimesWithoutPatterns) {
-    const departureSeconds = ride.scheduledDeparture - secondsFromMidnight;
-    const departureTime = timeString(departureSeconds);
-    if (departureSeconds >= 0) {
-      const li = document.createElement("li");
-      li.classList.add("timeTable");
-      li.innerHTML += `
-    <div class="time">${departureTime}</div>
-    <div class="bus">${ride.trip.routeShortName}</div>
-    <div class="destination">${ride.trip.tripHeadsign}</div>`;
-      stopList.appendChild(li);
-    }
-  }
-  stopName.tabIndex = 0;
-  stopName.addEventListener("focus", () => {
-    stopList.style.height = "195px";
-  });
-  stopName.addEventListener("focusout", () => {
-    stopList.style.height = "0";
-  });
-  stopElement.appendChild(stopList);
-  document.querySelector(".hsl-data").appendChild(stopElement);
-};
-
 const NoMenuFoundNotification = (message, name) => {
   console.log("NoMenuFound " + name);
   resContainer.innerHTML = "";
@@ -419,50 +328,15 @@ const getNearestCampus = () => {
       localStorage.setItem('currentCampus', currentCampus);
       console.log("Ready " + currentCampus);
       getMenu();
-      getStops();
+      getStops(language, currentCampus);
     })
     .catch((err) => {
       console.error(err.message);
       getMenu();
-      getStops();
+      getStops(language, currentCampus);
     });
 };
 
-const insertHslHeader = () => {
-  const header = document.querySelector('.hslHeader');
-  header.innerHTML = '';
-
-  if (language === 'fi') {
-    header.innerHTML = 'Aikataulut';
-  } if (language === 'en') {
-    header.innerHTML = 'Timetables';
-  }
-};
-
-const getStops = async () => {
-  document.querySelector('.hsl-data').innerHTML = '';
-  insertHslHeader();
-  for (const restaurant of RestaurantData.restaurants) {
-    if (restaurant.name === currentCampus) {
-      if (restaurant.name === "myyrmaki") {
-        loadHSLData("HSL:4150551");
-        loadHSLData("HSL:4150501");
-      }
-      if (restaurant.name === "karamalmi") {
-        loadHSLData("HSL:2132552");
-        loadHSLData("HSL:2132502");
-      }
-      const stops = await HSLData.getStopsByLocation(
-        restaurant.lat,
-        restaurant.lon
-      );
-      for (const stop of stops.data.stopsByRadius.edges) {
-        const id = stop.node.stop.gtfsId;
-        loadHSLData(id);
-      }
-    }
-  }
-};
 
 const createCampusInfo = (lang, campus) => {
   const data = parseCampusInfo(lang, campus);
@@ -552,12 +426,12 @@ const init = () => {
   infoCarouselRefresh();
   renderWeather();
 
-  const refreshStops = setInterval(getStops, 60000);
+  //const refreshStops = setInterval(getStops(language, currentCampus), 60000);
 };
 
 const refresh = () => {
   getMenu();
-  getStops();
+  getStops(language, currentCampus);
   makeSlides(language);
   infoCarouselRefresh();
   renderWeather();
