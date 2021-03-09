@@ -1,3 +1,7 @@
+/**
+ * Retrieves the user's current location with geoloaction API.
+ * @returns {promise} - If is gps allowed, returns current location.
+ */
 const getLocation = () => {
   if (navigator.geolocation) {
     console.log('Getlocation');
@@ -9,6 +13,15 @@ const getLocation = () => {
   }
 };
 
+/**
+ * Takes latitude and longitude of two locations and returns the distance between them.
+ * @param {number} lat1 - Latitude of first location.
+ * @param {number} lon1 - Longitude of first location.
+ * @param {number} lat2 - Latitude of second location.
+ * @param {number} lon2 - Longitude of second location.
+ * @param {string} unit - Defines in which unit the distance is returned.
+ * @returns {number} - The distance between two locations.
+ */
 const getDistance = (lat1, lon1, lat2, lon2, unit) => {
 	console.log('Getdistance');
   if ((lat1 == lat2) && (lon1 == lon2)) {

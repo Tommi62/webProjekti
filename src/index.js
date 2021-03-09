@@ -137,35 +137,8 @@ const renderSodexoMenu = (data, name) => {
   for (const item of data) {
     const mealContainer = document.createElement("div");
     mealContainer.classList.add("menuItem");
-
-    const nameContainer = document.createElement("div");
-    nameContainer.classList.add("menuName");
-    if (language === 'en') {
-      const translated = translateCategoryName(item.category);
-      nameContainer.innerHTML = "<h4>" + translated + "</h4>";
-    } else {
-      nameContainer.innerHTML = "<h4>" + item.category + "</h4>";
-    }
-    nameContainer.innerHTML += "<p>" + item.title + "</p>";
-
-    const infoContainer = document.createElement("div");
-    infoContainer.classList.add("mealInfo");
-
-    const priceContainer = document.createElement("div");
-    priceContainer.classList.add("menuPrice");
-    const price = handleChange(mediaQuery, item.price);
-    priceContainer.innerHTML = "<br><p>" + price + "</p>";
-
-    const codeContainer = document.createElement("div");
-    codeContainer.classList.add("menuCode");
-    if (item.code !== undefined) {
-      codeContainer.innerHTML = "<br><p>" + item.code + "</p>";
-    } else {
-      codeContainer.innerHTML = "<br><p>" + ' ' + "</p>";
-    }
-
-    infoContainer.appendChild(priceContainer);
-    infoContainer.appendChild(codeContainer);
+    const nameContainer = createSodexoNameContainer(item);
+    const infoContainer = createSodexoInfoContainer(item);
     mealContainer.appendChild(nameContainer);
     mealContainer.appendChild(infoContainer);
     menuContainer.appendChild(mealContainer);
@@ -173,6 +146,50 @@ const renderSodexoMenu = (data, name) => {
   resContainer.appendChild(titleDiv);
   resContainer.appendChild(menuContainer);
   addResCarouselEventListeners();
+};
+
+/**
+ * Creates div including the category and the name of the dish.
+ * @param {object} item - Includes information of certain dish.
+ * @returns {HTMLElement} - A div which includes tha category and the name of the dish.
+ */
+const createSodexoNameContainer = (item) => {
+  const nameContainer = document.createElement("div");
+  nameContainer.classList.add("menuName");
+  if (language === 'en') {
+    const translated = translateCategoryName(item.category);
+    nameContainer.innerHTML = "<h4>" + translated + "</h4>";
+  } else {
+    nameContainer.innerHTML = "<h4>" + item.category + "</h4>";
+  }
+  nameContainer.innerHTML += "<p>" + item.title + "</p>";
+  return nameContainer;
+};
+
+/**
+ * Creates div including the prices and the codes of the dish.
+ * @param {object} item - Includes information of certain dish.
+ * @returns {HTMLElement} - A div which includes tha prices and the codes of the dish.
+ */
+const createSodexoInfoContainer = (item) => {
+  const infoContainer = document.createElement("div");
+  infoContainer.classList.add("mealInfo");
+
+  const priceContainer = document.createElement("div");
+  priceContainer.classList.add("menuPrice");
+  const price = handleChange(mediaQuery, item.price);
+  priceContainer.innerHTML = "<br><p>" + price + "</p>";
+
+  const codeContainer = document.createElement("div");
+  codeContainer.classList.add("menuCode");
+  if (item.code !== undefined) {
+    codeContainer.innerHTML = "<br><p>" + item.code + "</p>";
+  } else {
+    codeContainer.innerHTML = "<br><p>" + ' ' + "</p>";
+  }
+  infoContainer.appendChild(priceContainer);
+  infoContainer.appendChild(codeContainer);
+  return infoContainer;
 };
 
 /**

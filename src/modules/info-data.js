@@ -42,7 +42,13 @@ const parseImgs = (lang) => {
   return infoList;
 };
 
-
+/**
+ * Retrieves campus info data from campus-info.json and parses it into array and sends it to whoever called
+ * this function.
+ * @param {string} lang - Language in which data is desired; fi or en.
+ * @param {string} campusName - The name of the campus which data is desired.
+ * @returns {array} - Includes campus' info data.
+ */
 const parseCampusInfo = (lang, campusName) => {
   let infoList = [];
   for (const infoObject of campusInfo.info) {
