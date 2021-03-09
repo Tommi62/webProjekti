@@ -2,6 +2,7 @@
 //const info = require('../assets/json/info.json');
 const campusInfo = require('../assets/json/campus-info.json');
 const slideAmount = 15;
+
 /* TEXT SLIDES
 
 const parseInfo = (lang) => {
@@ -25,6 +26,14 @@ const parseInfo = (lang) => {
   return infoList;
 };
 */
+
+/**
+ * Makes a list out of Powerpoint slide images to be used in the info carousel.
+ * Use the 'en' and 'fi' folders for slides and adjust slideAmount when needed.
+ *
+ * @param {string} lang - language
+ * @returns array - infoslides in an array
+ */
 const parseImgs = (lang) => {
   let infoList = [];
   for (let i = 1; i <= slideAmount; i++) {
@@ -32,6 +41,7 @@ const parseImgs = (lang) => {
   }
   return infoList;
 };
+
 
 const parseCampusInfo = (lang, campusName) => {
   let infoList = [];
