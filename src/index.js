@@ -1,13 +1,13 @@
 import { getLocation, getDistance } from "./modules/calculate-distance";
 import HSLData from "./modules/hsl-data";
-import { parseImgs, parseCampusInfo } from "./modules/info-data";
+import { parseCampusInfo } from "./modules/info-data";
 import { getWeatherLatLon } from './modules/weather-data';
 import { handleTouchStart, handleTouchMove } from './modules/swiper';
 import RestaurantData from './modules/restaurant-info';
-
+import { makeSlides, infoCarouselRefresh } from './modules/slide-controller';
+import { addBackgroundParallax } from './modules/background-parallax';
 
 const resContainer = document.querySelector(".restaurant");
-const infoContainer = document.querySelector(".info");
 const banner = document.querySelector(".banner");
 const title = document.querySelector(".title");
 const langFi = document.querySelector(".fi");
@@ -16,36 +16,11 @@ const myyrmaki = document.querySelector(".myyrmaki");
 const karamalmi = document.querySelector(".karamalmi");
 const myllypuro = document.querySelector(".myllypuro");
 const arabia = document.querySelector(".arabia");
-const carouselRight = document.querySelector(".carouselRight");
-const carouselLeft = document.querySelector(".carouselLeft");
 const footer = document.querySelector(".footer");
-const hslBox = document.querySelector(".hslBox");
 const mediaQuery = window.matchMedia('(max-width: 500px)');
 
-let carouselTimer;
-let dateTimer;
 let secondsFromMidnight;
 let menuOpened = false;
-
-const background = document.querySelector(".banner");
-let x = window.matchMedia("(max-width: 800px)");
-
-document.addEventListener("scroll", (evt) => {
-  let scrollArea = 1000 - window.innerHeight;
-  let scrollTop = window.pageYOffset || window.scrollTop;
-  let scrollPercent = scrollTop / scrollArea || 0;
-  let backgroundY = - (scrollPercent * window.innerHeight) / 800;
-  if (x.matches) {
-    backgroundY = - (scrollPercent * window.innerHeight) / 550;
-    let backgroundX = - (scrollPercent * window.innerHeight) / 1500;
-    background.style.transform =
-      "translateY(" + backgroundY + "%) " + "translateX(" + backgroundX + "%) " + "scale(" + 1.3 + ")";
-  } else {
-    background.style.transform =
-      "translateY(" + backgroundY + "%) " + "scale(" + 1.20 + ")";
-  }
-});
-
 
 const setTime = () => {
   const now = new Date();
@@ -117,19 +92,6 @@ const noMenuError = (restaurant) => {
   console.log("current: " + currentCampus);
 };
 
-const swipeChangeSlide = (evt) => {
-  let touch = handleTouchMove(evt);
-  if (touch === 'right') {
-    infoCarouselLeft();
-  }
-  if (touch === 'left') {
-    infoCarouselRight();
-  }
-};
-
-
-
-
 const swipeChangeMenuDay = (evt) => {
   let touch = handleTouchMove(evt);
   if (touch === 'right') {
@@ -152,119 +114,6 @@ const swipeChangeMenuDay = (evt) => {
 
 resContainer.addEventListener('touchstart', handleTouchStart);
 resContainer.addEventListener('touchmove', swipeChangeMenuDay);
-
-let slides = [];
-
-const makeSlides = () => {
-  slides.splice(0, slides.length);
-  infoContainer.innerHTML = "";
-  const imgs = parseImgs(language);
-  for (const img of imgs) {
-    const slide = document.createElement('div');
-    slide.className = 'slide';
-    slide.style.backgroundImage = "url(" + img + ")";
-    slide.addEventListener('touchstart', handleTouchStart);
-    slide.addEventListener('touchmove', swipeChangeSlide);
-    slides.push(slide);
-  }
-};
-
-/* TEXT SLIDES
-const makeSlides = () => {
-  slides.splice(0, slides.length);
-  infoContainer.innerHTML = "";
-  const data = parseInfo(language);
-  for (const set of data) {
-    const slide = document.createElement('div');
-    slide.className = 'slide';
-    const h3 = document.createElement('h3');
-
-    h3.innerHTML = set.title;
-    slide.appendChild(h3);
-
-    if (set.text !== "") {
-      const ul = document.createElement('ul');
-      for (const textNode of set.text) {
-        const li = document.createElement('li');
-        li.innerHTML = textNode;
-        ul.appendChild(li);
-      }
-      slide.appendChild(ul);
-    }
-    slides.push(slide);
-  }
-};
-*/
-const changeSlide = (direction) => {
-  let slide = document.querySelector(".slide");
-  slide.style.opacity = "0";
-  if (direction === "right") {
-    slide.style.transform = " scale(0.9) translate(-20%, 0%)";
-  }
-  if (direction === "left") {
-    slide.style.transform = " scale(0.9) translate(20%, 0%)";
-  }
-  setTimeout(function () {
-    slide.style.transform = "none";
-    infoContainer.innerHTML = "";
-    infoContainer.appendChild(slides[carouselPosition]);
-    slide = slides[carouselPosition];
-    if (direction === "right") {
-      slide.style.transform = " scale(0.9) translate(20%, 0%)";
-    }
-    if (direction === "left") {
-      slide.style.transform = " scale(0.9) translate(-20%, 0%)";
-    }
-    setTimeout(function () {
-      slide = document.querySelector(".slide");
-      slide.style.opacity = "1";
-      slide.style.transform = "rotate(0turn) scale(1) translate(0%, 0%)";
-    }, 10);
-  }, 500);
-};
-
-let carouselPosition = 0;
-
-const infoCarouselRight = () => {
-  if (carouselPosition < slides.length - 1) {
-    carouselPosition++;
-    changeSlide("right");
-  } else {
-    carouselPosition = 0;
-    changeSlide("right");
-  }
-};
-
-const infoCarouselLeft = () => {
-  if (carouselPosition > 0) {
-    carouselPosition--;
-    changeSlide("left");
-  } else {
-    carouselPosition = slides.length;
-    carouselPosition--;
-    changeSlide("left");
-  }
-};
-
-const infoCarouselRefresh = () => {
-  infoContainer.innerHTML = "";
-  infoContainer.appendChild(slides[carouselPosition]);
-  setTimeout(function () {
-    const slide = document.querySelector(".slide");
-    slide.style.opacity = "1";
-  }, 500);
-};
-
-const clearCarouselTimer = () => {
-  console.log("clearTimer");
-  clearTimeout(carouselTimer);
-  carouselTimer = setInterval(infoCarouselRight, 13000);
-};
-
-carouselRight.addEventListener("click", infoCarouselRight);
-carouselLeft.addEventListener("click", infoCarouselLeft);
-carouselLeft.addEventListener("click", clearCarouselTimer);
-carouselRight.addEventListener("click", clearCarouselTimer);
 
 const renderFazerMenu = (data, name) => {
   resContainer.innerHTML = "";
@@ -695,23 +544,21 @@ const renderWeather = async () => {
 };
 
 const init = () => {
+  addBackgroundParallax();
   setTime();
   getMenu();
   getNearestCampus();
-  makeSlides();
+  makeSlides(language);
   infoCarouselRefresh();
   renderWeather();
 
-
-  carouselTimer = setInterval(infoCarouselRight, 13000);
-  dateTimer = setInterval(setTime, 60000);
   const refreshStops = setInterval(getStops, 60000);
 };
 
 const refresh = () => {
   getMenu();
   getStops();
-  makeSlides();
+  makeSlides(language);
   infoCarouselRefresh();
   renderWeather();
 };
