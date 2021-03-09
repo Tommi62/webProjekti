@@ -1,3 +1,9 @@
+/**
+ * Fetches a menu from the inputted address.
+ *
+ * @param {url} address - menu url address
+ * @returns json - menu object
+ */
 const getMenus = async (address) => {
   let response;
   try {
@@ -12,6 +18,12 @@ const getMenus = async (address) => {
   return menu;
 };
 
+/**
+ * Fetches the weather from the inputted address.
+ *
+ * @param {url} address - weather url address
+ * @returns json - weather object
+ */
 const getWeather = async (address) => {
   let response;
   try {
@@ -26,6 +38,15 @@ const getWeather = async (address) => {
   return weather;
 };
 
+/**
+ * Fetches HSL stopdata.
+ *
+ * @param {url} url
+ * @param {contentType} contentType - 'application/graphql'
+ * @param {object} body - body query
+ * @param {boolean} useProxy
+ * @returns
+ */
 const fetchPostJson = async (url, contentType, body, useProxy = false) => {
   const options = {
     method: 'POST',
