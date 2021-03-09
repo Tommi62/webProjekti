@@ -474,15 +474,18 @@ const updateUi = () => {
  */
 const init = () => {
   addBackgroundParallax();
-  setTime();
   getMenu();
   getNearestCampus();
   makeSlides(language);
   infoCarouselRefresh();
   renderWeather(currentCampus);
 
-  //const refreshStops = setInterval(getStops(language, currentCampus), 60000);
+  setInterval(setTime(), 60000);
+  setTimeout(() => {
+    setInterval(getStops(language, currentCampus), 60000);
+  }, 60000);
 };
+
 
 /**
  * Refreshes the web page content

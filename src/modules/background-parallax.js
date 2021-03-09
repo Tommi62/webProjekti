@@ -13,7 +13,7 @@ const addBackgroundParallax = () => {
     let backgroundY = - (scrollPercent * window.innerHeight) / 800;
     if (x.matches) {
       backgroundY = - (scrollPercent * window.innerHeight) / 550;
-      let backgroundX = - (scrollPercent * window.innerHeight) / 1500;
+      let backgroundX = - (scrollPercent * window.innerHeight) / 2000;
       background.style.transform =
       "translateY(" + backgroundY + "%) " + "translateX(" + backgroundX + "%) " + "scale(" + 1.3 + ")";
     } else {

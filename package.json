@@ -30,6 +30,6 @@
     "write-file-webpack-plugin": "^4.5.1"
   },
   "dependencies": {
-    "jsdoc-webpack-plugin": "^0.3.0"
+    "jsdoc": "^3.6.6"
   }
 }
