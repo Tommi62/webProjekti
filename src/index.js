@@ -1,13 +1,14 @@
 import { getLocation, getDistance } from "./modules/calculate-distance";
-import HSLData from "./modules/hsl-data";
-import { parseImgs, parseCampusInfo } from "./modules/info-data";
+import { parseCampusInfo } from "./modules/info-data";
 import { getWeatherLatLon } from './modules/weather-data';
 import { handleTouchStart, handleTouchMove } from './modules/swiper';
 import RestaurantData from './modules/restaurant-info';
+import { makeSlides, infoCarouselRefresh } from './modules/slide-controller';
+import { addBackgroundParallax } from './modules/background-parallax';
+import { getStops, setTime} from './modules/hsl-controller';
 
 
 const resContainer = document.querySelector(".restaurant");
-const infoContainer = document.querySelector(".info");
 const banner = document.querySelector(".banner");
 const title = document.querySelector(".title");
 const langFi = document.querySelector(".fi");
@@ -16,49 +17,10 @@ const myyrmaki = document.querySelector(".myyrmaki");
 const karamalmi = document.querySelector(".karamalmi");
 const myllypuro = document.querySelector(".myllypuro");
 const arabia = document.querySelector(".arabia");
-const carouselRight = document.querySelector(".carouselRight");
-const carouselLeft = document.querySelector(".carouselLeft");
 const footer = document.querySelector(".footer");
-const hslBox = document.querySelector(".hslBox");
 const mediaQuery = window.matchMedia('(max-width: 500px)');
 
-let carouselTimer;
-let dateTimer;
-let secondsFromMidnight;
 let menuOpened = false;
-
-const background = document.querySelector(".banner");
-let x = window.matchMedia("(max-width: 800px)");
-
-document.addEventListener("scroll", (evt) => {
-  let scrollArea = 1000 - window.innerHeight;
-  let scrollTop = window.pageYOffset || window.scrollTop;
-  let scrollPercent = scrollTop / scrollArea || 0;
-  let backgroundY = - (scrollPercent * window.innerHeight) / 800;
-  if (x.matches) {
-    backgroundY = - (scrollPercent * window.innerHeight) / 550;
-    let backgroundX = - (scrollPercent * window.innerHeight) / 1500;
-    background.style.transform =
-      "translateY(" + backgroundY + "%) " + "translateX(" + backgroundX + "%) " + "scale(" + 1.3 + ")";
-  } else {
-    background.style.transform =
-      "translateY(" + backgroundY + "%) " + "scale(" + 1.20 + ")";
-  }
-});
-
-
-const setTime = () => {
-  const now = new Date();
-  const then = new Date(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate(),
-    0,
-    0,
-    0
-  );
-  secondsFromMidnight = Math.round((now.getTime() - then.getTime()) / 1000);
-};
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -366,16 +328,11 @@ const addResCarouselEventListeners = () => {
   });
 };
 
-const swipeChangeSlide = (evt) => {
-  let touch = handleTouchMove(evt);
-  if (touch === 'right') {
-    infoCarouselLeft();
-  }
-  if (touch === 'left') {
-    infoCarouselRight();
-  }
-};
-
+/**
+ * Changes menu day on a swipe in the restaurant element and makes a subtle swipe transition.
+ *
+ * @param {event} evt - swipe event
+ */
 const swipeChangeMenuDay = (evt) => {
   let touch = handleTouchMove(evt);
   if (touch === 'right') {
@@ -398,197 +355,6 @@ const swipeChangeMenuDay = (evt) => {
 
 resContainer.addEventListener('touchstart', handleTouchStart);
 resContainer.addEventListener('touchmove', swipeChangeMenuDay);
-
-let slides = [];
-
-const makeSlides = () => {
-  slides.splice(0, slides.length);
-  infoContainer.innerHTML = "";
-  const imgs = parseImgs(language);
-  for (const img of imgs) {
-    const slide = document.createElement('div');
-    slide.className = 'slide';
-    slide.style.backgroundImage = "url(" + img + ")";
-    slide.addEventListener('touchstart', handleTouchStart);
-    slide.addEventListener('touchmove', swipeChangeSlide);
-    slides.push(slide);
-  }
-};
-
-/* TEXT SLIDES
-const makeSlides = () => {
-  slides.splice(0, slides.length);
-  infoContainer.innerHTML = "";
-  const data = parseInfo(language);
-  for (const set of data) {
-    const slide = document.createElement('div');
-    slide.className = 'slide';
-    const h3 = document.createElement('h3');
-
-    h3.innerHTML = set.title;
-    slide.appendChild(h3);
-
-    if (set.text !== "") {
-      const ul = document.createElement('ul');
-      for (const textNode of set.text) {
-        const li = document.createElement('li');
-        li.innerHTML = textNode;
-        ul.appendChild(li);
-      }
-      slide.appendChild(ul);
-    }
-    slides.push(slide);
-  }
-};
-*/
-const changeSlide = (direction) => {
-  let slide = document.querySelector(".slide");
-  slide.style.opacity = "0";
-  if (direction === "right") {
-    slide.style.transform = " scale(0.9) translate(-20%, 0%)";
-  }
-  if (direction === "left") {
-    slide.style.transform = " scale(0.9) translate(20%, 0%)";
-  }
-  setTimeout(function () {
-    slide.style.transform = "none";
-    infoContainer.innerHTML = "";
-    infoContainer.appendChild(slides[carouselPosition]);
-    slide = slides[carouselPosition];
-    if (direction === "right") {
-      slide.style.transform = " scale(0.9) translate(20%, 0%)";
-    }
-    if (direction === "left") {
-      slide.style.transform = " scale(0.9) translate(-20%, 0%)";
-    }
-    setTimeout(function () {
-      slide = document.querySelector(".slide");
-      slide.style.opacity = "1";
-      slide.style.transform = "rotate(0turn) scale(1) translate(0%, 0%)";
-    }, 10);
-  }, 500);
-};
-
-let carouselPosition = 0;
-
-const infoCarouselRight = () => {
-  if (carouselPosition < slides.length - 1) {
-    carouselPosition++;
-    changeSlide("right");
-  } else {
-    carouselPosition = 0;
-    changeSlide("right");
-  }
-};
-
-const infoCarouselLeft = () => {
-  if (carouselPosition > 0) {
-    carouselPosition--;
-    changeSlide("left");
-  } else {
-    carouselPosition = slides.length;
-    carouselPosition--;
-    changeSlide("left");
-  }
-};
-
-const infoCarouselRefresh = () => {
-  infoContainer.innerHTML = "";
-  infoContainer.appendChild(slides[carouselPosition]);
-  setTimeout(function () {
-    const slide = document.querySelector(".slide");
-    slide.style.opacity = "1";
-  }, 500);
-};
-
-const clearCarouselTimer = () => {
-  console.log("clearTimer");
-  clearTimeout(carouselTimer);
-  carouselTimer = setInterval(infoCarouselRight, 13000);
-};
-
-carouselRight.addEventListener("click", infoCarouselRight);
-carouselLeft.addEventListener("click", infoCarouselLeft);
-carouselLeft.addEventListener("click", clearCarouselTimer);
-carouselRight.addEventListener("click", clearCarouselTimer);
-
-const isNumeric = (str) => {
-  if (typeof str != "string") return false;
-  return !isNaN(str) && !isNaN(parseFloat(str));
-};
-
-const timeString = (seconds) => {
-  let minutes = Math.floor(seconds / 60);
-  let time = "";
-  if (minutes >= 60) {
-    let hours = Math.floor(minutes / 60);
-    time = hours + "h" + (minutes - hours * 60) + "min";
-  } else {
-    time = minutes + "min";
-  }
-  return time;
-};
-
-const loadHSLData = async (id) => {
-  const result = await HSLData.getRidesByStopId(id);
-  const stop = result.data.stop;
-  const stopElement = document.createElement("div");
-  const stopName = document.createElement("h3");
-  const stopList = document.createElement("ul");
-  stopList.classList.add("stopList");
-
-  stopElement.className = "stop";
-  if (language === "fi") {
-    stopName.innerHTML = `${stop.name}`;
-    stopElement.appendChild(stopName);
-  } else {
-    stopName.innerHTML = `${stop.name}`;
-    stopElement.appendChild(stopName);
-  }
-  const isBusMetroTrain = stop.stoptimesWithoutPatterns[0].trip.routeShortName;
-  let stopCategory = "";
-  if (isNumeric(isBusMetroTrain.charAt(0))) {
-    stopCategory = 'bus';
-    stopElement.classList.add('busStop');
-    const icon = document.createElement('div');
-    icon.classList.add('hslBusIcon');
-    stopElement.appendChild(icon);
-  } else if (isBusMetroTrain.length === 1) {
-    stopCategory = 'train';
-    stopElement.classList.add('trainStop');
-    const icon = document.createElement('div');
-    icon.classList.add('hslTrainIcon');
-    stopElement.appendChild(icon);
-  } else if (isBusMetroTrain.length === 2) {
-    stopCategory = 'metro';
-    stopElement.classList.add('metroStop');
-    const icon = document.createElement('div');
-    icon.classList.add('hslMetroIcon');
-    stopElement.appendChild(icon);
-  }
-  for (const ride of stop.stoptimesWithoutPatterns) {
-    const departureSeconds = ride.scheduledDeparture - secondsFromMidnight;
-    const departureTime = timeString(departureSeconds);
-    if (departureSeconds >= 0) {
-      const li = document.createElement("li");
-      li.classList.add("timeTable");
-      li.innerHTML += `
-    <div class="time">${departureTime}</div>
-    <div class="bus">${ride.trip.routeShortName}</div>
-    <div class="destination">${ride.trip.tripHeadsign}</div>`;
-      stopList.appendChild(li);
-    }
-  }
-  stopName.tabIndex = 0;
-  stopName.addEventListener("focus", () => {
-    stopList.style.height = "195px";
-  });
-  stopName.addEventListener("focusout", () => {
-    stopList.style.height = "0";
-  });
-  stopElement.appendChild(stopList);
-  document.querySelector(".hsl-data").appendChild(stopElement);
-};
 
 /**
  * If the user allows the app to use the device's gps, this function checks which campus is closest to user's
@@ -616,50 +382,15 @@ const getNearestCampus = () => {
       currentCampus = RestaurantData.restaurants[i].name;
       localStorage.setItem('currentCampus', currentCampus);
       getMenu();
-      getStops();
+      getStops(language, currentCampus);
     })
     .catch((err) => {
       console.error(err.message);
       getMenu();
-      getStops();
+      getStops(language, currentCampus);
     });
 };
 
-const insertHslHeader = () => {
-  const header = document.querySelector('.hslHeader');
-  header.innerHTML = '';
-
-  if (language === 'fi') {
-    header.innerHTML = 'Aikataulut';
-  } if (language === 'en') {
-    header.innerHTML = 'Timetables';
-  }
-};
-
-const getStops = async () => {
-  document.querySelector('.hsl-data').innerHTML = '';
-  insertHslHeader();
-  for (const restaurant of RestaurantData.restaurants) {
-    if (restaurant.name === currentCampus) {
-      if (restaurant.name === "myyrmaki") {
-        loadHSLData("HSL:4150551");
-        loadHSLData("HSL:4150501");
-      }
-      if (restaurant.name === "karamalmi") {
-        loadHSLData("HSL:2132552");
-        loadHSLData("HSL:2132502");
-      }
-      const stops = await HSLData.getStopsByLocation(
-        restaurant.lat,
-        restaurant.lon
-      );
-      for (const stop of stops.data.stopsByRadius.edges) {
-        const id = stop.node.stop.gtfsId;
-        loadHSLData(id);
-      }
-    }
-  }
-};
 
 /**
  * Retrieves information of the current campus and puts that into footer.
@@ -749,23 +480,21 @@ const renderWeather = async () => {
 };
 
 const init = () => {
+  addBackgroundParallax();
   setTime();
   getMenu();
   getNearestCampus();
-  makeSlides();
+  makeSlides(language);
   infoCarouselRefresh();
   renderWeather();
 
-
-  carouselTimer = setInterval(infoCarouselRight, 13000);
-  dateTimer = setInterval(setTime, 60000);
-  const refreshStops = setInterval(getStops, 60000);
+  //const refreshStops = setInterval(getStops(language, currentCampus), 60000);
 };
 
 const refresh = () => {
   getMenu();
-  getStops();
-  makeSlides();
+  getStops(language, currentCampus);
+  makeSlides(language);
   infoCarouselRefresh();
   renderWeather();
 };
