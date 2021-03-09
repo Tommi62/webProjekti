@@ -1,6 +1,6 @@
 /**
  * Retrieves the user's current location with geoloaction API.
- * @returns {promise} - If is gps allowed, returns current location.
+ * @returns {promise} - If gps is allowed, returns current location.
  */
 const getLocation = () => {
   if (navigator.geolocation) {

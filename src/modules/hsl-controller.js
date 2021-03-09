@@ -70,7 +70,7 @@ const getStops = async (language, currentCampus) => {
  * checks if string is numeric
  *
  * @param {string} str
- * @returns boolean true or false
+ * @returns {boolean} true or false
  */
 const isNumeric = (str) => {
   if (typeof str != "string") return false;
@@ -81,7 +81,7 @@ const isNumeric = (str) => {
  * converts HSL departure time in seconds from seconds to departure to a user friendly string.
  *
  * @param {number} seconds
- * @returns string
+ * @returns {string}
  */
 const timeString = (seconds) => {
   let minutes = Math.floor(seconds / 60);

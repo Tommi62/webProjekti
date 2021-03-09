@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: modules/slide-controller.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: modules/slide-controller.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { handleTouchStart, handleTouchMove } from '../modules/swiper';
+import { parseImgs} from "../modules/info-data";
+const infoContainer = document.querySelector(".info");
+const carouselRight = document.querySelector(".carouselRight");
+const carouselLeft = document.querySelector(".carouselLeft");
+let slides = [];
+let carouselPosition = 0;
+
+
+/**
+ * Creates slides to an array depending on the language in use.
+ *
+ * @param {string} language - language 'fi' or 'en'
+ */
+const makeSlides = (language) => {
+  slides.splice(0, slides.length);
+  infoContainer.innerHTML = "";
+  const imgs = parseImgs(language);
+  for (const img of imgs) {
+    const slide = document.createElement('div');
+    slide.className = 'slide';
+    slide.style.backgroundImage = "url(" + img + ")";
+    slide.addEventListener('touchstart', handleTouchStart);
+    slide.addEventListener('touchmove', swipeChangeSlide);
+    slides.push(slide);
+  }
+};
+
+/* TEXT SLIDES
+const makeSlides = () => {
+  slides.splice(0, slides.length);
+  infoContainer.innerHTML = "";
+  const data = parseInfo(language);
+  for (const set of data) {
+    const slide = document.createElement('div');
+    slide.className = 'slide';
+    const h3 = document.createElement('h3');
+
+    h3.innerHTML = set.title;
+    slide.appendChild(h3);
+
+    if (set.text !== "") {
+      const ul = document.createElement('ul');
+      for (const textNode of set.text) {
+        const li = document.createElement('li');
+        li.innerHTML = textNode;
+        ul.appendChild(li);
+      }
+      slide.appendChild(ul);
+    }
+    slides.push(slide);
+  }
+};
+*/
+
+/**
+ * Changes slides on swipe event.
+ *
+ * @param {event} evt
+ */
+const swipeChangeSlide = (evt) => {
+  let touch = handleTouchMove(evt);
+  if (touch === 'right') {
+    infoCarouselLeft();
+  }
+  if (touch === 'left') {
+    infoCarouselRight();
+  }
+};
+
+/**
+ * Changes the slide with an transition depending on the direction.
+ *
+ * @param {string} direction - 'right' or 'left'
+ */
+const changeSlide = (direction) => {
+  let slide = document.querySelector(".slide");
+  slide.style.opacity = "0";
+  if (direction === "right") {
+    slide.style.transform = " scale(0.9) translate(-20%, 0%)";
+  }
+  if (direction === "left") {
+    slide.style.transform = " scale(0.9) translate(20%, 0%)";
+  }
+  setTimeout(function () {
+    slide.style.transform = "none";
+    infoContainer.innerHTML = "";
+    infoContainer.appendChild(slides[carouselPosition]);
+    slide = slides[carouselPosition];
+    if (direction === "right") {
+      slide.style.transform = " scale(0.9) translate(20%, 0%)";
+    }
+    if (direction === "left") {
+      slide.style.transform = " scale(0.9) translate(-20%, 0%)";
+    }
+    setTimeout(function () {
+      slide = document.querySelector(".slide");
+      slide.style.opacity = "1";
+      slide.style.transform = "rotate(0turn) scale(1) translate(0%, 0%)";
+    }, 10);
+  }, 500);
+};
+
+/**
+ * Makes the carousel go smoothly around right
+ */
+const infoCarouselRight = () => {
+  if (carouselPosition &lt; slides.length - 1) {
+    carouselPosition++;
+    changeSlide("right");
+  } else {
+    carouselPosition = 0;
+    changeSlide("right");
+  }
+};
+
+/**
+ * Makes the carousel go smoothly around left
+ */
+const infoCarouselLeft = () => {
+  if (carouselPosition > 0) {
+    carouselPosition--;
+    changeSlide("left");
+  } else {
+    carouselPosition = slides.length;
+    carouselPosition--;
+    changeSlide("left");
+  }
+};
+
+/**
+ * Refreshes the slides. Used for changing language.
+ */
+const infoCarouselRefresh = () => {
+  infoContainer.innerHTML = "";
+  infoContainer.appendChild(slides[carouselPosition]);
+  setTimeout(function () {
+    const slide = document.querySelector(".slide");
+    slide.style.opacity = "1";
+  }, 500);
+};
+
+/**
+ * Clears the timer that is used to auto-rotate slides. Used when the user controls the carousel.
+ */
+const clearCarouselTimer = () => {
+  console.log("clearTimer");
+  clearTimeout(carouselTimer);
+  carouselTimer = setInterval(infoCarouselRight, 13000);
+};
+
+let carouselTimer;
+carouselTimer = setInterval(infoCarouselRight, 13000);
+
+carouselRight.addEventListener("click", infoCarouselRight);
+carouselLeft.addEventListener("click", infoCarouselLeft);
+carouselLeft.addEventListener("click", clearCarouselTimer);
+carouselRight.addEventListener("click", clearCarouselTimer);
+
+export { makeSlides, infoCarouselRefresh, clearCarouselTimer };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addBackgroundParallax">addBackgroundParallax</a></li><li><a href="global.html#addResCarouselEventListeners">addResCarouselEventListeners</a></li><li><a href="global.html#changeDay">changeDay</a></li><li><a href="global.html#changeNavBar">changeNavBar</a></li><li><a href="global.html#changeSlide">changeSlide</a></li><li><a href="global.html#clearCarouselTimer">clearCarouselTimer</a></li><li><a href="global.html#createCampusInfo">createCampusInfo</a></li><li><a href="global.html#createFazerPriceContainer">createFazerPriceContainer</a></li><li><a href="global.html#createSodexoInfoContainer">createSodexoInfoContainer</a></li><li><a href="global.html#createSodexoNameContainer">createSodexoNameContainer</a></li><li><a href="global.html#createTitleDiv">createTitleDiv</a></li><li><a href="global.html#fetchPostJson">fetchPostJson</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getDailyMenu">getDailyMenu</a></li><li><a href="global.html#getDistance">getDistance</a></li><li><a href="global.html#getLocation">getLocation</a></li><li><a href="global.html#getMenu">getMenu</a></li><li><a href="global.html#getMenus">getMenus</a></li><li><a href="global.html#getNearestCampus">getNearestCampus</a></li><li><a href="global.html#getRidesByStopId">getRidesByStopId</a></li><li><a href="global.html#getStationsByName">getStationsByName</a></li><li><a href="global.html#getStops">getStops</a></li><li><a href="global.html#getStopsByLocation">getStopsByLocation</a></li><li><a href="global.html#getTouches">getTouches</a></li><li><a href="global.html#getWeather">getWeather</a></li><li><a href="global.html#getWeatherLatLon">getWeatherLatLon</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#handleTouchMove">handleTouchMove</a></li><li><a href="global.html#handleTouchStart">handleTouchStart</a></li><li><a href="global.html#infoCarouselLeft">infoCarouselLeft</a></li><li><a href="global.html#infoCarouselRefresh">infoCarouselRefresh</a></li><li><a href="global.html#infoCarouselRight">infoCarouselRight</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#insertHslHeader">insertHslHeader</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#loadHSLData">loadHSLData</a></li><li><a href="global.html#makeSlides">makeSlides</a></li><li><a href="global.html#noMenuError">noMenuError</a></li><li><a href="global.html#NoMenuFoundNotification">NoMenuFoundNotification</a></li><li><a href="global.html#parseCampusInfo">parseCampusInfo</a></li><li><a href="global.html#parseFazerMenu">parseFazerMenu</a></li><li><a href="global.html#parseImgs">parseImgs</a></li><li><a href="global.html#parseSodexoMenu">parseSodexoMenu</a></li><li><a href="global.html#refresh">refresh</a></li><li><a href="global.html#refreshDate">refreshDate</a></li><li><a href="global.html#renderFazerMenu">renderFazerMenu</a></li><li><a href="global.html#renderSodexoMenu">renderSodexoMenu</a></li><li><a href="global.html#renderWeather">renderWeather</a></li><li><a href="global.html#setTime">setTime</a></li><li><a href="global.html#swipeChangeMenuDay">swipeChangeMenuDay</a></li><li><a href="global.html#swipeChangeSlide">swipeChangeSlide</a></li><li><a href="global.html#timeString">timeString</a></li><li><a href="global.html#translateCategoryName">translateCategoryName</a></li><li><a href="global.html#updateUi">updateUi</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Mar 09 2021 17:33:43 GMT+0200 (GMT+02:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

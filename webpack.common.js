@@ -50,7 +50,7 @@ module.exports = {
           sizes: [96, 128, 192, 256, 384, 512]
         },
       ]
-    })
+    }),
   ],
   output: {
     filename: '[name].bundle.js',

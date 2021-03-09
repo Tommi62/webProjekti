@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: modules/calculate-distance.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: modules/calculate-distance.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Retrieves the user's current location with geoloaction API.
+ * @returns {promise} - If gps is allowed, returns current location.
+ */
+const getLocation = () => {
+  if (navigator.geolocation) {
+    console.log('Getlocation');
+    return new Promise((res, rej) => {
+      navigator.geolocation.getCurrentPosition(res, rej);
+    });
+  } else {
+    return 'nothing';
+  }
+};
+
+/**
+ * Takes latitude and longitude of two locations and returns the distance between them.
+ * @param {number} lat1 - Latitude of first location.
+ * @param {number} lon1 - Longitude of first location.
+ * @param {number} lat2 - Latitude of second location.
+ * @param {number} lon2 - Longitude of second location.
+ * @param {string} unit - Defines in which unit the distance is returned.
+ * @returns {number} - The distance between two locations.
+ */
+const getDistance = (lat1, lon1, lat2, lon2, unit) => {
+	console.log('Getdistance');
+  if ((lat1 == lat2) &amp;&amp; (lon1 == lon2)) {
+		return 0;
+	}
+	else {
+		var radlat1 = Math.PI * lat1/180;
+		var radlat2 = Math.PI * lat2/180;
+		var theta = lon1-lon2;
+		var radtheta = Math.PI * theta/180;
+		var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+		if (dist > 1) {
+			dist = 1;
+		}
+		dist = Math.acos(dist);
+		dist = dist * 180/Math.PI;
+		dist = dist * 60 * 1.1515;
+		if (unit=="K") { dist = dist * 1.609344; }
+		if (unit=="N") { dist = dist * 0.8684; }
+		return dist;
+	}
+};
+
+export {getLocation, getDistance};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addBackgroundParallax">addBackgroundParallax</a></li><li><a href="global.html#addResCarouselEventListeners">addResCarouselEventListeners</a></li><li><a href="global.html#changeDay">changeDay</a></li><li><a href="global.html#changeNavBar">changeNavBar</a></li><li><a href="global.html#changeSlide">changeSlide</a></li><li><a href="global.html#clearCarouselTimer">clearCarouselTimer</a></li><li><a href="global.html#createCampusInfo">createCampusInfo</a></li><li><a href="global.html#createFazerPriceContainer">createFazerPriceContainer</a></li><li><a href="global.html#createSodexoInfoContainer">createSodexoInfoContainer</a></li><li><a href="global.html#createSodexoNameContainer">createSodexoNameContainer</a></li><li><a href="global.html#createTitleDiv">createTitleDiv</a></li><li><a href="global.html#fetchPostJson">fetchPostJson</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getDailyMenu">getDailyMenu</a></li><li><a href="global.html#getDistance">getDistance</a></li><li><a href="global.html#getLocation">getLocation</a></li><li><a href="global.html#getMenu">getMenu</a></li><li><a href="global.html#getMenus">getMenus</a></li><li><a href="global.html#getNearestCampus">getNearestCampus</a></li><li><a href="global.html#getRidesByStopId">getRidesByStopId</a></li><li><a href="global.html#getStationsByName">getStationsByName</a></li><li><a href="global.html#getStops">getStops</a></li><li><a href="global.html#getStopsByLocation">getStopsByLocation</a></li><li><a href="global.html#getTouches">getTouches</a></li><li><a href="global.html#getWeather">getWeather</a></li><li><a href="global.html#getWeatherLatLon">getWeatherLatLon</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#handleTouchMove">handleTouchMove</a></li><li><a href="global.html#handleTouchStart">handleTouchStart</a></li><li><a href="global.html#infoCarouselLeft">infoCarouselLeft</a></li><li><a href="global.html#infoCarouselRefresh">infoCarouselRefresh</a></li><li><a href="global.html#infoCarouselRight">infoCarouselRight</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#insertHslHeader">insertHslHeader</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#loadHSLData">loadHSLData</a></li><li><a href="global.html#makeSlides">makeSlides</a></li><li><a href="global.html#noMenuError">noMenuError</a></li><li><a href="global.html#NoMenuFoundNotification">NoMenuFoundNotification</a></li><li><a href="global.html#parseCampusInfo">parseCampusInfo</a></li><li><a href="global.html#parseFazerMenu">parseFazerMenu</a></li><li><a href="global.html#parseImgs">parseImgs</a></li><li><a href="global.html#parseSodexoMenu">parseSodexoMenu</a></li><li><a href="global.html#refresh">refresh</a></li><li><a href="global.html#refreshDate">refreshDate</a></li><li><a href="global.html#renderFazerMenu">renderFazerMenu</a></li><li><a href="global.html#renderSodexoMenu">renderSodexoMenu</a></li><li><a href="global.html#renderWeather">renderWeather</a></li><li><a href="global.html#setTime">setTime</a></li><li><a href="global.html#swipeChangeMenuDay">swipeChangeMenuDay</a></li><li><a href="global.html#swipeChangeSlide">swipeChangeSlide</a></li><li><a href="global.html#timeString">timeString</a></li><li><a href="global.html#translateCategoryName">translateCategoryName</a></li><li><a href="global.html#updateUi">updateUi</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Mar 09 2021 17:33:43 GMT+0200 (GMT+02:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

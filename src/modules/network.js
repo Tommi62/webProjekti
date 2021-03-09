@@ -2,7 +2,7 @@
  * Fetches a menu from the inputted address.
  *
  * @param {url} address - menu url address
- * @returns json - menu object
+ * @returns {json} - menu object
  */
 const getMenus = async (address) => {
   let response;
@@ -22,7 +22,7 @@ const getMenus = async (address) => {
  * Fetches the weather from the inputted address.
  *
  * @param {url} address - weather url address
- * @returns json - weather object
+ * @returns {json} - weather object
  */
 const getWeather = async (address) => {
   let response;

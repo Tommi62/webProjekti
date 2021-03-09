@@ -74,7 +74,7 @@ const getStationsByName = async (name) => {
  *
  * @param {number} lat - latitude
  * @param {number} lon - longitude
- * @returns json - stops at coordinates inside radius
+ * @returns {json} - stops at coordinates inside radius
  */
 const getStopsByLocation = async (lat, lon) => {
   const query = `{

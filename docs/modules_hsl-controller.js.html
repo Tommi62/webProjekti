@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: modules/hsl-controller.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: modules/hsl-controller.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import HSLData from "../modules/hsl-data";
+import RestaurantData from '../modules/restaurant-info';
+
+let secondsFromMidnight;
+
+/**
+ * Sets time in seconds from midnight to be used with HSL departuretimes
+ *
+ */
+const setTime = () => {
+  const now = new Date();
+  const then = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    0,
+    0,
+    0
+  );
+  secondsFromMidnight = Math.round((now.getTime() - then.getTime()) / 1000);
+};
+
+/**
+ * Sets HSL header depending on the language the user is using
+ *
+ * @param {string} language - language 'fi' or 'en'
+ */
+const insertHslHeader = (language) => {
+  const header = document.querySelector('.hslHeader');
+  header.innerHTML = '';
+  if (language === 'fi') {
+    header.innerHTML = 'Aikataulut';
+  } if (language === 'en') {
+    header.innerHTML = 'Timetables';
+  }
+};
+
+/**
+ * Gets HSL stops by campus location and adds relevant stops outside the range
+ *
+ * @param {string} language - language 'fi' or 'en'
+ * @param {string} currentCampus - current campus name
+ */
+const getStops = async (language, currentCampus) => {
+  document.querySelector('.hsl-data').innerHTML = '';
+  insertHslHeader(language);
+  for (const restaurant of RestaurantData.restaurants) {
+    if (restaurant.name === currentCampus) {
+      if (restaurant.name === "myyrmaki") {
+        loadHSLData("HSL:4150551");
+        loadHSLData("HSL:4150501");
+      }
+      if (restaurant.name === "karamalmi") {
+        loadHSLData("HSL:2132552");
+        loadHSLData("HSL:2132502");
+      }
+      const stops = await HSLData.getStopsByLocation(
+        restaurant.lat,
+        restaurant.lon
+      );
+      for (const stop of stops.data.stopsByRadius.edges) {
+        const id = stop.node.stop.gtfsId;
+        loadHSLData(id);
+      }
+    }
+  }
+};
+
+/**
+ * checks if string is numeric
+ *
+ * @param {string} str
+ * @returns {boolean} true or false
+ */
+const isNumeric = (str) => {
+  if (typeof str != "string") return false;
+  return !isNaN(str) &amp;&amp; !isNaN(parseFloat(str));
+};
+
+/**
+ * converts HSL departure time in seconds from seconds to departure to a user friendly string.
+ *
+ * @param {number} seconds
+ * @returns {string}
+ */
+const timeString = (seconds) => {
+  let minutes = Math.floor(seconds / 60);
+  let time = "";
+  if (minutes >= 60) {
+    let hours = Math.floor(minutes / 60);
+    time = hours + "h" + (minutes - hours * 60) + "min";
+  } else {
+    time = minutes + "min";
+  }
+  return time;
+};
+
+/**
+ * Renders HSL stop to the web page and adds transition on :focus.
+ *
+ * @param {string} id - HSL stop id
+ */
+const loadHSLData = async (id) => {
+  const result = await HSLData.getRidesByStopId(id);
+  const stop = result.data.stop;
+  const stopElement = document.createElement("div");
+  const stopName = document.createElement("h3");
+  const stopList = document.createElement("ul");
+  stopList.classList.add("stopList");
+
+  stopElement.className = "stop";
+
+  stopName.innerHTML = `${stop.name}`;
+  stopElement.appendChild(stopName);
+
+  const isBusMetroTrain = stop.stoptimesWithoutPatterns[0].trip.routeShortName;
+  let stopCategory = "";
+  if (isNumeric(isBusMetroTrain.charAt(0))) {
+    stopCategory = 'bus';
+    stopElement.classList.add('busStop');
+    const icon = document.createElement('div');
+    icon.classList.add('hslBusIcon');
+    stopElement.appendChild(icon);
+  } else if (isBusMetroTrain.length === 1) {
+    stopCategory = 'train';
+    stopElement.classList.add('trainStop');
+    const icon = document.createElement('div');
+    icon.classList.add('hslTrainIcon');
+    stopElement.appendChild(icon);
+  } else if (isBusMetroTrain.length === 2) {
+    stopCategory = 'metro';
+    stopElement.classList.add('metroStop');
+    const icon = document.createElement('div');
+    icon.classList.add('hslMetroIcon');
+    stopElement.appendChild(icon);
+  }
+  for (const ride of stop.stoptimesWithoutPatterns) {
+    const departureSeconds = ride.scheduledDeparture - secondsFromMidnight;
+    const departureTime = timeString(departureSeconds);
+    if (departureSeconds >= 0) {
+      const li = document.createElement("li");
+      li.classList.add("timeTable");
+      li.innerHTML += `
+    &lt;div class="time">${departureTime}&lt;/div>
+    &lt;div class="bus">${ride.trip.routeShortName}&lt;/div>
+    &lt;div class="destination">${ride.trip.tripHeadsign}&lt;/div>`;
+      stopList.appendChild(li);
+    }
+  }
+  stopName.tabIndex = 0;
+  stopName.addEventListener("focus", () => {
+    stopList.style.height = "195px";
+  });
+  stopName.addEventListener("focusout", () => {
+    stopList.style.height = "0";
+  });
+  stopElement.appendChild(stopList);
+  document.querySelector(".hsl-data").appendChild(stopElement);
+};
+
+export { getStops, setTime };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addBackgroundParallax">addBackgroundParallax</a></li><li><a href="global.html#addResCarouselEventListeners">addResCarouselEventListeners</a></li><li><a href="global.html#changeDay">changeDay</a></li><li><a href="global.html#changeNavBar">changeNavBar</a></li><li><a href="global.html#changeSlide">changeSlide</a></li><li><a href="global.html#clearCarouselTimer">clearCarouselTimer</a></li><li><a href="global.html#createCampusInfo">createCampusInfo</a></li><li><a href="global.html#createFazerPriceContainer">createFazerPriceContainer</a></li><li><a href="global.html#createSodexoInfoContainer">createSodexoInfoContainer</a></li><li><a href="global.html#createSodexoNameContainer">createSodexoNameContainer</a></li><li><a href="global.html#createTitleDiv">createTitleDiv</a></li><li><a href="global.html#fetchPostJson">fetchPostJson</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getDailyMenu">getDailyMenu</a></li><li><a href="global.html#getDistance">getDistance</a></li><li><a href="global.html#getLocation">getLocation</a></li><li><a href="global.html#getMenu">getMenu</a></li><li><a href="global.html#getMenus">getMenus</a></li><li><a href="global.html#getNearestCampus">getNearestCampus</a></li><li><a href="global.html#getRidesByStopId">getRidesByStopId</a></li><li><a href="global.html#getStationsByName">getStationsByName</a></li><li><a href="global.html#getStops">getStops</a></li><li><a href="global.html#getStopsByLocation">getStopsByLocation</a></li><li><a href="global.html#getTouches">getTouches</a></li><li><a href="global.html#getWeather">getWeather</a></li><li><a href="global.html#getWeatherLatLon">getWeatherLatLon</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#handleTouchMove">handleTouchMove</a></li><li><a href="global.html#handleTouchStart">handleTouchStart</a></li><li><a href="global.html#infoCarouselLeft">infoCarouselLeft</a></li><li><a href="global.html#infoCarouselRefresh">infoCarouselRefresh</a></li><li><a href="global.html#infoCarouselRight">infoCarouselRight</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#insertHslHeader">insertHslHeader</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#loadHSLData">loadHSLData</a></li><li><a href="global.html#makeSlides">makeSlides</a></li><li><a href="global.html#noMenuError">noMenuError</a></li><li><a href="global.html#NoMenuFoundNotification">NoMenuFoundNotification</a></li><li><a href="global.html#parseCampusInfo">parseCampusInfo</a></li><li><a href="global.html#parseFazerMenu">parseFazerMenu</a></li><li><a href="global.html#parseImgs">parseImgs</a></li><li><a href="global.html#parseSodexoMenu">parseSodexoMenu</a></li><li><a href="global.html#refresh">refresh</a></li><li><a href="global.html#refreshDate">refreshDate</a></li><li><a href="global.html#renderFazerMenu">renderFazerMenu</a></li><li><a href="global.html#renderSodexoMenu">renderSodexoMenu</a></li><li><a href="global.html#renderWeather">renderWeather</a></li><li><a href="global.html#setTime">setTime</a></li><li><a href="global.html#swipeChangeMenuDay">swipeChangeMenuDay</a></li><li><a href="global.html#swipeChangeSlide">swipeChangeSlide</a></li><li><a href="global.html#timeString">timeString</a></li><li><a href="global.html#translateCategoryName">translateCategoryName</a></li><li><a href="global.html#updateUi">updateUi</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Mar 09 2021 17:33:43 GMT+0200 (GMT+02:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

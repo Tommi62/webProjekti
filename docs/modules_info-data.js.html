@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: modules/info-data.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: modules/info-data.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+//const info = require('../assets/json/info.json');
+const campusInfo = require('../assets/json/campus-info.json');
+const slideAmount = 15;
+
+/* TEXT SLIDES
+
+const parseInfo = (lang) => {
+  let infoList = [];
+  for (const infoObject of info.info) {
+    if (lang === "fi") {
+      const dataFi = {
+        title: infoObject.title_fi,
+        text: infoObject.text_fi
+      };
+      infoList.push(dataFi);
+    }
+    if (lang === "en") {
+      const dataEn = {
+        title: infoObject.title_en,
+        text: infoObject.text_en
+      };
+      infoList.push(dataEn);
+    }
+  }
+  return infoList;
+};
+*/
+
+/**
+ * Makes a list out of Powerpoint slide images to be used in the info carousel.
+ * Use the 'en' and 'fi' folders for slides and adjust slideAmount when needed.
+ *
+ * @param {string} lang - language
+ * @returns {array} - infoslides in an array
+ */
+const parseImgs = (lang) => {
+  let infoList = [];
+  for (let i = 1; i &lt;= slideAmount; i++) {
+    infoList.push("./assets/slides/" + lang + "/" + i + ".png");
+  }
+  return infoList;
+};
+
+/**
+ * Retrieves campus info data from campus-info.json and parses it into array and sends it to whoever called
+ * this function.
+ * @param {string} lang - Language in which data is desired; fi or en.
+ * @param {string} campusName - The name of the campus which data is desired.
+ * @returns {array} - Includes campus' info data.
+ */
+const parseCampusInfo = (lang, campusName) => {
+  let infoList = [];
+  for (const infoObject of campusInfo.info) {
+    if(infoObject.name === campusName){
+      for(const data of infoObject.data){
+        if (lang === "fi") {
+          const dataFi = {
+            title: data.title_fi,
+            text: data.text_fi
+          };
+          infoList.push(dataFi);
+        }
+        if (lang === "en") {
+          const dataEn = {
+            title: data.title_en,
+            text: data.text_en
+          };
+          infoList.push(dataEn);
+        }
+      }
+    }
+  }
+    return infoList;
+};
+
+//export {parseInfo, parseCampusInfo};
+export {parseImgs, parseCampusInfo};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addBackgroundParallax">addBackgroundParallax</a></li><li><a href="global.html#addResCarouselEventListeners">addResCarouselEventListeners</a></li><li><a href="global.html#changeDay">changeDay</a></li><li><a href="global.html#changeNavBar">changeNavBar</a></li><li><a href="global.html#changeSlide">changeSlide</a></li><li><a href="global.html#clearCarouselTimer">clearCarouselTimer</a></li><li><a href="global.html#createCampusInfo">createCampusInfo</a></li><li><a href="global.html#createFazerPriceContainer">createFazerPriceContainer</a></li><li><a href="global.html#createSodexoInfoContainer">createSodexoInfoContainer</a></li><li><a href="global.html#createSodexoNameContainer">createSodexoNameContainer</a></li><li><a href="global.html#createTitleDiv">createTitleDiv</a></li><li><a href="global.html#fetchPostJson">fetchPostJson</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getDailyMenu">getDailyMenu</a></li><li><a href="global.html#getDistance">getDistance</a></li><li><a href="global.html#getLocation">getLocation</a></li><li><a href="global.html#getMenu">getMenu</a></li><li><a href="global.html#getMenus">getMenus</a></li><li><a href="global.html#getNearestCampus">getNearestCampus</a></li><li><a href="global.html#getRidesByStopId">getRidesByStopId</a></li><li><a href="global.html#getStationsByName">getStationsByName</a></li><li><a href="global.html#getStops">getStops</a></li><li><a href="global.html#getStopsByLocation">getStopsByLocation</a></li><li><a href="global.html#getTouches">getTouches</a></li><li><a href="global.html#getWeather">getWeather</a></li><li><a href="global.html#getWeatherLatLon">getWeatherLatLon</a></li><li><a href="global.html#handleChange">handleChange</a></li><li><a href="global.html#handleTouchMove">handleTouchMove</a></li><li><a href="global.html#handleTouchStart">handleTouchStart</a></li><li><a href="global.html#infoCarouselLeft">infoCarouselLeft</a></li><li><a href="global.html#infoCarouselRefresh">infoCarouselRefresh</a></li><li><a href="global.html#infoCarouselRight">infoCarouselRight</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#insertHslHeader">insertHslHeader</a></li><li><a href="global.html#isNumeric">isNumeric</a></li><li><a href="global.html#loadHSLData">loadHSLData</a></li><li><a href="global.html#makeSlides">makeSlides</a></li><li><a href="global.html#noMenuError">noMenuError</a></li><li><a href="global.html#NoMenuFoundNotification">NoMenuFoundNotification</a></li><li><a href="global.html#parseCampusInfo">parseCampusInfo</a></li><li><a href="global.html#parseFazerMenu">parseFazerMenu</a></li><li><a href="global.html#parseImgs">parseImgs</a></li><li><a href="global.html#parseSodexoMenu">parseSodexoMenu</a></li><li><a href="global.html#refresh">refresh</a></li><li><a href="global.html#refreshDate">refreshDate</a></li><li><a href="global.html#renderFazerMenu">renderFazerMenu</a></li><li><a href="global.html#renderSodexoMenu">renderSodexoMenu</a></li><li><a href="global.html#renderWeather">renderWeather</a></li><li><a href="global.html#setTime">setTime</a></li><li><a href="global.html#swipeChangeMenuDay">swipeChangeMenuDay</a></li><li><a href="global.html#swipeChangeSlide">swipeChangeSlide</a></li><li><a href="global.html#timeString">timeString</a></li><li><a href="global.html#translateCategoryName">translateCategoryName</a></li><li><a href="global.html#updateUi">updateUi</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Mar 09 2021 17:33:43 GMT+0200 (GMT+02:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
