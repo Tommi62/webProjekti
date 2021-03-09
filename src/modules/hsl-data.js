@@ -2,6 +2,12 @@ import {fetchPostJson} from "./network";
 
 const apiUrl = 'https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql';
 
+/**
+ * Gets all the departuring rides from a single stop.
+ *
+ * @param {number} id - stop id
+ * @returns list of departuring HSL rides.
+ */
 const getRidesByStopId = async (id) => {
   const query = `{
     stop(id: "${id}") {
@@ -24,11 +30,21 @@ const getRidesByStopId = async (id) => {
       }
     }
   }`;
-  // TODO: add try-catch error handling
-  return await fetchPostJson(apiUrl, 'application/graphql', query);
-
+  let stopData = '';
+  try {
+    stopData = await fetchPostJson(apiUrl, 'application/graphql', query);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+  return stopData;
 };
 
+/**
+ * Fetches HSL stations by name and returns them as an object.
+ *
+ * @param {string} name - Train station name
+ * @returns json - stop data
+ */
 const getStationsByName = async (name) => {
   const query = `{
     stations(name: "${name}") {
@@ -44,11 +60,22 @@ const getStationsByName = async (name) => {
       }
     }
   }`;
-  // TODO: add try-catch error handling
-  return await fetchPostJson(apiUrl, 'application/graphql', query);
-
+  let stationsData = '';
+  try {
+    stationsData = await fetchPostJson(apiUrl, 'application/graphql', query);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+  return stationsData;
 };
 
+/**
+ * Gets HSL stops within the radius of 500 meters with coordinates and returns them as an object.
+ *
+ * @param {number} lat - latitude
+ * @param {number} lon - longitude
+ * @returns json - stops at coordinates inside radius
+ */
 const getStopsByLocation = async (lat, lon) => {
   const query = `{
     stopsByRadius(lat:${lat}, lon:${lon}, radius:500) {
@@ -63,9 +90,13 @@ const getStopsByLocation = async (lat, lon) => {
       }
     }
   }`;
-  // TODO: add try-catch error handling
-  return await fetchPostJson(apiUrl, 'application/graphql', query);
-
+  let stopData = '';
+  try {
+    stopData = await fetchPostJson(apiUrl, 'application/graphql', query);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+  return stopData;
 };
 
 /**
