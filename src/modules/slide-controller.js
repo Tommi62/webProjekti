@@ -61,9 +61,11 @@ const makeSlides = () => {
 const swipeChangeSlide = (evt) => {
   let touch = handleTouchMove(evt);
   if (touch === 'right') {
+    clearCarouselTimer();
     infoCarouselLeft();
   }
   if (touch === 'left') {
+    clearCarouselTimer();
     infoCarouselRight();
   }
 };
