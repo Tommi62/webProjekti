@@ -167,7 +167,7 @@ const createSodexoNameContainer = (item) => {
 };
 
 /**
- * Creates div including the prices and the codes of the dish.
+ * Creates a div including the prices and the codes of the dish.
  * @param {object} item - Includes information of certain dish.
  * @returns {HTMLElement} - A div which includes tha prices and the codes of the dish.
  */

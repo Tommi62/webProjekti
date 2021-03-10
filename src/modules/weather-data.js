@@ -9,7 +9,7 @@ const key = '56684b208668c1335175e8c8b53b7f69';
  *
  * @param {number} lat - latitude
  * @param {number} lon - longitude
- * @returns weather object
+ * @returns {object} - weather object
  */
 const getWeatherLatLon = async (lat, lon) => {
   let weatherData;

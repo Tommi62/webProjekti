@@ -6,7 +6,7 @@ let swipe = '';
  * Gets touch events
  *
  * @param {event} evt
- * @returns touch event
+ * @returns {event} - touch event.
  */
 function getTouches(evt) {
   return evt.touches;
@@ -27,7 +27,7 @@ function handleTouchStart(evt) {
  * Returns swipe direction calculated from the starting position to the ending position of the swipe.
  *
  * @param {event} evt
- * @returns swipe direction in string
+ * @returns {string} - swipe direction in string
  */
 function handleTouchMove(evt) {
     if ( ! x || ! y ) {

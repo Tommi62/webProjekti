@@ -32,7 +32,7 @@ const parseInfo = (lang) => {
  * Use the 'en' and 'fi' folders for slides and adjust slideAmount when needed.
  *
  * @param {string} lang - language
- * @returns array - infoslides in an array
+ * @returns {array} - infoslides in an array
  */
 const parseImgs = (lang) => {
   let infoList = [];
